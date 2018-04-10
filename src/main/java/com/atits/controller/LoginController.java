@@ -2,6 +2,9 @@ package com.atits.controller;
 
 import com.atits.entity.User;
 import com.atits.service.UserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -34,9 +37,12 @@ public class LoginController {
         }
         return "home";
 
+
     }
 
 
+    @ApiOperation(value="获取用户详细信息", notes="根据url的id来获取用户详细信息")
+    @ApiImplicitParam(name = "id", value = "用户ID", required = true, dataType = "Long")
     @RequestMapping(value = "user", method = RequestMethod.GET)
     @ResponseBody
     public List<User> findAll() {

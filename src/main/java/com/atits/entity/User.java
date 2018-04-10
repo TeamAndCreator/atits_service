@@ -1,10 +1,13 @@
 package com.atits.entity;
 
 
+import io.swagger.annotations.ApiModel;
+
 import javax.persistence.*;
 import java.util.Set;
 
 @Entity(name = "t_user")
+@ApiModel(value="user对象",description="用户对象user")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
