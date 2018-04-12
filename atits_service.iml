@@ -2,9 +2,7 @@
 <module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" type="JAVA_MODULE" version="4">
   <component name="FacetManager">
     <facet type="Spring" name="Spring">
-<<<<<<< HEAD
-      <configuration />
-=======
+
       <configuration>
         <fileset id="fileset" name="Atits Servlet" removed="false">
           <file>file://$MODULE_DIR$/src/main/resources/atits-servlet.xml</file>
@@ -12,7 +10,6 @@
           <file>file://$MODULE_DIR$/src/main/java/com/atits/config/SwaggerConfig.java</file>
         </fileset>
       </configuration>
->>>>>>> 3b3a52dde54801fab9f9d9252aa9d51c8f497e5f
     </facet>
     <facet type="web" name="Web">
       <configuration>
