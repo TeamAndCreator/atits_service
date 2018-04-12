@@ -15,9 +15,18 @@ public class UserService {
     @Resource
     private UserDao userDao;
 
+    /**
+     *查找所有user
+     */
     public List<User> findAll() {
-
         return userDao.findAll();
+    }
+
+    /**
+     *添加一个user
+     */
+    public void save(User user){
+        userDao.save(user);
     }
 
 

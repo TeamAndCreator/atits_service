@@ -2,7 +2,10 @@ package com.atits.entity;
 
 import javax.persistence.*;
 import java.util.Set;
-
+/**
+ *权限
+ * @author zys
+ */
 @Entity(name = "t_role")
 public class Role {
     @Id

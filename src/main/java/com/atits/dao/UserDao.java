@@ -1,6 +1,5 @@
 package com.atits.dao;
 
-
 import com.atits.entity.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -19,11 +18,27 @@ public class UserDao {
         return sessionFactory.getCurrentSession();
     }
 
+    /**
+     *查找所有user
+     */
     public List<User> findAll() {
+        System.out.println(sessionFactory);
         String hql = "from t_user";
         List list = getSession().createQuery(hql).list();
         return list;
-
     }
+
+    /**
+     *添加一个user
+     */
+    public void save(User user){
+        getSession().save(user);
+    }
+
+
+
+
+
+
 
 }
