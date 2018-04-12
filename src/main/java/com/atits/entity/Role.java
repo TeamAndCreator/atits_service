@@ -1,54 +1,51 @@
 package com.atits.entity;
 
 import javax.persistence.*;
-import java.io.Serializable;
-
+import java.util.Set;
+/**
+ *权限
+ * @author zys
+ */
 @Entity(name = "t_role")
-public class Role implements Serializable {
+public class Role {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+    private String name;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
-	private int id;
+    private String description;
 
-	@Column(name = "name", nullable = false, unique = true)
-	private String name;
+    public int getId() {
+        return id;
+    }
 
-	@Column(name = "permission")
-	private int permission;
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	public int getId() {
-		return id;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public int getPermission() {
-		return permission;
-	}
-
-	public void setPermission(int permission) {
-		this.permission = permission;
-	}
-
-	@Override
-	public String toString() {
-		return "Role [id=" + id + ", name=" + name + ", permission=" + permission + "]";
-	}
-
+    @Override
+    public String toString() {
+        return "Role{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }

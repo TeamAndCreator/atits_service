@@ -1,54 +1,49 @@
 package com.atits.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
-import javax.persistence.*;
-
+/**
+ *文件
+ * @author zys
+ */
 @Entity(name = "t_files")
 public class Files {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private int id;
 
-    @Column(name = "title")
-    private String title;// 文件名
+    private String name;
 
+    private String type;
 
-    @Column(name = "file_name")
-    private String fileName;
+    private String title;
 
-    @Column(name = "file_type")
-    private String fileType;
-
-    @ManyToOne(targetEntity = System.class)
-    @JoinColumn(name = "sys_id", referencedColumnName = "id", nullable = true)
-    @JsonIgnore
-    private System system;// 系统名称
-
-    @Column(name = "content", length = 100000)
     private String content;
 
-    @Column(name = "time")
-    private String time;
-
-    @Column(name = "date")
-    private String date;
-
-    @ManyToOne
-    @JoinColumn(name = "editor", referencedColumnName = "id", nullable = true)
-    private Person editor;
-
-    @Column(name = "state")
     private int state;
 
     public int getId() {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getTitle() {
@@ -59,30 +54,6 @@ public class Files {
         this.title = title;
     }
 
-    public String getFileName() {
-        return fileName;
-    }
-
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
-    }
-
-    public String getFileType() {
-        return fileType;
-    }
-
-    public void setFileType(String fileType) {
-        this.fileType = fileType;
-    }
-
-    public System getSystem() {
-        return system;
-    }
-
-    public void setSystem(System system) {
-        this.system = system;
-    }
-
     public String getContent() {
         return content;
     }
@@ -91,30 +62,8 @@ public class Files {
         this.content = content;
     }
 
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
-    }
-
-    public String getDate() { return date; }
-
-    public void setDate(String date) { this.date = date; }
-
-
-
     public int getState() {
         return state;
-    }
-
-    public Person getEditor() {
-        return editor;
-    }
-
-    public void setEditor(Person editor) {
-        this.editor = editor;
     }
 
     public void setState(int state) {
@@ -125,14 +74,10 @@ public class Files {
     public String toString() {
         return "Files{" +
                 "id=" + id +
+                ", name='" + name + '\'' +
+                ", type='" + type + '\'' +
                 ", title='" + title + '\'' +
-                ", fileName='" + fileName + '\'' +
-                ", fileType='" + fileType + '\'' +
-                ", system=" + system.getId() +
                 ", content='" + content + '\'' +
-                ", time='" + time + '\'' +
-                ", date='" + date + '\'' +
-                ", editor='" + editor.getId() + '\'' +
                 ", state=" + state +
                 '}';
     }

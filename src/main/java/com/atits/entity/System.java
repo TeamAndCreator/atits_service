@@ -1,62 +1,36 @@
 package com.atits.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
-import java.io.Serializable;
-import java.util.List;
 
+/**
+ * 体系
+ * @author zys
+ */
 @Entity(name = "t_system")
-public class System implements Serializable {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1L;
+public class System {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private int id;
 
-    @Column(name = "sys_name")
-    private String sysName;// 体系名称
+    private String systemName;
 
-    @Column(name = "chief")
-    private String chief;// 首席
-
-    @Column(name = "sub_chief")
-    private String subChief;// 首席
-
-    @Column(name = "content", length = 100000)
     private String content;
 
-    @OneToMany(mappedBy = "system", fetch = FetchType.LAZY)
-    @JsonIgnore
-    private List<Person> persons;
+    private String overView;
 
-    @OneToMany(mappedBy = "system", fetch = FetchType.LAZY)
-    @JsonIgnore
-    private List<Laboratory> laboratories;
-
-    @OneToMany(mappedBy = "system", fetch = FetchType.LAZY)
-    @JsonIgnore
-    private List<Station> stations;
+    public void setId(int id){this.id=id;}
 
     public int getId() {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public String getSystemName() {
+        return systemName;
     }
 
-    public String getSysName() {
-        return sysName;
-    }
-
-    public void setSysName(String sysName) {
-        this.sysName = sysName;
+    public void setSystemName(String systemName) {
+        this.systemName = systemName;
     }
 
     public String getContent() {
@@ -67,56 +41,22 @@ public class System implements Serializable {
         this.content = content;
     }
 
-    public String getChief() {
-        return chief;
+    public String getOverView() {
+        return overView;
     }
 
-    public void setChief(String chief) {
-        this.chief = chief;
+    public void setOverView(String overView) {
+        this.overView = overView;
     }
-
-    public String getSubChief() {
-        return subChief;
-    }
-
-    public void setSubChief(String subChief) {
-        this.subChief = subChief;
-    }
-
-    public List<Person> getPersons() {
-        return persons;
-    }
-
-    public void setPersons(List<Person> persons) {
-        this.persons = persons;
-    }
-
-    public List<Station> getStations() {
-        return stations;
-    }
-
-    public void setStations(List<Station> stations) {
-        this.stations = stations;
-    }
-
-    public List<Laboratory> getLaboratories() {
-        return laboratories;
-    }
-
-    public void setLaboratories(List<Laboratory> laboratories) {
-        this.laboratories = laboratories;
-    }
-
 
 
     @Override
     public String toString() {
         return "System{" +
                 "id=" + id +
-                ", sysName='" + sysName + '\'' +
-                ", chief=" + chief +'\'' +
-                ", subChief=" + subChief +'\'' +
+                ", systemName='" + systemName + '\'' +
                 ", content='" + content + '\'' +
+                ", overView='" + overView + '\'' +
                 '}';
     }
 }

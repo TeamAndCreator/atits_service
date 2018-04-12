@@ -1,123 +1,95 @@
 package com.atits.entity;
 
+
 import javax.persistence.*;
 
-@Entity(name = "t_sta")
+/**
+ * 实验站
+ * @author zys
+ */
+@Entity(name = "t_station")
 public class Station {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
-	private int id;
 
-	@Column(name = "sta_name")
-	private String staName;// 实验站名称
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
-	@ManyToOne
-	@JoinColumn(name = "sys_id", referencedColumnName = "id",nullable = true)
-	private System system;// 系统名称
+    private String staName;
 
-	@Column(name = "content", length = 100000)
-	private String content;// 试验站基本信息
+    private String content;
 
-	@Column(name = "manager")
-	private String manager;// 实验站站长姓名
+    private String company;
 
-	@Column(name = "company")
-	private String company;// 建设依托单位
+    @ManyToOne(fetch= FetchType.LAZY)
+    @JoinColumn( nullable = false)
+    private System system;
 
-	@Column(name = "time")
-	private String time;// 上传时间
+    private String time;
 
-	@Column(name = "state")
-	private int state;// 状态
+    private int state;
 
-	@OneToOne(mappedBy = "station",fetch = FetchType.EAGER,cascade={CascadeType.PERSIST,CascadeType.MERGE})
-	private Person person;
+    public int getId() {
+        return id;
+    }
 
-	public Person getPerson() {
-		return person;
-	}
+    public String getStaName() {
+        return staName;
+    }
 
-	public void setPerson(Person person) {
-		this.person = person;
-	}
+    public void setStaName(String staName) {
+        this.staName = staName;
+    }
 
-	public int getId() {
-		return id;
-	}
+    public String getContent() {
+        return content;
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public void setContent(String content) {
+        this.content = content;
+    }
 
-	public String getStaName() {
-		return staName;
-	}
+    public String getCompany() {
+        return company;
+    }
 
-	public void setStaName(String staName) {
-		this.staName = staName;
-	}
+    public void setCompany(String company) {
+        this.company = company;
+    }
 
-	public System getSystem() {
-		return system;
-	}
+    public System getSystem() {
+        return system;
+    }
 
-	public void setSystem(System system) {
-		this.system = system;
-	}
+    public void setSystem(System system) {
+        this.system = system;
+    }
 
-	public String getContent() {
-		return content;
-	}
+    public String getTime() {
+        return time;
+    }
 
-	public void setContent(String content) {
-		this.content = content;
-	}
+    public void setTime(String time) {
+        this.time = time;
+    }
 
-	public String getManager() {
-		return manager;
-	}
+    public int getState() {
+        return state;
+    }
 
-	public void setManager(String manager) {
-		this.manager = manager;
-	}
+    public void setState(int state) {
+        this.state = state;
+    }
 
-	public String getCompany() {
-		return company;
-	}
-
-	public void setCompany(String company) {
-		this.company = company;
-	}
-
-	public String getTime() {
-		return time;
-	}
-
-	public void setTime(String time) {
-		this.time = time;
-	}
-
-	public int getState() {
-		return state;
-	}
-
-	public void setState(int state) {
-		this.state = state;
-	}
-
-	@Override
-	public String toString() {
-		return "Station{" +
-				"id=" + id +
-				", staName='" + staName + '\'' +
-				", system=" + system.getId() +
-				", content='" + content + '\'' +
-				", manager='" + manager + '\'' +
-				", company='" + company + '\'' +
-				", time='" + time + '\'' +
-				", state=" + state +
-				'}';
-	}
-
+    @Override
+    public String toString() {
+        return "Station{" +
+                "id=" + id +
+                ", staName='" + staName + '\'' +
+                ", content='" + content + '\'' +
+                ", company='" + company + '\'' +
+                ", system=" + system +
+                ", time='" + time + '\'' +
+                ", state=" + state +
+                '}';
+    }
 }

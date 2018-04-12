@@ -1,155 +1,104 @@
 package com.atits.entity;
 
 import javax.persistence.*;
+import java.util.Set;
 
 /**
- * 2017年---体系动态表: 字段：ID、Title、Content、Time、Person、File_dir、State
- * 
- * @author YXX
- * @Date 2017年6月20日
- * @类型 Dynamic
+ *体系动态
+ * @author zys
  */
 @Entity(name = "t_dynamic")
 public class Dynamic {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
-	private int id;
 
-	@Column(name = "title")
-	private String title;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
-	@ManyToOne(targetEntity = System.class)
-	@JoinColumn(name = "sys_id", referencedColumnName = "id")
-	private System system;// 系统名称
+    private String title;
 
-	@ManyToOne(targetEntity = Laboratory.class)
-	@JoinColumn(name = "lab_id",referencedColumnName = "id",nullable = true)
-	private Laboratory laboratory;//该人所在研究室
+    private String content;
 
-	@ManyToOne(targetEntity = Station.class)
-	@JoinColumn(name = "sta_id",referencedColumnName = "id")
-	private Station station;
+    private String time;
 
-	@Column(name = "content", length = 100000)
-	private String content;
+    @OneToMany
+    private Set<Files> files;
 
-	@Column(name = "time")
-	private String time;
+    @JoinColumn(nullable = false)
+    @ManyToOne
+    private User user;
 
-	@Column(name = "date")
-	private String date;
+    @JoinColumn(nullable = false)
+    @ManyToOne
+    private System system;
 
-	@ManyToOne(targetEntity = Person.class)
-	@JoinColumn(name = "editor",referencedColumnName = "id",nullable = true)
-	private Person editor;
+    private int state;
 
-	@Column(name = "file_id")
-	private String fileId;
+    public int getId() {
+        return id;
+    }
 
-	@Column(name = "state")
-	private int state;
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	public Laboratory getLaboratory() {
-		return laboratory;
-	}
+    public String getTitle() {
+        return title;
+    }
 
-	public void setLaboratory(Laboratory laboratory) {
-		this.laboratory = laboratory;
-	}
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-	public Station getStation() {
-		return station;
-	}
+    public String getContent() {
+        return content;
+    }
 
-	public void setStation(Station station) {
-		this.station = station;
-	}
+    public void setContent(String content) {
+        this.content = content;
+    }
 
-	public int getId() {
-		return id;
-	}
+    public String getTime() {
+        return time;
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public void setTime(String time) {
+        this.time = time;
+    }
 
-	public String getTitle() {
-		return title;
-	}
+    public User getUser() {
+        return user;
+    }
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
+    public void setUser(User user) {
+        this.user = user;
+    }
 
-	public System getSystem() {
-		return system;
-	}
+    public System getSystem() {
+        return system;
+    }
 
-	public void setSystem(System system) {
-		this.system = system;
-	}
+    public void setSystem(System system) {
+        this.system = system;
+    }
 
-	public String getContent() {
-		return content;
-	}
+    public int getState() {
+        return state;
+    }
 
-	public void setContent(String content) {
-		this.content = content;
-	}
+    public void setState(int state) {
+        this.state = state;
+    }
 
-	public String getTime() {
-		return time;
-	}
-
-	public void setTime(String time) {
-		this.time = time;
-	}
-
-	public String getDate() { return date; }
-
-	public void setDate(String date) { this.date = date; }
-
-
-
-	public String getFileId() {
-		return fileId;
-	}
-
-	public Person getEditor() {
-		return editor;
-	}
-
-	public void setEditor(Person editor) {
-		this.editor = editor;
-	}
-
-	public void setFileId(String fileId) {
-		this.fileId = fileId;
-	}
-
-	public int getState() {
-		return state;
-	}
-
-	public void setState(int state) {
-		this.state = state;
-	}
-
-	@Override
-	public String toString() {
-		return "Dynamic{" +
-				"id=" + id +
-				", title='" + title + '\'' +
-				", system=" + system.getId() +
-				", laboratory=" + laboratory.getId() +
-				", station=" + station.getId() +
-				", content='" + content + '\'' +
-				", time='" + time + '\'' +
-				", date='" + date + '\'' +
-				", editor='" + editor.getId() + '\'' +
-				", fileId='" + fileId + '\'' +
-				", state=" + state +
-				'}';
-	}
+    @Override
+    public String toString() {
+        return "Dynamic{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                ", time='" + time + '\'' +
+                ", editor=" + user +
+                ", system=" + system +
+                ", state=" + state +
+                '}';
+    }
 }

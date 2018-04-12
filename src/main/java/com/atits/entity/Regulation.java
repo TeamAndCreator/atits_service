@@ -1,131 +1,105 @@
 package com.atits.entity;
 
 import javax.persistence.*;
+import java.util.Set;
 
-//规章制度
+/**
+ * 规章制度
+ * @author zys
+ */
 @Entity(name = "t_regulation")
 public class Regulation {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
-	private int id;
 
-	@Column(name = "title")
-	private String title;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
-	@Basic
-	@Column(name = "content", length = 100000)
-	private String content;
+    private String title;
 
-	@Column(name = "time")//年月日时分秒
-	private String time;
+    private String content;
 
-	@Column(name = "date")//年月日
-	private String date;
+    private String time;
 
-	@ManyToOne
-	@JoinColumn(name = "editor", referencedColumnName = "id",nullable = true)
-	private Person editor;
+    @OneToMany
+    private Set<Files> files;
 
-	@Column(name = "file_id")
-	private String fileId;
+    @JoinColumn(nullable = false)
+    @ManyToOne
+    private User user;
 
+    @JoinColumn(nullable = false)
+    @ManyToOne
+    private System system;
 
-	@ManyToOne(targetEntity = System.class)
-	@JoinColumn(name = "sys_id", referencedColumnName = "id")
-	private System system;// 体系名称
+    private int state;
 
-	@Column(name = "state")
-	private int state;
+    public int getId() {
+        return id;
+    }
 
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	public int getId() {
-		return id;
-	}
+    public String getTitle() {
+        return title;
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
+    public String getContent() {
+        return content;
+    }
 
-	public String getTitle() {
-		return title;
-	}
+    public void setContent(String content) {
+        this.content = content;
+    }
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
+    public String getTime() {
+        return time;
+    }
 
-	public String getContent() {
-		return content;
-	}
+    public void setTime(String time) {
+        this.time = time;
+    }
 
-	public void setContent(String content) {
-		this.content = content;
-	}
+    public User getUser() {
+        return user;
+    }
 
-	public String getTime() {
-		return time;
-	}
+    public void setUser(User user) {
+        this.user = user;
+    }
 
-	public void setTime(String time) {
-		this.time = time;
-	}
+    public System getSystem() {
+        return system;
+    }
 
-	public String getDate() {
-		return date;
-	}
+    public void setSystem(System system) {
+        this.system = system;
+    }
 
-	public void setDate(String date) {
-		this.date = date;
-	}
+    public int getState() {
+        return state;
+    }
 
+    public void setState(int state) {
+        this.state = state;
+    }
 
+    @Override
+    public String toString() {
+        return "Dynamic{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                ", time='" + time + '\'' +
+                ", editor=" + user +
+                ", system=" + system +
+                ", state=" + state +
+                '}';
+    }
 
-	public String getFileId() {
-		return fileId;
-	}
-
-	public Person getEditor() {
-		return editor;
-	}
-
-	public void setEditor(Person editor) {
-		this.editor = editor;
-	}
-
-	public void setFileId(String fileId) {
-		this.fileId = fileId;
-	}
-
-	public System getSystem() {
-		return system;
-	}
-
-	public void setSystem(System system) {
-		this.system = system;
-	}
-
-	public int getState() {
-		return state;
-	}
-
-	public void setState(int state) {
-		this.state = state;
-	}
-
-	@Override
-	public String toString() {
-		return "Regulation{" +
-				"id=" + id +
-				", title='" + title + '\'' +
-				", content='" + content + '\'' +
-				", time='" + time + '\'' +
-				", date='" + date + '\'' +
-				", editor='" + editor.getId() + '\'' +
-				", fileId='" + fileId + '\'' +
-				", system=" + system.getId() +
-				", state=" + state +
-				'}';
-	}
 }

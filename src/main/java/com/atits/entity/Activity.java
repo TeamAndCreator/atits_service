@@ -1,26 +1,19 @@
 package com.atits.entity;
 
+
 import javax.persistence.*;
 import java.util.Set;
 
 /**
- * 父任务
+ *重大活动
  * @author zys
  */
-@Entity(name = "t_task")
-public class Task {
+@Entity(name = "t_activity")
+public class Activity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
-    @ManyToOne
-    @JoinColumn(nullable = false)
-    private User user;
-
-    @ManyToOne
-    @JoinColumn(nullable = false)
-    private System system;
 
     private String title;
 
@@ -28,14 +21,18 @@ public class Task {
 
     private String time;
 
-    private String stratDate;
-
-    private String endDate;
-
-    private int state;
-
     @OneToMany
     private Set<Files> files;
+
+    @JoinColumn(nullable = false)
+    @ManyToOne
+    private User user;
+
+    @JoinColumn(nullable = false)
+    @ManyToOne
+    private System system;
+
+    private int state;
 
     public int getId() {
         return id;
@@ -43,22 +40,6 @@ public class Task {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public System getSystem() {
-        return system;
-    }
-
-    public void setSystem(System system) {
-        this.system = system;
     }
 
     public String getTitle() {
@@ -85,20 +66,20 @@ public class Task {
         this.time = time;
     }
 
-    public String getStratDate() {
-        return stratDate;
+    public User getUser() {
+        return user;
     }
 
-    public void setStratDate(String stratDate) {
-        this.stratDate = stratDate;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public String getEndDate() {
-        return endDate;
+    public System getSystem() {
+        return system;
     }
 
-    public void setEndDate(String endDate) {
-        this.endDate = endDate;
+    public void setSystem(System system) {
+        this.system = system;
     }
 
     public int getState() {
@@ -109,27 +90,16 @@ public class Task {
         this.state = state;
     }
 
-    public Set<Files> getFiles() {
-        return files;
-    }
-
-    public void setFiles(Set<Files> files) {
-        this.files = files;
-    }
-
     @Override
     public String toString() {
-        return "Task{" +
+        return "Dynamic{" +
                 "id=" + id +
-                ", user=" + user +
-                ", system=" + system +
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
                 ", time='" + time + '\'' +
-                ", stratDate='" + stratDate + '\'' +
-                ", endDate='" + endDate + '\'' +
+                ", editor=" + user +
+                ", system=" + system +
                 ", state=" + state +
-                ", files=" + files +
                 '}';
     }
 }
