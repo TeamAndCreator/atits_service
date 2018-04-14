@@ -32,7 +32,7 @@ public class LaboratoryDao {
      * @return
      */
     public List<Laboratory> findAll(){
-        String hql="from t_lab";
+        String hql="from t_laboratory ";
         return getSession().createQuery(hql).list();
     }
 

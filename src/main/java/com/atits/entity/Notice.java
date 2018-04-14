@@ -15,7 +15,7 @@ public class Notice {
     private int id;
 
     private String title;
-
+    @Column(length = 100000)
     private String content;
 
     private String time;

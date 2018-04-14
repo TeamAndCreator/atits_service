@@ -16,6 +16,8 @@ public class Regulation {
 
     private String title;
 
+
+    @Column(length = 100000)
     private String content;
 
     private String time;

@@ -1,12 +1,16 @@
 package com.atits.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+
 /**
- *研究室
+ * 研究室
+ *
  * @author zys
  */
-@Entity(name = "t_lab")
+@Entity(name = "t_laboratory")
 public class Laboratory {
 
     @Id
@@ -15,11 +19,12 @@ public class Laboratory {
 
     private String labName;
 
+    @Column(length = 100000)
     private String content;
 
     private String company;
 
-    @ManyToOne(fetch= FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(nullable = false)
     private System system;
 
@@ -29,6 +34,10 @@ public class Laboratory {
 
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getLabName() {

@@ -15,6 +15,7 @@ public class System {
 
     private String systemName;
 
+    @Column(length = 100000)
     private String content;
 
     private String overView;

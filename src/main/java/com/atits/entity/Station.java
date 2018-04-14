@@ -16,11 +16,13 @@ public class Station {
 
     private String staName;
 
+
+    @Column(length = 100000)
     private String content;
 
     private String company;
 
-    @ManyToOne(fetch= FetchType.LAZY)
+    @ManyToOne
     @JoinColumn( nullable = false)
     private System system;
 
@@ -30,6 +32,10 @@ public class Station {
 
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getStaName() {

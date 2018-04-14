@@ -17,6 +17,7 @@ public class Activity {
 
     private String title;
 
+    @Column(length = 100000)
     private String content;
 
     private String time;
@@ -33,6 +34,8 @@ public class Activity {
     private System system;
 
     private int state;
+
+
 
     public int getId() {
         return id;

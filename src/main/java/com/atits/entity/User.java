@@ -12,11 +12,61 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @JoinColumn(nullable = false,unique = true)
     private String userName;
     private String password;
-
+    @ManyToOne
+    private Laboratory laboratory;
+    @ManyToOne
+    private Station station;
+    @ManyToOne
+    @JoinColumn(nullable = false)
+    private System system;
+    private String time;
+    private int state;
     @ManyToMany
     private Set<Role> roles;
+
+
+    public Laboratory getLaboratory() {
+        return laboratory;
+    }
+
+    public void setLaboratory(Laboratory laboratory) {
+        this.laboratory = laboratory;
+    }
+
+    public Station getStation() {
+        return station;
+    }
+
+    public void setStation(Station station) {
+        this.station = station;
+    }
+
+    public System getSystem() {
+        return system;
+    }
+
+    public void setSystem(System system) {
+        this.system = system;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
+    }
 
     public int getId() {
         return id;
@@ -56,6 +106,11 @@ public class User {
                 "id=" + id +
                 ", userName='" + userName + '\'' +
                 ", password='" + password + '\'' +
+                ", laboratory=" + laboratory +
+                ", station=" + station +
+                ", system=" + system+
+                ", time='" + time + '\'' +
+                ", state=" + state +
                 ", roles=" + roles +
                 '}';
     }

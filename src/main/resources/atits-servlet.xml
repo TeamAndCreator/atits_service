@@ -19,10 +19,10 @@
 
     <context:component-scan base-package="com.atits.controller"/>
 
-    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="prefix" value="/"/>
-        <property name="suffix" value=".jsp"/>
-    </bean>
+    <!--<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">-->
+        <!--<property name="prefix" value="/"/>-->
+        <!--<property name="suffix" value=".jsp"/>-->
+    <!--</bean>-->
 
     <mvc:annotation-driven/>
 

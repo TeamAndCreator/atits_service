@@ -19,26 +19,29 @@ public class UserDao {
     }
 
     /**
-     *查找所有user
+     * 查找所有user
      */
     public List<User> findAll() {
-        System.out.println(sessionFactory);
         String hql = "from t_user";
         List list = getSession().createQuery(hql).list();
         return list;
     }
 
     /**
-     *添加一个user
+     * 添加一个user
      */
-    public void save(User user){
+    public void save(User user) {
         getSession().save(user);
     }
 
 
+    public User findUser(String username) {
+        String hql = "from t_user where userName=:username";
+        return (User) getSession().createQuery(hql).setParameter("username", username).uniqueResult();
+    }
 
-
-
-
-
+    public User findUser(int id) {
+        String hql = "from t_user where id=:id";
+        return (User) getSession().createQuery(hql).setParameter("id", id).uniqueResult();
+    }
 }

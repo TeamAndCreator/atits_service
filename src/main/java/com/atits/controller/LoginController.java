@@ -1,6 +1,8 @@
 package com.atits.controller;
 
+import com.atits.entity.Station;
 import com.atits.entity.User;
+import com.atits.service.StationService;
 import com.atits.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -16,13 +18,19 @@ import javax.annotation.Resource;
 import java.util.List;
 
 @Controller
+@Api(value = "product", description = "登录接口")
 public class LoginController {
     @Resource
     private UserService userService;
 
+    @Resource
+    private StationService stationService;
 
-    //    @ResponseBody
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
+
+    @ResponseBody
+    @ApiOperation(value="根据用户名和密码进行登录")
+    @ApiImplicitParam(name = "username", value = "表单输入的用户名", required = true, dataType = "字符串")
+    @RequestMapping(value = "login", method = RequestMethod.POST)
     public String login(@RequestParam("username") String username, @RequestParam("password") String password) {
         Subject currentUser = SecurityUtils.getSubject();
         if (!currentUser.isAuthenticated()) {
@@ -48,6 +56,15 @@ public class LoginController {
     public List<User> findAll() {
         List<User> users = userService.findAll();
         return users;
+    }
+
+
+    @ApiOperation(value="获取所有试验站详细信息")
+    @RequestMapping(value = "station", method = RequestMethod.GET)
+    @ResponseBody
+    public List<Station> findAll2() {
+        List<Station> stations = stationService.findAll();
+        return stations;
     }
 
 }

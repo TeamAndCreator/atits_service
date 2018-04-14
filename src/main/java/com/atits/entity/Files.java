@@ -22,9 +22,13 @@ public class Files {
 
     private String title;
 
-    private String content;
+    private String path;
 
     private int state;
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public int getId() {
         return id;
@@ -54,12 +58,12 @@ public class Files {
         this.title = title;
     }
 
-    public String getContent() {
-        return content;
+    public String getPath() {
+        return path;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setPath(String path) {
+        this.path = path;
     }
 
     public int getState() {
@@ -77,7 +81,7 @@ public class Files {
                 ", name='" + name + '\'' +
                 ", type='" + type + '\'' +
                 ", title='" + title + '\'' +
-                ", content='" + content + '\'' +
+                ", path='" + path + '\'' +
                 ", state=" + state +
                 '}';
     }

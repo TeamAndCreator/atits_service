@@ -63,8 +63,11 @@ public class Profile {
 
     private String professionalExpertise; // 专业特长 professional expertise
 
+
+    @Column(length = 100000)
     private String participate;// 主持或参与重大课题或重大项目情况（近十年）
 
+    @Column(length = 100000)
     private String achievement; // 主要业绩
 
     public int getId() {
