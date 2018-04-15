@@ -1,7 +1,10 @@
 package com.atits.controller;
 
+import com.atits.entity.Msg;
+import com.atits.entity.Notice;
 import com.atits.entity.Station;
 import com.atits.entity.User;
+import com.atits.service.NoticeService;
 import com.atits.service.StationService;
 import com.atits.service.UserService;
 import io.swagger.annotations.Api;
@@ -18,7 +21,8 @@ import javax.annotation.Resource;
 import java.util.List;
 
 @Controller
-@Api(value = "product", description = "登录接口")
+@RequestMapping(value = "login")
+@Api(description = "登录接口")
 public class LoginController {
     @Resource
     private UserService userService;
@@ -26,15 +30,18 @@ public class LoginController {
     @Resource
     private StationService stationService;
 
+    @Resource
+    private NoticeService noticeService;
+
 
     @ResponseBody
     @ApiOperation(value="根据用户名和密码进行登录")
     @ApiImplicitParam(name = "username", value = "表单输入的用户名", required = true, dataType = "字符串")
     @RequestMapping(value = "login", method = RequestMethod.POST)
-    public String login(@RequestParam("username") String username, @RequestParam("password") String password) {
+    public String login(@RequestParam("user") String user) {
         Subject currentUser = SecurityUtils.getSubject();
         if (!currentUser.isAuthenticated()) {
-            UsernamePasswordToken token = new UsernamePasswordToken(username, password);
+            UsernamePasswordToken token = new UsernamePasswordToken();
             token.setRememberMe(true);
             try {
                 currentUser.login(token);
@@ -53,19 +60,18 @@ public class LoginController {
     @ApiImplicitParam(name = "id", value = "用户ID", required = true, dataType = "Long")
     @RequestMapping(value = "user", method = RequestMethod.GET)
     @ResponseBody
-    public List<User> findAll() {
-        List<User> users = userService.findAll();
-        return users;
+    public Msg findAll() {
+        try {
+            List<User> users = userService.findAll();
+            return Msg.success().add("users",users);
+        }catch(Exception e){
+            return Msg.fail(e);
+        }
     }
 
 
-    @ApiOperation(value="获取所有试验站详细信息")
-    @RequestMapping(value = "station", method = RequestMethod.GET)
-    @ResponseBody
-    public List<Station> findAll2() {
-        List<Station> stations = stationService.findAll();
-        return stations;
-    }
+
+
 
 }
 

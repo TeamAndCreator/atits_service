@@ -8,13 +8,16 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ * @author zys
+ */
 @Repository
 public class UserDao {
 
     @Autowired
     private SessionFactory sessionFactory;
 
-    public Session getSession() {//获取session
+    private Session getSession() {//获取session
         return sessionFactory.getCurrentSession();
     }
 
