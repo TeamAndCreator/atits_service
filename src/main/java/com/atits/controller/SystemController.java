@@ -25,10 +25,15 @@ public class SystemController {
     @ApiImplicitParam(name = "system",value = "从表单输入的一个体系",dataType = "SystemByJson")
     @RequestMapping(value = "save",method = RequestMethod.POST)
     public Msg save(@RequestParam("system") String json){
-        JSONObject  jsonObject = JSONObject.fromObject(json);
-        System system=(System)JSONObject.toBean(jsonObject,System.class);
-        systemService.save(system);
-        return Msg.success();
+            JSONObject  jsonObject = JSONObject.fromObject(json);
+            System system=(System)JSONObject.toBean(jsonObject,System.class);
+        try{
+            systemService.save(system);
+            return Msg.success();
+        }catch (Exception e){
+            return Msg.fail(e);
+        }
+
     }
 
 
