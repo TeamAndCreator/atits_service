@@ -5,7 +5,6 @@ import com.atits.entity.Station;
 import com.atits.service.StationService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -20,7 +19,7 @@ public class StationController {
     private StationService stationService;
 
     @ApiOperation(value="获取所有试验站详细信息")
-    @RequestMapping(value = "station", method = RequestMethod.GET)
+    @RequestMapping(value = "findAll", method = RequestMethod.GET)
     @ResponseBody
     public Msg findAll() {
         try {
