@@ -27,13 +27,6 @@ public class LoginController {
     @Resource
     private UserService userService;
 
-    @Resource
-    private StationService stationService;
-
-    @Resource
-    private NoticeService noticeService;
-
-
     @ResponseBody
     @ApiOperation(value="根据用户名和密码进行登录")
     @ApiImplicitParam(name = "username", value = "表单输入的用户名", required = true, dataType = "字符串")

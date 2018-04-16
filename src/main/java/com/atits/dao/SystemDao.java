@@ -1,5 +1,6 @@
 package com.atits.dao;
 
+import com.atits.entity.System;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,10 @@ public class SystemDao {
     public List<System> findAll(){
         String hql="from t_system ";
         return getSession().createQuery(hql).list();
+    }
+
+    public void save(System system){
+        getSession().save(system);
     }
 
 }

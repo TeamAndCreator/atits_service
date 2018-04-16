@@ -1,8 +1,7 @@
 package com.atits.service;
 
-import com.atits.dao.StationDao;
 import com.atits.dao.SystemDao;
-import com.atits.entity.Station;
+import com.atits.entity.System;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,11 +16,13 @@ public class SystemService {
 
 
     /**
-     *查找所有laboratory
+     *查找所有system
      */
     public List<System> findAll(){
         return systemDao.findAll();
     }
 
-
+    public void save(System system){
+        systemDao.save(system);
+    }
 }

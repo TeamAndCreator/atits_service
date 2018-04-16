@@ -3,6 +3,7 @@ package com.atits.controller;
 import com.atits.entity.Msg;
 import com.atits.entity.Station;
 import com.atits.service.StationService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +14,7 @@ import javax.annotation.Resource;
 import java.util.List;
 
 @Controller
+@Api(description = "实验站")
 @RequestMapping(value = "station")
 public class StationController {
     @Resource
