@@ -2,11 +2,10 @@ package com.atits.controller;
 
 import com.atits.entity.Station;
 import com.atits.entity.User;
+import com.atits.entity.Msg;
 import com.atits.service.StationService;
 import com.atits.service.UserService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.*;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -27,11 +26,22 @@ public class LoginController {
     private StationService stationService;
 
 
-    @ResponseBody
-    @ApiOperation(value="根据用户名和密码进行登录")
-    @ApiImplicitParam(name = "username", value = "表单输入的用户名", required = true, dataType = "字符串")
+//    @ApiOperation(value="根据用户名和密码进行登录")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "username", value = "用户名", required = true),
+            @ApiImplicitParam(name = "password", value = "用户密码", required = true)
+    }
+    )
+    @ApiResponses({
+            @ApiResponse(code= 201 ,message = "已创建"),
+            @ApiResponse(code = 400, message = "请求参数填写错误 "),
+            @ApiResponse(code= 401 ,message = "访问被拒绝"),
+            @ApiResponse(code= 403 ,message = "禁止访问"),
+            @ApiResponse(code= 404 ,message = "请求路径没有或页面跳转路径错误")
+    })
     @RequestMapping(value = "login", method = RequestMethod.POST)
-    public String login(@RequestParam("username") String username, @RequestParam("password") String password) {
+    @ResponseBody
+    public Msg login(@RequestParam("username") String username, @RequestParam("password") String password) {
         Subject currentUser = SecurityUtils.getSubject();
         if (!currentUser.isAuthenticated()) {
             UsernamePasswordToken token = new UsernamePasswordToken(username, password);
@@ -40,12 +50,10 @@ public class LoginController {
                 currentUser.login(token);
             } catch (AuthenticationException ae) {
                 System.out.println("登录出错啦！:" + ae.getMessage());
-                return "unauthorized";
+                return Msg.fail();
             }
         }
-        return "home";
-
-
+        return Msg.success();
     }
 
 
