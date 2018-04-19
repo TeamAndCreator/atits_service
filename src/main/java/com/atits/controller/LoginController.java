@@ -2,10 +2,7 @@ package com.atits.controller;
 
 import com.atits.entity.Msg;
 import com.atits.entity.User;
-import com.atits.service.NoticeService;
-import com.atits.service.StationService;
 import com.atits.service.UserService;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -18,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping(value = "login")
@@ -29,27 +25,20 @@ public class LoginController {
 
     @ResponseBody
     @ApiOperation(value="根据用户名和密码进行登录")
-    @ApiImplicitParam(name = "username", value = "表单输入的用户名", required = true, dataType = "字符串")
     @RequestMapping(value = "login", method = RequestMethod.POST)
-    public String login(@RequestParam("user") String user) throws Exception{
+    public Msg login(User user){
         Subject currentUser = SecurityUtils.getSubject();
-        Map<String,String> map;
-        ObjectMapper objectMapper = new ObjectMapper();
-        map=objectMapper.readValue(user, Map.class);
-        String userName=map.get("username");
-        String password=map.get("password");
         if (!currentUser.isAuthenticated()) {
-            UsernamePasswordToken token = new UsernamePasswordToken(userName,password);
+            UsernamePasswordToken token = new UsernamePasswordToken(user.getUserName(),user.getPassword());
             token.setRememberMe(true);
             try {
                 currentUser.login(token);
             } catch (AuthenticationException ae) {
                 System.out.println("登录出错啦！:" + ae.getMessage());
-                return "unauthorized";
+                return Msg.fail(ae);
             }
         }
-        return "home";
-
+        return Msg.success();
 
     }
 
@@ -66,10 +55,6 @@ public class LoginController {
             return Msg.fail(e);
         }
     }
-
-
-
-
 
 }
 
