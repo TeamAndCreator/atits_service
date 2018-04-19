@@ -37,7 +37,7 @@ public class SubTask {
 
     private String endDate;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private Set<Files> files;
 
     public int getId() {

@@ -27,7 +27,7 @@ public class taskProgress {
 
     private String date;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private Set<Files> files;
 
     private int state;

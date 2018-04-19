@@ -35,7 +35,7 @@ public class Task {
 
     private int state;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private Set<Files> files;
 
     public int getId() {

@@ -21,7 +21,7 @@ public class Harvest {
 
     private String time;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private Set<Files> files;
 
     @JoinColumn(nullable = false)

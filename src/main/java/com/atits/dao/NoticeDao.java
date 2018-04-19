@@ -15,33 +15,61 @@ import java.util.List;
 public class NoticeDao {
 
     @Autowired
-    private SessionFactory sessionFactory;
+    SessionFactory sessionFactory;
 
-    private Session getSession() {
+    private Session getSession(){
         return sessionFactory.getCurrentSession();
     }
 
     /**
-     * 增加一个通知公告
+     * 添加一个Notice
+     * @param notice
      */
     public void save(Notice notice){
         getSession().save(notice);
     }
 
     /**
-     * 删除一个通知公告
+     * 根据id删除一个Notice
+     * @param id
      */
-    public void delet(Notice notice){
+    public void deletById(Integer id){
+        Notice notice=findById(id);
         getSession().delete(notice);
     }
 
     /**
-     * 查找所有的通知公告
+     * 根据id数组批量删除Notice
+     * @param idList
+     */
+    public void deletByIds(List<Integer> idList){
+        getSession().createQuery("delete from t_notice where id in:idList").setParameterList("idList",idList).executeUpdate();
+    }
+
+    /**
+     * 更新一个Notice
+     * @param notice
+     */
+    public void update(Notice notice){
+        getSession().update(notice);
+    }
+
+    /**
+     *查找所有Notice
      */
     public List<Notice> findAll(){
-        String hql="from t_notice ";
-        List<Notice> list=getSession().createQuery("from t_notice ").list();
-        return list;
+        String hql="from t_notice";
+        return getSession().createQuery(hql).list();
+    }
+
+    /**
+     * 根据id查找一个Notice
+     * @param id
+     * @return
+     */
+    public Notice findById(Integer id){
+        String hql="from t_notice where id=:id";
+        return (Notice) getSession().createQuery(hql).setParameter("id",id).uniqueResult();
     }
 
 

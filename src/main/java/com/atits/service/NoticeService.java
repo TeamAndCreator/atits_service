@@ -19,24 +19,51 @@ public class NoticeService {
     private NoticeDao noticeDao;
 
     /**
-     * 增加一个通知公告
+     * 添加一个Notice
+     * @param notice
      */
     public void save(Notice notice){
         noticeDao.save(notice);
     }
 
+
     /**
-     * 删除一个通知公告
+     * 通过id删除一个Notice
+     * @param id
      */
-    public void delet(Notice notice){
-        noticeDao.delet(notice);
+    public void deletById(Integer id){
+        noticeDao.deletById(id);
     }
 
     /**
-     * 查找所有通知公告
+     * 根据id数组批量删除Notice
+     * @param idList
+     */
+    public void deletByIds(List<Integer> idList){
+        noticeDao.deletByIds(idList);
+    }
+
+    /**
+     * 更新一个Notice
+     * @param notice
+     */
+    public void update(Notice notice){
+        noticeDao.update(notice);
+    }
+
+
+    /**
+     * 根据id查找一个Notice
+     * @param id
+     */
+    public Notice findById(Integer id){
+        return noticeDao.findById(id);
+    }
+
+    /**
+     *查找所有Notice
      */
     public List<Notice> findAll(){
         return noticeDao.findAll();
     }
-
 }
