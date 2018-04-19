@@ -21,9 +21,9 @@ public class SystemController {
     @ResponseBody
     @ApiOperation(value = "添加一个体系",notes = "添加一个体系")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "systemName",value = "体系名称",dataType = "字符串",paramType = "query"),
-            @ApiImplicitParam(name = "content",value = "体系描述",dataType = "字符串",paramType = "query"),
-            @ApiImplicitParam(name = "overView",value = "overView",dataType = "字符串",paramType = "query")
+            @ApiImplicitParam(name = "systemName",value = "体系名称",dataType = "String",paramType = "query"),
+            @ApiImplicitParam(name = "content",value = "体系描述",dataType = "String",paramType = "query"),
+            @ApiImplicitParam(name = "overView",value = "overView",dataType = "String",paramType = "query")
     })
     @RequestMapping(value = "save",method = RequestMethod.POST)
     public Msg save(System system){
