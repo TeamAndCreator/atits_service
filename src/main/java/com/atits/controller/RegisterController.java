@@ -3,10 +3,7 @@ package com.atits.controller;
 import com.atits.entity.Msg;
 import com.atits.entity.User;
 import com.atits.service.UserService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,9 +30,9 @@ public class RegisterController {
             @ApiResponse(code= 404 ,message = "请求路径没有或页面跳转路径错误")
     })
 //        @ApiImplicitParams({
-//            @ApiImplicitParam(name = "userName", value = "用户名", required = true),
-//            @ApiImplicitParam(name = "password", value = "用户密码", required = true)
-////          @ApiImplicitParam(name = "system.id",value = "系统ID",required = true)
+//            @ApiImplicitParam(name = "username", value = "用户名", required = true,paramType = "query"),
+//            @ApiImplicitParam(name = "password", value = "用户密码", required = true,paramType = "query"),
+//            @ApiImplicitParam(name = "system.id",value = "系统ID",required = true,paramType = "query")
 //    }
 //    )
     @RequestMapping(value = "/register",method = RequestMethod.POST)
@@ -45,7 +42,7 @@ public class RegisterController {
         try{
             User findByUserName = this.userService.findByUserName(user.getUserName());
             if (findByUserName != null){
-                System.out.println("用户名已存在！请换个账号");
+                System.out.println("用户名已存在！请重建用户名");
                 return Msg.fail();
             }
             user.setState(2);//未激活
