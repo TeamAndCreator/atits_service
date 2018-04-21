@@ -42,7 +42,7 @@ public class HarvestDao {
      * @param idList
      */
     public void deleteByIds(List<Integer> idList){
-        getSession().createQuery("delete from t_harvest where id in:idList").setParameterList("idList",idList).executeUpdate();
+        getSession().createQuery("delete from Harvest where id in:idList").setParameterList("idList",idList).executeUpdate();
     }
 
     /**
@@ -57,7 +57,7 @@ public class HarvestDao {
      *查找所有Harvest
      */
     public List<Harvest> findAll(){
-        String hql="from t_harvest";
+        String hql="from Harvest ";
         return getSession().createQuery(hql).list();
     }
 
@@ -67,7 +67,7 @@ public class HarvestDao {
      * @return
      */
     public Harvest findById(Integer id){
-        String hql="from t_harvest where id=:id";
+        String hql="from Harvest where id=:id";
         return (Harvest) getSession().createQuery(hql).setParameter("id",id).uniqueResult();
     }
 }

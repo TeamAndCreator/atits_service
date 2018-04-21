@@ -7,7 +7,8 @@ import java.util.Set;
  * 重大成果
  * @author zys
  */
-@Entity(name = "t_harvest")
+@Entity
+@Table(name = "t_harvest")
 public class Harvest {
 
     @Id

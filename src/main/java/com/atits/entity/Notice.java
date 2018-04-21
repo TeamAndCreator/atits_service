@@ -8,7 +8,8 @@ import java.util.Set;
  * 通知公告
  * @author zys
  */
-@Entity(name = "t_notice")
+@Entity
+@Table(name = "t_notice")
 public class Notice {
 
     @Id

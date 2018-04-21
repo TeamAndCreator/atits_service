@@ -25,7 +25,7 @@ public class UserDao {
      * 查找所有user
      */
     public List<User> findAll() {
-        String hql = "from t_user";
+        String hql = "from User ";
         List list = getSession().createQuery(hql).list();
         return list;
     }
@@ -38,13 +38,13 @@ public class UserDao {
     }
 
 
-    public User findUser(String username) {
-        String hql = "from t_user where userName=:username";
-        return (User) getSession().createQuery(hql).setParameter("username", username).uniqueResult();
+    public User findUser(String userName) {
+        String hql = "from User where userName=:userName";
+        return (User) getSession().createQuery(hql).setParameter("userName", userName).uniqueResult();
     }
 
     public User findUser(int id) {
-        String hql = "from t_user where id=:id";
+        String hql = "from User where id=:id";
         return (User) getSession().createQuery(hql).setParameter("id", id).uniqueResult();
     }
 }

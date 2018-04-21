@@ -43,7 +43,7 @@ public class LaboratoryDao {
      * @param idList
      */
     public void deleteByIds(List<Integer> idList){
-        getSession().createQuery("delete from t_laboratory where id in:idList").setParameterList("idList",idList).executeUpdate();
+        getSession().createQuery("delete from Laboratory where id in:idList").setParameterList("idList",idList).executeUpdate();
     }
 
     /**
@@ -58,7 +58,7 @@ public class LaboratoryDao {
      *查找所有Laboratory
      */
     public List<Laboratory> findAll(){
-        String hql="from t_laboratory";
+        String hql="from Laboratory ";
         return getSession().createQuery(hql).list();
     }
 
@@ -68,7 +68,7 @@ public class LaboratoryDao {
      * @return
      */
     public Laboratory findById(Integer id){
-        String hql="from t_laboratory where id=:id";
+        String hql="from Laboratory where id=:id";
         return (Laboratory) getSession().createQuery(hql).setParameter("id",id).uniqueResult();
     }
 

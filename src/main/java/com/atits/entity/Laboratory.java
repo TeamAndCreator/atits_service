@@ -10,7 +10,8 @@ import javax.persistence.*;
  *
  * @author zys
  */
-@Entity(name = "t_laboratory")
+@Entity
+@Table(name = "t_laboratory")
 public class Laboratory {
 
     @Id

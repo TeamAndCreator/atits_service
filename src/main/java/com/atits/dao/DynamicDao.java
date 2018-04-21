@@ -42,7 +42,7 @@ public class DynamicDao {
      * @param idList
      */
     public void deleteByIds(List<Integer> idList){
-        getSession().createQuery("delete from t_dynamic where id in:idList").setParameterList("idList",idList).executeUpdate();
+        getSession().createQuery("delete from Dynamic where id in:idList").setParameterList("idList",idList).executeUpdate();
     }
 
     /**
@@ -57,7 +57,7 @@ public class DynamicDao {
      *查找所有Dynamic
      */
     public List<Dynamic> findAll(){
-        String hql="from t_dynamic";
+        String hql="from Dynamic ";
         return getSession().createQuery(hql).list();
     }
 
@@ -67,7 +67,7 @@ public class DynamicDao {
      * @return
      */
     public Dynamic findById(Integer id){
-        String hql="from t_dynamic where id=:id";
+        String hql="from Dynamic where id=:id";
         return (Dynamic) getSession().createQuery(hql).setParameter("id",id).uniqueResult();
     }
 }

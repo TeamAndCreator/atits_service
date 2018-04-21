@@ -7,7 +7,8 @@ import java.util.Set;
  * 子任务
  * @author zys
  */
-@Entity(name = "t_subtask")
+@Entity
+@Table(name = "t_subtask")
 public class SubTask {
 
     @Id

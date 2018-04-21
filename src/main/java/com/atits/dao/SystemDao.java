@@ -42,7 +42,7 @@ public class SystemDao {
      * @param idList
      */
     public void deleteByIds(List<Integer> idList){
-        getSession().createQuery("delete from t_system where id in:idList").setParameterList("idList",idList).executeUpdate();
+        getSession().createQuery("delete from System where id in:idList").setParameterList("idList",idList).executeUpdate();
     }
 
     /**
@@ -59,7 +59,7 @@ public class SystemDao {
      * @return
      */
     public List<System> findAll(){
-        String hql="from t_system ";
+        String hql="from System ";
         return getSession().createQuery(hql).list();
     }
 
@@ -69,7 +69,7 @@ public class SystemDao {
      * @return
      */
     public System findById(Integer id){
-        String hql="from t_system where id=:id";
+        String hql="from System where id=:id";
         return (System) getSession().createQuery(hql).setParameter("id",id).uniqueResult();
     }
 

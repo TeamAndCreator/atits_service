@@ -44,7 +44,7 @@ public class ActivityDao {
      * @param idList
      */
     public void deleteByIds(List<Integer> idList){
-        getSession().createQuery("delete from t_activity where id in:idList").setParameterList("idList",idList).executeUpdate();
+        getSession().createQuery("delete from Activity where id in:idList").setParameterList("idList",idList).executeUpdate();
     }
 
     /**
@@ -59,7 +59,7 @@ public class ActivityDao {
      *查找所有Activity
      */
     public List<Activity> findAll(){
-        String hql="from t_activity";
+        String hql="from Activity ";
         return getSession().createQuery(hql).list();
     }
 
@@ -69,7 +69,7 @@ public class ActivityDao {
      * @return
      */
     public Activity findById(Integer id){
-        String hql="from t_activity where id=:id";
+        String hql="from Activity where id=:id";
         return (Activity) getSession().createQuery(hql).setParameter("id",id).uniqueResult();
     }
 }

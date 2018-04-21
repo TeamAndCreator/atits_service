@@ -6,7 +6,8 @@ import javax.persistence.*;
  * 体系
  * @author zys
  */
-@Entity(name = "t_system")
+@Entity
+@Table(name = "t_system")
 public class System {
 
     @Id

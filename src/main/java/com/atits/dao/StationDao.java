@@ -42,7 +42,7 @@ public class StationDao {
      * @param idList
      */
     public void deleteByIds(List<Integer> idList){
-        getSession().createQuery("delete from t_station where id in:idList").setParameterList("idList",idList).executeUpdate();
+        getSession().createQuery("delete from Station where id in:idList").setParameterList("idList",idList).executeUpdate();
     }
 
     /**
@@ -57,7 +57,7 @@ public class StationDao {
      *查找所有station
      */
     public List<Station> findAll(){
-        String hql="from t_station";
+        String hql="from Station ";
         return getSession().createQuery(hql).list();
     }
 
@@ -67,7 +67,7 @@ public class StationDao {
      * @return
      */
     public Station findById(Integer id){
-        String hql="from t_station where id=:id";
+        String hql="from Station where id=:id";
         return (Station) getSession().createQuery(hql).setParameter("id",id).uniqueResult();
     }
 

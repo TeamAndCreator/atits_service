@@ -42,7 +42,7 @@ public class ReportDao {
      * @param idList
      */
     public void deleteByIds(List<Integer> idList){
-        getSession().createQuery("delete from t_report where id in:idList").setParameterList("idList",idList).executeUpdate();
+        getSession().createQuery("delete from Report where id in:idList").setParameterList("idList",idList).executeUpdate();
     }
 
     /**
@@ -56,8 +56,8 @@ public class ReportDao {
     /**
      *查找所有Report
      */
-    public List<Report> findAll(){
-        String hql="from t_report";
+    public List findAll(){
+        String hql="from Report ";
         return getSession().createQuery(hql).list();
     }
 
@@ -67,7 +67,7 @@ public class ReportDao {
      * @return
      */
     public Report findById(Integer id){
-        String hql="from t_report where id=:id";
+        String hql="from Report where id=:id";
         return (Report) getSession().createQuery(hql).setParameter("id",id).uniqueResult();
     }
 }

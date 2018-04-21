@@ -43,7 +43,7 @@ public class NoticeDao {
      * @param idList
      */
     public void deleteByIds(List<Integer> idList){
-        getSession().createQuery("delete from t_notice where id in:idList").setParameterList("idList",idList).executeUpdate();
+        getSession().createQuery("delete from Notice where id in:idList").setParameterList("idList",idList).executeUpdate();
     }
 
     /**
@@ -58,7 +58,7 @@ public class NoticeDao {
      *查找所有Notice
      */
     public List<Notice> findAll(){
-        String hql="from t_notice";
+        String hql="from Notice ";
         return getSession().createQuery(hql).list();
     }
 
@@ -68,7 +68,7 @@ public class NoticeDao {
      * @return
      */
     public Notice findById(Integer id){
-        String hql="from t_notice where id=:id";
+        String hql="from Notice where id=:id";
         return (Notice) getSession().createQuery(hql).setParameter("id",id).uniqueResult();
     }
 

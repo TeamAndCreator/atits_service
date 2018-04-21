@@ -3,10 +3,12 @@ package com.atits.entity;
 
 import io.swagger.annotations.ApiModel;
 
+
 import javax.persistence.*;
 import java.util.Set;
 
-@Entity(name = "t_user")
+@Entity
+@Table(name = "t_user")
 @ApiModel(value="user对象",description="用户对象user")
 public class User {
     @Id
@@ -25,6 +27,10 @@ public class User {
     private String time;
     private int state;
     @ManyToMany
+    @JoinTable(name = "t_user_t_role",
+            joinColumns = {@JoinColumn(name = "t_user_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "roles_id", referencedColumnName ="id")}
+            )
     private Set<Role> roles;
 
 

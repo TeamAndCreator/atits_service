@@ -42,7 +42,7 @@ public class RegulationDao {
      * @param idList
      */
     public void deleteByIds(List<Integer> idList){
-        getSession().createQuery("delete from t_regulation where id in:idList").setParameterList("idList",idList).executeUpdate();
+        getSession().createQuery("delete from Regulation where id in:idList").setParameterList("idList",idList).executeUpdate();
     }
 
     /**
@@ -57,7 +57,7 @@ public class RegulationDao {
      *查找所有Regulation
      */
     public List<Regulation> findAll(){
-        String hql="from t_regulation";
+        String hql="from Regulation ";
         return getSession().createQuery(hql).list();
     }
 
@@ -67,7 +67,7 @@ public class RegulationDao {
      * @return
      */
     public Regulation findById(Integer id){
-        String hql="from t_regulation where id=:id";
+        String hql="from Regulation where id=:id";
         return (Regulation) getSession().createQuery(hql).setParameter("id",id).uniqueResult();
     }
 }

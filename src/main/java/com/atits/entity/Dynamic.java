@@ -7,7 +7,8 @@ import java.util.Set;
  *体系动态
  * @author zys
  */
-@Entity(name = "t_dynamic")
+@Entity
+@Table(name = "t_dynamic")
 public class Dynamic {
 
     @Id

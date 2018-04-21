@@ -8,7 +8,8 @@ import java.util.Set;
  *重大活动
  * @author zys
  */
-@Entity(name = "t_activity")
+@Entity
+@Table(name = "t_activity")
 public class Activity {
 
     @Id

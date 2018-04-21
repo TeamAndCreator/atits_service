@@ -6,7 +6,8 @@ import java.util.Set;
  *权限
  * @author zys
  */
-@Entity(name = "t_role")
+@Entity
+@Table(name = "t_role")
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -7,7 +7,8 @@ import javax.persistence.*;
  * 实验站
  * @author zys
  */
-@Entity(name = "t_station")
+@Entity
+@Table(name = "t_station")
 public class Station {
 
     @Id

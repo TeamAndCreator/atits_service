@@ -1,15 +1,13 @@
 package com.atits.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  *文件
  * @author zys
  */
-@Entity(name = "t_files")
+@Entity
+@Table(name = "t_files")
 public class Files {
 
     @Id
@@ -23,6 +21,16 @@ public class Files {
     private String title;
 
     private String path;
+
+    private String fileType;
+
+    public String getFileType() {
+        return fileType;
+    }
+
+    public void setFileType(String fileType) {
+        this.fileType = fileType;
+    }
 
     private int state;
 
@@ -82,6 +90,7 @@ public class Files {
                 ", type='" + type + '\'' +
                 ", title='" + title + '\'' +
                 ", path='" + path + '\'' +
+                ", fileType='" + fileType + '\'' +
                 ", state=" + state +
                 '}';
     }

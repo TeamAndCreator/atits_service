@@ -7,7 +7,8 @@ import java.util.Set;
  * 父任务
  * @author zys
  */
-@Entity(name = "t_task")
+@Entity
+@Table(name = "t_task")
 public class Task {
 
     @Id

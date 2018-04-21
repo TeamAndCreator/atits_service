@@ -7,7 +7,8 @@ import java.util.Set;
  * 任务进展
  * @author zys
  */
-@Entity(name = "t_taskprogress")
+@Entity
+@Table(name = "t_taskprogress")
 public class taskProgress {
 
     @Id
