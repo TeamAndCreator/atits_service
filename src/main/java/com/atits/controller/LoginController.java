@@ -43,18 +43,7 @@ public class LoginController {
     }
 
 
-    @ApiOperation(value="获取用户详细信息", notes="根据url的id来获取用户详细信息")
-    @ApiImplicitParam(name = "id", value = "用户ID", required = true, dataType = "Long")
-    @RequestMapping(value = "user", method = RequestMethod.GET)
-    @ResponseBody
-    public Msg findAll() {
-        try {
-            List<User> users = userService.findAll();
-            return Msg.success().add("users",users);
-        }catch(Exception e){
-            return Msg.fail(e);
-        }
-    }
+
 
 }
 
