@@ -48,10 +48,10 @@ public class LaboratoryController {
     @ResponseBody
     @ApiOperation(value = "根据id删除一个研究室")
     @ApiImplicitParam(name = "id",value = "需删除研究室的id",paramType = "query",dataType = "long")
-    @RequestMapping(value = "deletbyid",method = RequestMethod.DELETE)
-    public Msg deletById(Integer id){
+    @RequestMapping(value = "deleteByid",method = RequestMethod.DELETE)
+    public Msg deleteById(Integer id){
         try {
-            laboratoryService.deletById(id);
+            laboratoryService.deleteById(id);
             return Msg.success();
         }catch (Exception e){
             return Msg.fail(e);
@@ -60,10 +60,10 @@ public class LaboratoryController {
 
     @ResponseBody
     @ApiOperation(value = "根据id数组批量删除Laboratory")
-    @RequestMapping(value = "deletbyids",method = RequestMethod.DELETE)
-    public Msg deletByIds(@ApiParam(name = "idList",value = "需删除研究室的id数组")@RequestParam List<Integer> idList){
+    @RequestMapping(value = "deleteByIds",method = RequestMethod.DELETE)
+    public Msg deleteByIds(@ApiParam(name = "idList",value = "需删除研究室的id数组")@RequestParam List<Integer> idList){
         try {
-            laboratoryService.deletByIds(idList);
+            laboratoryService.deleteByIds(idList);
             return Msg.success();
         }catch (Exception e){
             return Msg.fail(e);
@@ -84,7 +84,7 @@ public class LaboratoryController {
             @ApiImplicitParam(name = "system.content",value = "研究室所属体系描述",paramType = "query",dataType = "String"),
             @ApiImplicitParam(name = "system.overView",value = "研究室所属体系overView",paramType = "query",dataType = "String")
     })
-    @RequestMapping(value = "update",method = RequestMethod.POST)
+    @RequestMapping(value = "update",method = RequestMethod.PUT)
     public Msg update(Laboratory laboratory){
         try {
             laboratoryService.update(laboratory);
@@ -97,7 +97,7 @@ public class LaboratoryController {
     @ResponseBody
     @ApiOperation(value = "根据id查找一个Laboratory")
     @ApiImplicitParam(name = "id",value = "要查找的研究室id",paramType = "query",dataType = "long")
-    @RequestMapping(value = "findbyid",method = RequestMethod.GET)
+    @RequestMapping(value = "findById",method = RequestMethod.GET)
     public Msg findById(Integer id){
         try {
             return Msg.success().add("Laboratory",laboratoryService.findById(id));

@@ -32,7 +32,7 @@ public class ReportDao {
      * 根据id删除一个Report
      * @param id
      */
-    public void deletById(Integer id){
+    public void deleteById(Integer id){
         Report report=findById(id);
         getSession().delete(report);
     }
@@ -41,7 +41,7 @@ public class ReportDao {
      * 根据id数组批量删除Report
      * @param idList
      */
-    public void deletByIds(List<Integer> idList){
+    public void deleteByIds(List<Integer> idList){
         getSession().createQuery("delete from t_report where id in:idList").setParameterList("idList",idList).executeUpdate();
     }
 

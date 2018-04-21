@@ -27,16 +27,16 @@ public class LaboratoryService {
      * 通过id删除一个Laboratory
      * @param id
      */
-    public void deletById(Integer id){
-        laboratoryDao.deletById(id);
+    public void deleteById(Integer id){
+        laboratoryDao.deleteById(id);
     }
 
     /**
      * 根据id数组批量删除Laboratory
      * @param idList
      */
-    public void deletByIds(List<Integer> idList){
-        laboratoryDao.deletByIds(idList);
+    public void deleteByIds(List<Integer> idList){
+        laboratoryDao.deleteByIds(idList);
     }
 
     /**

@@ -33,7 +33,7 @@ public class LaboratoryDao {
      * 根据id删除一个Laboratory
      * @param id
      */
-    public void deletById(Integer id){
+    public void deleteById(Integer id){
         Laboratory laboratory=findById(id);
         getSession().delete(laboratory);
     }
@@ -42,7 +42,7 @@ public class LaboratoryDao {
      * 根据id数组批量删除Laboratory
      * @param idList
      */
-    public void deletByIds(List<Integer> idList){
+    public void deleteByIds(List<Integer> idList){
         getSession().createQuery("delete from t_laboratory where id in:idList").setParameterList("idList",idList).executeUpdate();
     }
 

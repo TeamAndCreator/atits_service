@@ -34,7 +34,7 @@ public class ActivityDao {
      * 根据id删除一个Activity
      * @param id
      */
-    public void deletById(Integer id){
+    public void deleteById(Integer id){
         Activity activity=findById(id);
         getSession().delete(activity);
     }
@@ -43,7 +43,7 @@ public class ActivityDao {
      * 根据id数组批量删除Activity
      * @param idList
      */
-    public void deletByIds(List<Integer> idList){
+    public void deleteByIds(List<Integer> idList){
         getSession().createQuery("delete from t_activity where id in:idList").setParameterList("idList",idList).executeUpdate();
     }
 

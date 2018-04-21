@@ -32,7 +32,7 @@ public class HarvestDao {
      * 根据id删除一个Harvest
      * @param id
      */
-    public void deletById(Integer id){
+    public void deleteById(Integer id){
         Harvest harvest=findById(id);
         getSession().delete(harvest);
     }
@@ -41,7 +41,7 @@ public class HarvestDao {
      * 根据id数组批量删除Harvest
      * @param idList
      */
-    public void deletByIds(List<Integer> idList){
+    public void deleteByIds(List<Integer> idList){
         getSession().createQuery("delete from t_harvest where id in:idList").setParameterList("idList",idList).executeUpdate();
     }
 

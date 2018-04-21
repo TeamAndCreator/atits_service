@@ -27,16 +27,16 @@ public class ReportService {
      * 通过id删除一个Report
      * @param id
      */
-    public void deletById(Integer id){
-        reportDao.deletById(id);
+    public void deleteById(Integer id){
+        reportDao.deleteById(id);
     }
 
     /**
      * 根据id数组批量删除Report
      * @param idList
      */
-    public void deletByIds(List<Integer> idList){
-        reportDao.deletByIds(idList);
+    public void deleteByIds(List<Integer> idList){
+        reportDao.deleteByIds(idList);
     }
 
     /**

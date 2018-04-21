@@ -32,7 +32,7 @@ public class RegulationDao {
      * 根据id删除一个Regulation
      * @param id
      */
-    public void deletById(Integer id){
+    public void deleteById(Integer id){
         Regulation regulation=findById(id);
         getSession().delete(regulation);
     }
@@ -41,7 +41,7 @@ public class RegulationDao {
      * 根据id数组批量删除Regulation
      * @param idList
      */
-    public void deletByIds(List<Integer> idList){
+    public void deleteByIds(List<Integer> idList){
         getSession().createQuery("delete from t_regulation where id in:idList").setParameterList("idList",idList).executeUpdate();
     }
 

@@ -28,16 +28,16 @@ public class StationService {
      * 通过id删除一个station
      * @param id
      */
-    public void deletById(Integer id){
-        stationDao.deletById(id);
+    public void deleteById(Integer id){
+        stationDao.deleteById(id);
     }
 
     /**
      * 根据id数组批量删除station
      * @param idList
      */
-    public void deletByIds(List<Integer> idList){
-        stationDao.deletByIds(idList);
+    public void deleteByIds(List<Integer> idList){
+        stationDao.deleteByIds(idList);
     }
 
     /**

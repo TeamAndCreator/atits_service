@@ -45,10 +45,10 @@ public class NoticeController {
     @ResponseBody
     @ApiOperation(value = "根据id删除一个通知公告")
     @ApiImplicitParam(name = "id",value = "需要删除的通知公告id",paramType = "query")
-    @RequestMapping(value = "delet",method = RequestMethod.DELETE)
-    public Msg delet(Integer id){
+    @RequestMapping(value = "delete",method = RequestMethod.DELETE)
+    public Msg delete(Integer id){
         try {
-            noticeService.deletById(id);
+            noticeService.deleteById(id);
             return Msg.success();
         }catch (Exception e){
             return Msg.fail(e);
@@ -57,10 +57,10 @@ public class NoticeController {
 
     @ResponseBody
     @ApiOperation(value = "根据id数组批量删除notice")
-    @RequestMapping(value = "deletbyids",method = RequestMethod.DELETE)
-    public Msg deletByIds(@ApiParam(name = "idList",value = "需删除通知公告的id数组")@RequestParam List<Integer> idList){
+    @RequestMapping(value = "deleteByIds",method = RequestMethod.DELETE)
+    public Msg deleteByIds(@ApiParam(name = "idList",value = "需删除通知公告的id数组")@RequestParam List<Integer> idList){
         try {
-            noticeService.deletByIds(idList);
+            noticeService.deleteByIds(idList);
             return Msg.success();
         }catch (Exception e){
             return Msg.fail(e);
@@ -78,7 +78,7 @@ public class NoticeController {
             @ApiImplicitParam(name = "user.id",value = "编辑人id",paramType = "query"),
             @ApiImplicitParam(name = "state",value = "状态",paramType = "query")
     })
-    @RequestMapping(value = "update",method = RequestMethod.POST)
+    @RequestMapping(value = "update",method = RequestMethod.PUT)
     public Msg update(Notice notice){
         try {
             noticeService.update(notice);
@@ -91,7 +91,7 @@ public class NoticeController {
     @ResponseBody
     @ApiOperation(value = "根据id查找一个notice")
     @ApiImplicitParam(name = "id",value = "要查找的通知公告的id",paramType = "query",dataType = "long")
-    @RequestMapping(value = "findbyid",method = RequestMethod.GET)
+    @RequestMapping(value = "findById",method = RequestMethod.GET)
     public Msg findById(Integer id){
         try {
             return Msg.success().add("notice",noticeService.findById(id));

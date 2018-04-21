@@ -39,10 +39,10 @@ public class SystemController {
     @ResponseBody
     @ApiOperation(value = "通过id删除一个体系对象",notes = "通过id删除一个体系对象")
     @ApiImplicitParam(name = "id",value = "体系id",paramType = "query",dataType = "long")
-    @RequestMapping(value = "deletbyid",method = RequestMethod.DELETE)
-    public Msg deletById(Integer id){
+    @RequestMapping(value = "deleteById",method = RequestMethod.DELETE)
+    public Msg deleteById(Integer id){
         try {
-            systemService.deletById(id);
+            systemService.deleteById(id);
             return Msg.success();
         }catch (Exception e){
             return Msg.fail(e);
@@ -51,10 +51,10 @@ public class SystemController {
 
     @ResponseBody
     @ApiOperation(value = "根据id数组批量删除system",notes = "根据id数组批量删除system")
-    @RequestMapping(value = "deletbyids",method = RequestMethod.DELETE)
-    public Msg deletByIds(@ApiParam(name = "idList",value = "id数组")@RequestParam List<Integer> idList){
+    @RequestMapping(value = "deleteByIds",method = RequestMethod.DELETE)
+    public Msg deleteByIds(@ApiParam(name = "idList",value = "id数组")@RequestParam List<Integer> idList){
         try {
-            systemService.deletByIds(idList);
+            systemService.deleteByIds(idList);
             return Msg.success();
         }catch (Exception e){
             return Msg.fail(e);
@@ -68,7 +68,7 @@ public class SystemController {
             @ApiImplicitParam(name = "content",value = "体系描述",dataType = "String",paramType = "query"),
             @ApiImplicitParam(name = "overView",value = "overView",dataType = "String",paramType = "query")
     })
-    @RequestMapping(value = "update",method = RequestMethod.POST)
+    @RequestMapping(value = "update",method = RequestMethod.PUT)
     public Msg update(System system){
         try {
             systemService.update(system);
@@ -81,7 +81,7 @@ public class SystemController {
 
     @ResponseBody
     @ApiOperation(value = "查找所有的体系",notes = "查找所有的体系")
-    @RequestMapping(value = "findall",method = RequestMethod.GET)
+    @RequestMapping(value = "findAll",method = RequestMethod.GET)
     public Msg findAll(){
         try {
             return Msg.success().add("systems",systemService.findAll());
@@ -94,7 +94,7 @@ public class SystemController {
     @ResponseBody
     @ApiOperation(value = "通过id获取一个体系对象",notes = "通过id获取一个体系对象")
     @ApiImplicitParam(name = "id",value = "体系id",paramType = "query",dataType = "long")
-    @RequestMapping(value = "findbyid",method = RequestMethod.GET)
+    @RequestMapping(value = "findById",method = RequestMethod.GET)
     public Msg findById(Integer id){
         try {
             System system=systemService.findById(id);

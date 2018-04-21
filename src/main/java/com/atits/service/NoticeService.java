@@ -31,16 +31,16 @@ public class NoticeService {
      * 通过id删除一个Notice
      * @param id
      */
-    public void deletById(Integer id){
-        noticeDao.deletById(id);
+    public void deleteById(Integer id){
+        noticeDao.deleteById(id);
     }
 
     /**
      * 根据id数组批量删除Notice
      * @param idList
      */
-    public void deletByIds(List<Integer> idList){
-        noticeDao.deletByIds(idList);
+    public void deleteByIds(List<Integer> idList){
+        noticeDao.deleteByIds(idList);
     }
 
     /**

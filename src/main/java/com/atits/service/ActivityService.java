@@ -30,16 +30,16 @@ public class ActivityService {
      * 通过id删除一个Activity
      * @param id
      */
-    public void deletById(Integer id){
-        activityDao.deletById(id);
+    public void deleteById(Integer id){
+        activityDao.deleteById(id);
     }
 
     /**
      * 根据id数组批量删除Activity
      * @param idList
      */
-    public void deletByIds(List<Integer> idList){
-        activityDao.deletByIds(idList);
+    public void deleteByIds(List<Integer> idList){
+        activityDao.deleteByIds(idList);
     }
 
     /**

@@ -33,7 +33,7 @@ public class NoticeDao {
      * 根据id删除一个Notice
      * @param id
      */
-    public void deletById(Integer id){
+    public void deleteById(Integer id){
         Notice notice=findById(id);
         getSession().delete(notice);
     }
@@ -42,7 +42,7 @@ public class NoticeDao {
      * 根据id数组批量删除Notice
      * @param idList
      */
-    public void deletByIds(List<Integer> idList){
+    public void deleteByIds(List<Integer> idList){
         getSession().createQuery("delete from t_notice where id in:idList").setParameterList("idList",idList).executeUpdate();
     }
 

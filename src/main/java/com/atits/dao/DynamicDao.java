@@ -32,7 +32,7 @@ public class DynamicDao {
      * 根据id删除一个Dynamic
      * @param id
      */
-    public void deletById(Integer id){
+    public void deleteById(Integer id){
         Dynamic dynamic=findById(id);
         getSession().delete(dynamic);
     }
@@ -41,7 +41,7 @@ public class DynamicDao {
      * 根据id数组批量删除Dynamic
      * @param idList
      */
-    public void deletByIds(List<Integer> idList){
+    public void deleteByIds(List<Integer> idList){
         getSession().createQuery("delete from t_dynamic where id in:idList").setParameterList("idList",idList).executeUpdate();
     }
 

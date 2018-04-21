@@ -27,16 +27,16 @@ public class HarvestService {
      * 通过id删除一个Harvest
      * @param id
      */
-    public void deletById(Integer id){
-        harvestDao.deletById(id);
+    public void deleteById(Integer id){
+        harvestDao.deleteById(id);
     }
 
     /**
      * 根据id数组批量删除Harvest
      * @param idList
      */
-    public void deletByIds(List<Integer> idList){
-        harvestDao.deletByIds(idList);
+    public void deleteByIds(List<Integer> idList){
+        harvestDao.deleteByIds(idList);
     }
 
     /**

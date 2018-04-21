@@ -44,10 +44,10 @@ public class DynamicController {
     @ResponseBody
     @ApiOperation(value = "根据id删除一个体系动态")
     @ApiImplicitParam(name = "id",value = "需要删除的体系动态id",paramType = "query")
-    @RequestMapping(value = "delet",method = RequestMethod.DELETE)
-    public Msg delet(Integer id){
+    @RequestMapping(value = "delete",method = RequestMethod.DELETE)
+    public Msg delete(Integer id){
         try {
-            dynamicService.deletById(id);
+            dynamicService.deleteById(id);
             return Msg.success();
         }catch (Exception e){
             return Msg.fail(e);
@@ -56,10 +56,10 @@ public class DynamicController {
 
     @ResponseBody
     @ApiOperation(value = "根据id数组批量删除Dynamic")
-    @RequestMapping(value = "deletbyids",method = RequestMethod.DELETE)
-    public Msg deletByIds(@ApiParam(name = "idList",value = "需删除体系动态的id数组")@RequestParam List<Integer> idList){
+    @RequestMapping(value = "deleteByIds",method = RequestMethod.DELETE)
+    public Msg deleteByIds(@ApiParam(name = "idList",value = "需删除体系动态的id数组")@RequestParam List<Integer> idList){
         try {
-            dynamicService.deletByIds(idList);
+            dynamicService.deleteByIds(idList);
             return Msg.success();
         }catch (Exception e){
             return Msg.fail(e);
@@ -77,7 +77,7 @@ public class DynamicController {
             @ApiImplicitParam(name = "user.id",value = "编辑人id",paramType = "query"),
             @ApiImplicitParam(name = "state",value = "状态",paramType = "query")
     })
-    @RequestMapping(value = "update",method = RequestMethod.POST)
+    @RequestMapping(value = "update",method = RequestMethod.PUT)
     public Msg update(Dynamic dynamic){
         try {
             dynamicService.update(dynamic);
@@ -90,7 +90,7 @@ public class DynamicController {
     @ResponseBody
     @ApiOperation(value = "根据id查找一个Dynamic")
     @ApiImplicitParam(name = "id",value = "要查找的体系动态的id",paramType = "query",dataType = "long")
-    @RequestMapping(value = "findbyid",method = RequestMethod.GET)
+    @RequestMapping(value = "findById",method = RequestMethod.GET)
     public Msg findById(Integer id){
         try {
             return Msg.success().add("dynamic",dynamicService.findById(id));

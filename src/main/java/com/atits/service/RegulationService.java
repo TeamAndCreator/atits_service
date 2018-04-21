@@ -27,16 +27,16 @@ public class RegulationService {
      * 通过id删除一个Regulation
      * @param id
      */
-    public void deletById(Integer id){
-        regulationDao.deletById(id);
+    public void deleteById(Integer id){
+        regulationDao.deleteById(id);
     }
 
     /**
      * 根据id数组批量删除Regulation
      * @param idList
      */
-    public void deletByIds(List<Integer> idList){
-        regulationDao.deletByIds(idList);
+    public void deleteByIds(List<Integer> idList){
+        regulationDao.deleteByIds(idList);
     }
 
     /**

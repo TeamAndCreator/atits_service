@@ -27,16 +27,16 @@ public class SystemService {
      * 通过id删除一个system
      * @param id
      */
-    public void deletById(Integer id){
-        systemDao.deletById(id);
+    public void deleteById(Integer id){
+        systemDao.deleteById(id);
     }
 
     /**
      * 根据id数组批量删除system
      * @param idList
      */
-    public void deletByIds(List<Integer> idList){
-        systemDao.deletByIds(idList);
+    public void deleteByIds(List<Integer> idList){
+        systemDao.deleteByIds(idList);
     }
 
     /**

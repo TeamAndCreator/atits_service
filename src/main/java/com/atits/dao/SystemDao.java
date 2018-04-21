@@ -32,7 +32,7 @@ public class SystemDao {
      * 根据id删除一个system
      * @param id
      */
-    public void deletById(Integer id){
+    public void deleteById(Integer id){
         System system=findById(id);
         getSession().delete(system);
     }
@@ -41,7 +41,7 @@ public class SystemDao {
      * 根据id数组批量删除system
      * @param idList
      */
-    public void deletByIds(List<Integer> idList){
+    public void deleteByIds(List<Integer> idList){
         getSession().createQuery("delete from t_system where id in:idList").setParameterList("idList",idList).executeUpdate();
     }
 
