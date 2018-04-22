@@ -37,10 +37,9 @@ public class UserDao {
         getSession().save(user);
     }
 
-
-    public User findUser(String userName) {
-        String hql = "from User where userName=:userName";
-        return (User) getSession().createQuery(hql).setParameter("userName", userName).uniqueResult();
+    public User findByUserName(String username) {
+        String hql = "from User where userName=:username";
+        return (User) getSession().createQuery(hql).setParameter("username", username).uniqueResult();
     }
 
     public User findUser(int id) {

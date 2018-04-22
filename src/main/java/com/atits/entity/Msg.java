@@ -31,6 +31,11 @@ public class Msg {
 		result.setMsg(e.getMessage());
 		return result;
 	}
+	public static Msg fail(){
+		Msg result = new Msg();
+		result.setCode(200);
+		return result;
+	}
 
 	public Msg add(String key, Object value){
 		this.getData().put(key, value);

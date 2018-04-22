@@ -22,6 +22,9 @@ public class UserService {
         return userDao.findAll();
     }
 
+    public User findByUserName(String username){
+        return userDao.findByUserName(username);
+    }
     /**
      *添加一个user
      */

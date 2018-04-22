@@ -1,49 +1,69 @@
 package com.atits.controller;
 
 import com.atits.entity.Msg;
-import com.atits.entity.User;
 import com.atits.service.UserService;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.*;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authc.*;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 @Controller
+@Api(value = "product", description = "登录接口")
 @RequestMapping(value = "login")
-@Api(description = "登录接口")
 public class LoginController {
     @Resource
     private UserService userService;
 
-    @ResponseBody
+
     @ApiOperation(value="根据用户名和密码进行登录")
-    @RequestMapping(value = "login", method = RequestMethod.POST)
-    public Msg login(User user){
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "username", value = "用户名", required = true,paramType = "query"),
+            @ApiImplicitParam(name = "password", value = "用户密码", required = true,paramType = "query")
+    }
+    )
+    @ApiResponses({
+            @ApiResponse(code= 201 ,message = "已创建"),
+            @ApiResponse(code = 400, message = "请求参数填写错误 "),
+            @ApiResponse(code= 401 ,message = "访问被拒绝"),
+            @ApiResponse(code= 403 ,message = "禁止访问"),
+            @ApiResponse(code= 404 ,message = "请求路径没有或页面跳转路径错误")
+    })
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @ResponseBody
+    public Msg login(@RequestParam("username")String username,@RequestParam("password")String password) {
         Subject currentUser = SecurityUtils.getSubject();
         if (!currentUser.isAuthenticated()) {
-            UsernamePasswordToken token = new UsernamePasswordToken(user.getUserName(),user.getPassword());
+            String passwordMD5 = DigestUtils.md5DigestAsHex(password.getBytes());
+            System.out.println(passwordMD5);
+            UsernamePasswordToken token = new UsernamePasswordToken(username, passwordMD5);
             token.setRememberMe(true);
             try {
                 currentUser.login(token);
-            } catch (AuthenticationException ae) {
-                System.out.println("登录出错啦！:" + ae.getMessage());
+            }catch (UnknownAccountException ua){
+                System.out.println("未知账户！（提示：若已成功注册，请联系管理员查看用户是否已激活。）："+ua.getMessage());
+                return Msg.fail(ua);
+            }catch (IncorrectCredentialsException ice){
+                System.out.println("错误的凭证！："+ice.getMessage());
+                return Msg.fail(ice);
+            }catch (LockedAccountException lae){
+                System.out.println("账户已锁定！："+lae.getMessage());
+                return Msg.fail(lae);
+            }catch (ExcessiveAttemptsException eae){
+                System.out.println("错误次数过多！："+eae.getMessage());
+                return Msg.fail(eae);
+            }catch (AuthenticationException ae) {
+                System.out.println("验证未通过！:" + ae.getMessage());
                 return Msg.fail(ae);
             }
         }
         return Msg.success();
-
     }
-
-
-
 
 }
 
