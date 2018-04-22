@@ -1,6 +1,7 @@
 package com.atits.controller;
 
 import com.atits.entity.Activity;
+import com.atits.entity.Files;
 import com.atits.entity.Msg;
 import com.atits.service.ActivityService;
 import io.swagger.annotations.*;
@@ -9,8 +10,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -32,8 +37,32 @@ public class ActivityController {
             @ApiImplicitParam(name = "state",value = "状态",paramType = "query")
     })
     @RequestMapping(value = "save",method = RequestMethod.POST)
-    public Msg save(Activity activity){
+    public Msg save(Activity activity, MultipartFile[] multipartFiles){
         try {
+            SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
+            SimpleDateFormat time = new SimpleDateFormat("HH:mm:ss");//设置时间点格式
+            if (multipartFiles!=null){
+                for (MultipartFile multipartFile:multipartFiles){
+                    if (!multipartFile.isEmpty()){
+                        String path="C:/File/Activity/"+activity.getSystem().getId()+"/"+activity.getUser().getId();
+                        String fileName=multipartFile.getOriginalFilename();
+                        File file=new File(path,fileName);
+                        if (!file.getParentFile().exists()){
+                            file.getParentFile().mkdirs();
+                        }
+                        multipartFile.transferTo(new File(path+File.separator+fileName));
+                        Files files=new Files();
+                        files.setDate(date.format(new Date()));
+                        files.setTime(time.format(new Date()));
+                        files.setPath(path);
+                        files.setName(fileName);
+                        files.setFileType("重大活动");
+                        activity.getFiles().add(files);
+                    }
+                }
+            }
+            activity.setDate(date.format(new Date()));
+            activity.setTime(time.format(new Date()));// new Date()为获取当前系统时间
             activityService.save(activity);
             return Msg.success();
         }catch (Exception e){

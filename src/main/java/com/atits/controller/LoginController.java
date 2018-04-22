@@ -40,9 +40,7 @@ public class LoginController {
         Subject currentUser = SecurityUtils.getSubject();
         if (!currentUser.isAuthenticated()) {
             String passwordMD5 = DigestUtils.md5DigestAsHex(password.getBytes());
-            System.out.println(passwordMD5);
             UsernamePasswordToken token = new UsernamePasswordToken(username, passwordMD5);
-            token.setRememberMe(true);
             try {
                 currentUser.login(token);
             }catch (UnknownAccountException ua){

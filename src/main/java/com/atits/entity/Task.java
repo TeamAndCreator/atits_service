@@ -1,6 +1,7 @@
 package com.atits.entity;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -30,6 +31,8 @@ public class Task {
 
     private String time;
 
+    private String date;
+
     private String stratDate;
 
     private String endDate;
@@ -37,7 +40,15 @@ public class Task {
     private int state;
 
     @OneToMany(cascade = CascadeType.ALL)
-    private Set<Files> files;
+    private Set<Files> files=new HashSet<Files>();
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
 
     public int getId() {
         return id;
@@ -128,6 +139,7 @@ public class Task {
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
                 ", time='" + time + '\'' +
+                ", date='" + date + '\'' +
                 ", stratDate='" + stratDate + '\'' +
                 ", endDate='" + endDate + '\'' +
                 ", state=" + state +
