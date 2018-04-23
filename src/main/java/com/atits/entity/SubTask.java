@@ -1,6 +1,7 @@
 package com.atits.entity;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -39,7 +40,7 @@ public class SubTask {
     private String endDate;
 
     @OneToMany(cascade = CascadeType.ALL)
-    private Set<Files> files;
+    private Set<Files> files=new HashSet<Files>();
 
     public int getId() {
         return id;

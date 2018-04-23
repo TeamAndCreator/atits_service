@@ -2,6 +2,7 @@ package com.atits.entity;
 
 
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 
 import javax.persistence.*;
@@ -14,8 +15,12 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     @JoinColumn(nullable = false,unique = true)
+    @ApiModelProperty(value = "用户登录账号", required = true)
     private String userName;
+
+    @ApiModelProperty(value = "用户登录密码", required = true)
     private String password;
     @ManyToOne
     private Laboratory laboratory;
@@ -27,10 +32,6 @@ public class User {
     private String time;
     private int state;
     @ManyToMany
-    @JoinTable(name = "t_user_t_role",
-            joinColumns = {@JoinColumn(name = "t_user_id", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "roles_id", referencedColumnName ="id")}
-            )
     private Set<Role> roles;
 
 

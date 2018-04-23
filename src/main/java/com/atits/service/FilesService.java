@@ -9,9 +9,9 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.Resource;
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
-import java.util.UUID;
+import java.util.Set;
 
 
 /**
@@ -136,6 +136,25 @@ public class FilesService {
 //        return filesDao.getIdOfSave(files);
 //
 //    }
+
+    /**
+     * 保存一个文件（file）到服务器某处（例如File/Activity/system.id/user.id/fileName等）
+     * 并返回一个实体类（Files）用于在上一层（例如ActivityController等）将File保存到数据库
+     */
+    public Set<Files> fileSave(MultipartFile[] multipartFiles, String fileType, int systemId, int userId, String date, String time) throws IOException {
+        String path = "C:/File/" + fileType + "/" + systemId + "/" + userId;
+        Set<Files> filesSet=new HashSet<Files>();
+        for (MultipartFile multipartFile:multipartFiles){
+            String fileName = multipartFile.getOriginalFilename();
+            File file = new File(path, fileName);
+            if (!file.getParentFile().exists()) {
+                file.getParentFile().mkdirs();
+            }
+            multipartFile.transferTo(new File(path + File.separator + fileName));
+            filesSet.add(new Files(fileName,fileType,path,time,date));
+        }
+        return filesSet;
+    }
 //
 //
 //    /* 批量删除： */

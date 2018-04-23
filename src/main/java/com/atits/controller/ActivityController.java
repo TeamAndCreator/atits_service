@@ -1,17 +1,26 @@
 package com.atits.controller;
 
 import com.atits.entity.Activity;
+import com.atits.entity.Files;
 import com.atits.entity.Msg;
 import com.atits.service.ActivityService;
+import com.atits.service.FilesService;
+import com.atits.utils.GetTimeUtil;
 import io.swagger.annotations.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @Api(description = "重大活动")
@@ -19,6 +28,9 @@ import java.util.List;
 public class ActivityController {
     @Resource
     private ActivityService activityService;
+
+    @Resource
+    private FilesService filesService;
 
     @ResponseBody
     @ApiOperation(value = "增加一个重大活动")
@@ -32,8 +44,17 @@ public class ActivityController {
             @ApiImplicitParam(name = "state",value = "状态",paramType = "query")
     })
     @RequestMapping(value = "save",method = RequestMethod.POST)
-    public Msg save(Activity activity){
+    public Msg save(Activity activity, MultipartFile[] multipartFiles, HttpServletRequest request){
         try {
+            System.out.println(request.getServletContext().getRealPath("/File"));
+            String date=GetTimeUtil.getDate();
+            String time=GetTimeUtil.getTime();
+            if (multipartFiles!=null){
+                Set<Files> filesSet=filesService.fileSave(multipartFiles,"Activity",activity.getSystem().getId(),activity.getUser().getId(),date,time);
+                activity.setFiles(filesSet);
+            }
+            activity.setDate(date);
+            activity.setTime(time);
             activityService.save(activity);
             return Msg.success();
         }catch (Exception e){

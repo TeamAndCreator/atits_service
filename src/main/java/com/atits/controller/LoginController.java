@@ -21,11 +21,6 @@ public class LoginController {
 
 
     @ApiOperation(value="根据用户名和密码进行登录")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "username", value = "用户名", required = true,paramType = "query"),
-            @ApiImplicitParam(name = "password", value = "用户密码", required = true,paramType = "query")
-    }
-    )
     @ApiResponses({
             @ApiResponse(code= 201 ,message = "已创建"),
             @ApiResponse(code = 400, message = "请求参数填写错误 "),
@@ -42,6 +37,7 @@ public class LoginController {
             System.out.println(passwordMD5);
             UsernamePasswordToken token = new UsernamePasswordToken(user.getUserName(), passwordMD5);
             token.setRememberMe(true);
+
             try {
                 currentUser.login(token);
             }catch (UnknownAccountException ua){

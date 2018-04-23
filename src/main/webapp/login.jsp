@@ -11,12 +11,23 @@
     <title>Title</title>
 </head>
 <body>
-<form action="login" method="post">
-    usename:<input type="text" name="username" />
+<form action="activity/save" enctype="multipart/form-data" method="post">
+    title:<input type="text" name="title" />
     <br/>
-    password:<input type="text" name="password" />
+    content:<input type="text" name="content" />
     <br/>
+    time:<input type="text" name="time">
+    <br>
+    system.id<input type="text" name="system.id">
+    <br>
+    user.id<input type="text" name="user.id">
+    <br>
+    state<input type="text" name="state">
+    <br>
+    file<input type="file" name="multipartFiles" multiple>
     <input type="submit" value="submit"/>
 </form>
+<a href="/File/1.pptx">aaaaa</a>
+<button></button>
 </body>
 </html>
