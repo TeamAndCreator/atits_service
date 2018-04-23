@@ -4,6 +4,8 @@ import com.atits.entity.Activity;
 import com.atits.entity.Files;
 import com.atits.entity.Msg;
 import com.atits.service.ActivityService;
+import com.atits.service.FilesService;
+import com.atits.utils.GetTimeUtil;
 import io.swagger.annotations.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,10 +15,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @Api(description = "重大活动")
@@ -24,6 +28,9 @@ import java.util.List;
 public class ActivityController {
     @Resource
     private ActivityService activityService;
+
+    @Resource
+    private FilesService filesService;
 
     @ResponseBody
     @ApiOperation(value = "增加一个重大活动")
@@ -37,32 +44,17 @@ public class ActivityController {
             @ApiImplicitParam(name = "state",value = "状态",paramType = "query")
     })
     @RequestMapping(value = "save",method = RequestMethod.POST)
-    public Msg save(Activity activity, MultipartFile[] multipartFiles){
+    public Msg save(Activity activity, MultipartFile[] multipartFiles, HttpServletRequest request){
         try {
-            SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
-            SimpleDateFormat time = new SimpleDateFormat("HH:mm:ss");//设置时间点格式
+            System.out.println(request.getServletContext().getRealPath("/File"));
+            String date=GetTimeUtil.getDate();
+            String time=GetTimeUtil.getTime();
             if (multipartFiles!=null){
-                for (MultipartFile multipartFile:multipartFiles){
-                    if (!multipartFile.isEmpty()){
-                        String path="C:/File/Activity/"+activity.getSystem().getId()+"/"+activity.getUser().getId();
-                        String fileName=multipartFile.getOriginalFilename();
-                        File file=new File(path,fileName);
-                        if (!file.getParentFile().exists()){
-                            file.getParentFile().mkdirs();
-                        }
-                        multipartFile.transferTo(new File(path+File.separator+fileName));
-                        Files files=new Files();
-                        files.setDate(date.format(new Date()));
-                        files.setTime(time.format(new Date()));
-                        files.setPath(path);
-                        files.setName(fileName);
-                        files.setFileType("重大活动");
-                        activity.getFiles().add(files);
-                    }
-                }
+                Set<Files> filesSet=filesService.fileSave(multipartFiles,"Activity",activity.getSystem().getId(),activity.getUser().getId(),date,time);
+                activity.setFiles(filesSet);
             }
-            activity.setDate(date.format(new Date()));
-            activity.setTime(time.format(new Date()));// new Date()为获取当前系统时间
+            activity.setDate(date);
+            activity.setTime(time);
             activityService.save(activity);
             return Msg.success();
         }catch (Exception e){
