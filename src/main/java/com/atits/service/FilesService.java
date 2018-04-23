@@ -27,40 +27,11 @@ public class FilesService {
     @Resource
     private FilesDao filesDao;// 注入dao数据
 
-    /* filesDao的get和set方法 */
-    public void setfilesDao(FilesDao filesDao) {
-        this.filesDao = filesDao;
+    public Files findById(Integer id){
+        return filesDao.findById(id);
     }
 
-    public void getfilesDao(FilesDao filesDao) {
-        this.filesDao = filesDao;
-    }
 
-    /* 查询所有方法：findAll */
-    public List<Files> findAll() {// 与集合不同，列表通常允许重复元素
-        return filesDao.findAll();
-    }
-
-    /* 根据id进行查询 */
-    public Files findById(Integer id) {
-        return filesDao.findById(id);// 调用dao的方法
-    }
-
-    /* 根据多个id进行查询 */
-    public List<Files> findByIds(Integer[] ids) {
-        return filesDao.findByIds(ids);
-    }
-
-    /* 根据页数：进行分页 */
-    public List<Files> findByPage(int startRow, int pageSize) {
-        return filesDao.findByPage(startRow, pageSize);// 调用dao的方法
-    }
-
-    /* files:是实体类 */
-    public void save(Files files) {
-        filesDao.save(files);//
-
-    }
 
     /* files:是实体类 */
 //    public int upload(MultipartFile[] multipartFiles) throws IOException {
@@ -138,20 +109,23 @@ public class FilesService {
 //    }
 
     /**
-     * 保存一个文件（file）到服务器某处（例如File/Activity/system.id/user.id/fileName等）
-     * 并返回一个实体类（Files）用于在上一层（例如ActivityController等）将File保存到数据库
+     * 保存一个文件（file）到服务器指定处（例如到File/Activity/system.id/user.id/fileName路径下等）
+     * 并返回一个实体类（Files）用于在上一层（例如ActivityController等）将file保存到数据库
      */
     public Set<Files> fileSave(MultipartFile[] multipartFiles, String fileType, int systemId, int userId, String date, String time) throws IOException {
-        String path = "C:/File/" + fileType + "/" + systemId + "/" + userId;
+        //物理路径
+        String realpath = "C:/File/" + fileType + "/" + systemId + "/" + userId;
+        String virtualPath="/File/"+fileType+"/"+systemId+"/"+userId+"/";
         Set<Files> filesSet=new HashSet<Files>();
         for (MultipartFile multipartFile:multipartFiles){
             String fileName = multipartFile.getOriginalFilename();
-            File file = new File(path, fileName);
+            File file = new File(realpath, fileName);
             if (!file.getParentFile().exists()) {
                 file.getParentFile().mkdirs();
             }
-            multipartFile.transferTo(new File(path + File.separator + fileName));
-            filesSet.add(new Files(fileName,fileType,path,time,date));
+            multipartFile.transferTo(new File(realpath + File.separator + fileName));
+            //数据库中要保存虚拟路径，才可用于下载
+            filesSet.add(new Files(fileName,fileType,virtualPath,time,date));
         }
         return filesSet;
     }

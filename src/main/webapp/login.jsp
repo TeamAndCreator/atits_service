@@ -27,7 +27,9 @@
     file<input type="file" name="multipartFiles" multiple>
     <input type="submit" value="submit"/>
 </form>
-<a href="/File/1.pptx">aaaaa</a>
+<a href="files/download/38" download="download">ppt</a>
+<br>
+<a href="/files/download/37" download="download">txt</a>
 <button></button>
 </body>
 </html>
