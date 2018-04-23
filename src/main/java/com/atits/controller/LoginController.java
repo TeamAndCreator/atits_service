@@ -1,6 +1,7 @@
 package com.atits.controller;
 
 import com.atits.entity.Msg;
+import com.atits.entity.User;
 import com.atits.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.*;
@@ -14,11 +15,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 
 @Controller
-@Api(value = "product", description = "登录接口")
+@Api(description = "登录接口")
 @RequestMapping(value = "login")
 public class LoginController {
-    @Resource
-    private UserService userService;
 
 
     @ApiOperation(value="根据用户名和密码进行登录")
@@ -36,12 +35,12 @@ public class LoginController {
     })
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
-    public Msg login(@RequestParam("username")String username,@RequestParam("password")String password) {
+    public Msg login(User user) {
         Subject currentUser = SecurityUtils.getSubject();
         if (!currentUser.isAuthenticated()) {
-            String passwordMD5 = DigestUtils.md5DigestAsHex(password.getBytes());
+            String passwordMD5 = DigestUtils.md5DigestAsHex(user.getPassword().getBytes());
             System.out.println(passwordMD5);
-            UsernamePasswordToken token = new UsernamePasswordToken(username, passwordMD5);
+            UsernamePasswordToken token = new UsernamePasswordToken(user.getUserName(), passwordMD5);
             token.setRememberMe(true);
             try {
                 currentUser.login(token);

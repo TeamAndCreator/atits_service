@@ -1,7 +1,7 @@
 <component name="ArtifactManager">
   <artifact type="war" name="atits_service:war">
     <output-path>$PROJECT_DIR$/target</output-path>
-    <root id="archive" name="atits_app.war">
+    <root id="archive" name="atits_service.war">
       <element id="artifact" artifact-name="atits_service:war exploded" />
     </root>
   </artifact>
