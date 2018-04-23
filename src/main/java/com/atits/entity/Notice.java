@@ -1,5 +1,6 @@
 package com.atits.entity;
 
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -7,7 +8,8 @@ import java.util.Set;
  * 通知公告
  * @author zys
  */
-@Entity(name = "t_notice")
+@Entity
+@Table(name = "t_notice")
 public class Notice {
 
     @Id
@@ -20,7 +22,7 @@ public class Notice {
 
     private String time;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private Set<Files> files;
 
     @JoinColumn(nullable = false)
@@ -30,6 +32,16 @@ public class Notice {
     @JoinColumn(nullable = false)
     @ManyToOne
     private System system;
+
+    private int state;
+
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
+    }
 
     public int getId() {
         return id;
@@ -82,13 +94,15 @@ public class Notice {
 
     @Override
     public String toString() {
-        return "Dynamic{" +
+        return "Notice{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
                 ", time='" + time + '\'' +
-                ", editor=" + user +
+                ", files=" + files +
+                ", user=" + user +
                 ", system=" + system +
+                ", state=" + state +
                 '}';
     }
 

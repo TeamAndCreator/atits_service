@@ -26,10 +26,15 @@ public class Msg {
 		return result;
 	}
 	
+	public static Msg fail(Exception e){
+		Msg result = new Msg();
+		result.setCode(200);
+		result.setMsg(e.getMessage());
+		return result;
+	}
 	public static Msg fail(){
 		Msg result = new Msg();
 		result.setCode(200);
-		result.setMsg("处理失败！");
 		return result;
 	}
 

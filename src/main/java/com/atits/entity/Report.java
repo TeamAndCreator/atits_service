@@ -7,7 +7,8 @@ import java.util.Set;
  * 重大文件
  * @author zys
  */
-@Entity(name = "t_report")
+@Entity
+@Table(name = "t_report")
 public class Report {
 
     @Id
@@ -21,7 +22,7 @@ public class Report {
 
     private String time;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private Set<Files> files;
 
     @JoinColumn(nullable = false)

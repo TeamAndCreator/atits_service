@@ -6,7 +6,8 @@ import javax.persistence.*;
  *简历
  * @author zys
  */
-@Entity(name = "t_profile")
+@Entity
+@Table(name = "t_profile")
 public class Profile {
 
     @Id

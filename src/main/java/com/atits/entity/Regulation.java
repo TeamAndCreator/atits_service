@@ -7,7 +7,8 @@ import java.util.Set;
  * 规章制度
  * @author zys
  */
-@Entity(name = "t_regulation")
+@Entity
+@Table(name = "t_regulation")
 public class Regulation {
 
     @Id
@@ -22,7 +23,7 @@ public class Regulation {
 
     private String time;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private Set<Files> files;
 
     @JoinColumn(nullable = false)

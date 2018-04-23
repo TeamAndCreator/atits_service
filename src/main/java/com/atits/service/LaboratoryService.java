@@ -11,26 +11,56 @@ import java.util.List;
 @Transactional
 @Service
 public class LaboratoryService {
-
     @Resource
     private LaboratoryDao laboratoryDao;
 
     /**
-     *添加一个laboratory
+     * 添加一个Laboratory
+     * @param laboratory
      */
     public void save(Laboratory laboratory){
         laboratoryDao.save(laboratory);
     }
 
+
     /**
-     *查找所有laboratory
+     * 通过id删除一个Laboratory
+     * @param id
+     */
+    public void deleteById(Integer id){
+        laboratoryDao.deleteById(id);
+    }
+
+    /**
+     * 根据id数组批量删除Laboratory
+     * @param idList
+     */
+    public void deleteByIds(List<Integer> idList){
+        laboratoryDao.deleteByIds(idList);
+    }
+
+    /**
+     * 更新一个Laboratory
+     * @param laboratory
+     */
+    public void update(Laboratory laboratory){
+        laboratoryDao.update(laboratory);
+    }
+
+
+    /**
+     * 根据id查找一个Laboratory
+     * @param id
+     */
+    public Laboratory findById(Integer id){
+        return laboratoryDao.findById(id);
+    }
+
+    /**
+     *查找所有Laboratory
      */
     public List<Laboratory> findAll(){
         return laboratoryDao.findAll();
     }
-
-
-
-
 }
 

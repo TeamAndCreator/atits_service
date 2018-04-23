@@ -7,7 +7,8 @@ import java.util.Set;
  *体系动态
  * @author zys
  */
-@Entity(name = "t_dynamic")
+@Entity
+@Table(name = "t_dynamic")
 public class Dynamic {
 
     @Id
@@ -21,7 +22,7 @@ public class Dynamic {
 
     private String time;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private Set<Files> files;
 
     @JoinColumn(nullable = false)
