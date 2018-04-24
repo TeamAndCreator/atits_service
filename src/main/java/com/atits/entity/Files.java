@@ -91,9 +91,10 @@ public class Files {
         this.state = state;
     }
 
-    public Files(String name, String fileType, String path, String time, String date) {
+    public Files(String name, String fileType, String title, String path, String time, String date) {
         this.name = name;
         this.fileType = fileType;
+        this.title = title;
         this.path = path;
         this.time = time;
         this.date = date;

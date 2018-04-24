@@ -1,25 +1,48 @@
 package com.atits.controller;
 
 import com.atits.entity.Files;
+import com.atits.entity.Msg;
 import com.atits.service.FilesService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.io.*;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 @Controller
 @Api(description = "文件")
 @RequestMapping(value = "files")
 public class FilesController {
 
+    @Resource
+    private FilesService filesService;
+
+    /**
+     * 文件下载
+     * 通过id在数据库中查找出一个files对象，
+     * 将files.path和files.name拼串，作为文件虚拟路径，转发该虚拟路径，即下载该文件
+     * 需在网页上a标签添加*download*属性，否则.txt等文件会被浏览器直接解析。
+     * （由于文件保存时名称被改为uuid，原名被保存到files.title中，
+     * 所以下载时需在a标签*download*属性中填files.title以重命名）
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "download",method = RequestMethod.GET)
+    public String downLoad(Integer id){
+        Files files=filesService.findById(id);
+        String filePath=files.getPath()+files.getName();
+        return "redirect:"+filePath;
+    }
 //    @Resource
 //    FilesService filesService;
 //

@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Set;
 
@@ -42,9 +41,8 @@ public class ActivityController {
     })
     
     @RequestMapping(value = "save",method = RequestMethod.POST)
-    public Msg save(Activity activity, MultipartFile[] multipartFiles, HttpServletRequest request){
+    public Msg save(Activity activity, MultipartFile[] multipartFiles){
         try {
-            System.out.println(request.getServletContext().getRealPath("/File"));
             String date=GetTimeUtil.getDate();
             String time=GetTimeUtil.getTime();
             if (multipartFiles!=null){
@@ -66,6 +64,9 @@ public class ActivityController {
     @RequestMapping(value = "delete",method = RequestMethod.DELETE)
     public Msg delete(Integer id){
         try {
+            Activity activity=activityService.findById(id);
+            Set<Files> filesSet=activity.getFiles();
+            filesService.deleteFiles(filesSet,"Activity",activity.getSystem().getId(),activity.getUser().getId());
             activityService.deleteById(id);
             return Msg.success();
         }catch (Exception e){
