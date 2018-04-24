@@ -30,6 +30,12 @@ public class FilesService {
 
     private final String REAL_PATH="C:/File/";
 
+    private final static String VR_PATH="/File/";
+
+    public static String getVR_PATH() {
+        return VR_PATH;
+    }
+
     public Files findById(Integer id){
         return filesDao.findById(id);
     }
@@ -117,8 +123,8 @@ public class FilesService {
      */
     public Set<Files> fileSave(MultipartFile[] multipartFiles, String fileType, int systemId, int userId, String date, String time) throws IOException {
         //物理路径
-        String realPath = REAL_PATH + fileType + "/" + systemId + "/" + userId;
-        String virtualPath="/File/"+fileType+"/"+systemId+"/"+userId+"/";
+        String path=systemId+"/"+fileType+"/"+userId+"/";
+        String realPath = REAL_PATH + path;
         Set<Files> filesSet=new HashSet<Files>();
         for (MultipartFile multipartFile:multipartFiles){
             String title = multipartFile.getOriginalFilename();
@@ -133,7 +139,7 @@ public class FilesService {
             }
             multipartFile.transferTo(new File(realPath + File.separator + fileName));
             //数据库中要保存虚拟路径，才可用于下载
-            filesSet.add(new Files(fileName,fileType,title,virtualPath,time,date));
+            filesSet.add(new Files(fileName,fileType,title,path,time,date));
         }
         return filesSet;
     }
@@ -141,9 +147,9 @@ public class FilesService {
     /**
      * 删除一个文件(file)
      */
-    public void deleteFiles(Set<Files> filesSet, String fileType, int systemId, int userId){
+    public void deleteFiles(Set<Files> filesSet){
         for (Files files:filesSet){
-            String path=REAL_PATH + fileType + "/" + systemId + "/" + userId;
+            String path=REAL_PATH + files.getPath();
             String fileName=files.getName();
             File file=new File(path,fileName);
             if (file.exists()){

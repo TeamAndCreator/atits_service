@@ -28,7 +28,7 @@
     <input type="submit" value="submit"/>
 </form>
 
-<a href="files/download?id=39" download="16计算机科学与技术1班春游策划.docx">16计算机科学与技术1班春游策划.docx</a>
+<a href="files/download?id=46" download="16计算机科学与技术1班春游策划.docx">16计算机科学与技术1班春游策划.docx</a>
 <br>
 <a href="/files/download?id=37" download="download">txt</a>
 <button></button>

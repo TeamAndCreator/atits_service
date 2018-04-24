@@ -41,7 +41,7 @@ public class FilesController {
     public String downLoad(Integer id){
         Files files=filesService.findById(id);
         String filePath=files.getPath()+files.getName();
-        return "redirect:"+filePath;
+        return "redirect:"+FilesService.getVR_PATH()+filePath;
     }
 //    @Resource
 //    FilesService filesService;
