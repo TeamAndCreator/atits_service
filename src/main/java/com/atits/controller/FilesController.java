@@ -28,15 +28,17 @@ public class FilesController {
     private FilesService filesService;
 
     /**
-     * 通过id在数据库中查找出files，
+     * 文件下载
+     * 通过id在数据库中查找出一个files对象，
      * 将files.path和files.name拼串，作为文件虚拟路径，转发该虚拟路径，即下载该文件
-     * 需在网页上添加*download*属性，否则.txt等文件会被浏览器直接解析。
+     * 需在网页上a标签添加*download*属性，否则.txt等文件会被浏览器直接解析。
+     * （由于文件保存时名称被改为uuid，原名被保存到files.title中，
+     * 所以下载时需在a标签*download*属性中填files.title以重命名）
      * @param id
-     * @param request
      * @return
      */
-    @RequestMapping(value = "download/{id}")
-    public String downLoad(@PathVariable("id") Integer id, HttpServletRequest request){
+    @RequestMapping(value = "download",method = RequestMethod.GET)
+    public String downLoad(Integer id){
         Files files=filesService.findById(id);
         String filePath=files.getPath()+files.getName();
         return "redirect:"+filePath;

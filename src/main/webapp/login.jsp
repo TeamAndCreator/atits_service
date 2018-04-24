@@ -27,9 +27,10 @@
     file<input type="file" name="multipartFiles" multiple>
     <input type="submit" value="submit"/>
 </form>
-<a href="files/download/38" download="download">ppt</a>
+
+<a href="files/download?id=39" download="16计算机科学与技术1班春游策划.docx">16计算机科学与技术1班春游策划.docx</a>
 <br>
-<a href="/files/download/37" download="download">txt</a>
+<a href="/files/download?id=37" download="download">txt</a>
 <button></button>
 </body>
 </html>

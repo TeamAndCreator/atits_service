@@ -63,6 +63,9 @@ public class ActivityController {
     @RequestMapping(value = "delete",method = RequestMethod.DELETE)
     public Msg delete(Integer id){
         try {
+            Activity activity=activityService.findById(id);
+            Set<Files> filesSet=activity.getFiles();
+            filesService.deleteFiles(filesSet,"Activity",activity.getSystem().getId(),activity.getUser().getId());
             activityService.deleteById(id);
             return Msg.success();
         }catch (Exception e){

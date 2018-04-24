@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 
 /**
@@ -26,6 +27,8 @@ public class FilesService {
 
     @Resource
     private FilesDao filesDao;// 注入dao数据
+
+    private final String REAL_PATH="C:/File/";
 
     public Files findById(Integer id){
         return filesDao.findById(id);
@@ -114,21 +117,41 @@ public class FilesService {
      */
     public Set<Files> fileSave(MultipartFile[] multipartFiles, String fileType, int systemId, int userId, String date, String time) throws IOException {
         //物理路径
-        String realpath = "C:/File/" + fileType + "/" + systemId + "/" + userId;
+        String realPath = REAL_PATH + fileType + "/" + systemId + "/" + userId;
         String virtualPath="/File/"+fileType+"/"+systemId+"/"+userId+"/";
         Set<Files> filesSet=new HashSet<Files>();
         for (MultipartFile multipartFile:multipartFiles){
-            String fileName = multipartFile.getOriginalFilename();
-            File file = new File(realpath, fileName);
+            String title = multipartFile.getOriginalFilename();
+            //获取文件后缀
+            String fileEnd = title.substring(title.lastIndexOf(".") + 1).toLowerCase();
+            //创建唯一文件名
+            String uuid= UUID.randomUUID().toString();
+            String fileName=uuid+"."+fileEnd;
+            File file = new File(realPath, fileName);
             if (!file.getParentFile().exists()) {
                 file.getParentFile().mkdirs();
             }
-            multipartFile.transferTo(new File(realpath + File.separator + fileName));
+            multipartFile.transferTo(new File(realPath + File.separator + fileName));
             //数据库中要保存虚拟路径，才可用于下载
-            filesSet.add(new Files(fileName,fileType,virtualPath,time,date));
+            filesSet.add(new Files(fileName,fileType,title,virtualPath,time,date));
         }
         return filesSet;
     }
+
+    /**
+     * 删除一个文件(file)
+     */
+    public void deleteFiles(Set<Files> filesSet, String fileType, int systemId, int userId){
+        for (Files files:filesSet){
+            String path=REAL_PATH + fileType + "/" + systemId + "/" + userId;
+            String fileName=files.getName();
+            File file=new File(path,fileName);
+            if (file.exists()){
+                file.delete();
+            }
+        }
+    }
+
 //
 //
 //    /* 批量删除： */
