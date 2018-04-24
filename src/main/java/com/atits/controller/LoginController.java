@@ -1,6 +1,7 @@
 package com.atits.controller;
 
 import com.atits.entity.Msg;
+import com.atits.entity.User;
 import com.atits.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.*;
@@ -14,19 +15,12 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 
 @Controller
-@Api(value = "product", description = "登录接口")
+@Api(description = "登录接口")
 @RequestMapping(value = "login")
 public class LoginController {
-    @Resource
-    private UserService userService;
 
 
     @ApiOperation(value="根据用户名和密码进行登录")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "username", value = "用户名", required = true,paramType = "query"),
-            @ApiImplicitParam(name = "password", value = "用户密码", required = true,paramType = "query")
-    }
-    )
     @ApiResponses({
             @ApiResponse(code= 201 ,message = "已创建"),
             @ApiResponse(code = 400, message = "请求参数填写错误 "),
@@ -36,11 +30,14 @@ public class LoginController {
     })
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
-    public Msg login(@RequestParam("username")String username,@RequestParam("password")String password) {
+    public Msg login(User user) {
         Subject currentUser = SecurityUtils.getSubject();
         if (!currentUser.isAuthenticated()) {
-            String passwordMD5 = DigestUtils.md5DigestAsHex(password.getBytes());
-            UsernamePasswordToken token = new UsernamePasswordToken(username, passwordMD5);
+            String passwordMD5 = DigestUtils.md5DigestAsHex(user.getPassword().getBytes());
+            System.out.println(passwordMD5);
+            UsernamePasswordToken token = new UsernamePasswordToken(user.getUserName(), passwordMD5);
+            token.setRememberMe(true);
+
             try {
                 currentUser.login(token);
             }catch (UnknownAccountException ua){

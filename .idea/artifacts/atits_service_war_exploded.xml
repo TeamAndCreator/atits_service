@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
   <artifact type="exploded-war" name="atits_service:war exploded">
-    <output-path>$PROJECT_DIR$/target/atits_app</output-path>
+    <output-path>$PROJECT_DIR$/target/atits_service</output-path>
     <root id="root">
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
@@ -73,7 +73,7 @@
         </element>
       </element>
       <element id="directory" name="META-INF">
-        <element id="file-copy" path="$PROJECT_DIR$/target/atits_app/META-INF/MANIFEST.MF" />
+        <element id="file-copy" path="$PROJECT_DIR$/target/atits_service/META-INF/MANIFEST.MF" />
       </element>
       <element id="javaee-facet-resources" facet="atits_service/web/Web" />
     </root>
