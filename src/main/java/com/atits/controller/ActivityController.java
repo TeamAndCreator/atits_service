@@ -39,6 +39,7 @@ public class ActivityController {
             @ApiImplicitParam(name = "user.id",value = "编辑人id",paramType = "query"),
             @ApiImplicitParam(name = "state",value = "状态",paramType = "query")
     })
+    
     @RequestMapping(value = "save",method = RequestMethod.POST)
     public Msg save(Activity activity, MultipartFile[] multipartFiles){
         try {
