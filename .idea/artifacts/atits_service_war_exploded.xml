@@ -70,6 +70,8 @@
           <element id="library" level="project" name="Maven: io.springfox:springfox-swagger-ui:2.6.1" />
           <element id="library" level="project" name="Maven: io.swagger:swagger-annotations:1.5.18" />
           <element id="library" level="project" name="Maven: commons-io:commons-io:2.4" />
+          <element id="library" level="project" name="Maven: javax.servlet:javax.servlet-api:3.1.0" />
+          <element id="library" level="project" name="Maven: org.apache.tomcat:tomcat-servlet-api:8.5.27" />
         </element>
       </element>
       <element id="directory" name="META-INF">

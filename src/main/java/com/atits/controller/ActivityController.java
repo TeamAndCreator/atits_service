@@ -16,9 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -43,6 +40,7 @@ public class ActivityController {
             @ApiImplicitParam(name = "user.id",value = "编辑人id",paramType = "query"),
             @ApiImplicitParam(name = "state",value = "状态",paramType = "query")
     })
+    
     @RequestMapping(value = "save",method = RequestMethod.POST)
     public Msg save(Activity activity, MultipartFile[] multipartFiles, HttpServletRequest request){
         try {
