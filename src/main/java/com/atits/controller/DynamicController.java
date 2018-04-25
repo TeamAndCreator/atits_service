@@ -37,7 +37,7 @@ public class DynamicController {
             dynamicService.save(dynamic);
             return Msg.success();
         }catch (Exception e){
-            return Msg.fail(e);
+            return Msg.fail(e.getMessage());
         }
     }
 
@@ -50,7 +50,7 @@ public class DynamicController {
             dynamicService.deleteById(id);
             return Msg.success();
         }catch (Exception e){
-            return Msg.fail(e);
+            return Msg.fail(e.getMessage());
         }
     }
 
@@ -62,7 +62,7 @@ public class DynamicController {
             dynamicService.deleteByIds(idList);
             return Msg.success();
         }catch (Exception e){
-            return Msg.fail(e);
+            return Msg.fail(e.getMessage());
         }
     }
 
@@ -83,7 +83,7 @@ public class DynamicController {
             dynamicService.update(dynamic);
             return Msg.success();
         }catch (Exception e){
-            return Msg.fail(e);
+            return Msg.fail(e.getMessage());
         }
     }
 
@@ -95,7 +95,7 @@ public class DynamicController {
         try {
             return Msg.success().add("dynamic",dynamicService.findById(id));
         }catch (Exception e){
-            return Msg.fail(e);
+            return Msg.fail(e.getMessage());
         }
     }
 
@@ -107,7 +107,7 @@ public class DynamicController {
             List<Dynamic> dynamics=dynamicService.findAll();
             return Msg.success().add("dynamics",dynamics);
         }catch (Exception e){
-            return Msg.fail(e);
+            return Msg.fail(e.getMessage());
         }
     }
 }

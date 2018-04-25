@@ -37,7 +37,7 @@ public class RegulationController {
             regulationService.save(regulation);
             return Msg.success();
         }catch (Exception e){
-            return Msg.fail(e);
+            return Msg.fail(e.getMessage());
         }
     }
 
@@ -50,7 +50,7 @@ public class RegulationController {
             regulationService.deleteById(id);
             return Msg.success();
         }catch (Exception e){
-            return Msg.fail(e);
+            return Msg.fail(e.getMessage());
         }
     }
 
@@ -62,7 +62,7 @@ public class RegulationController {
             regulationService.deleteByIds(idList);
             return Msg.success();
         }catch (Exception e){
-            return Msg.fail(e);
+            return Msg.fail(e.getMessage());
         }
     }
 
@@ -83,7 +83,7 @@ public class RegulationController {
             regulationService.update(regulation);
             return Msg.success();
         }catch (Exception e){
-            return Msg.fail(e);
+            return Msg.fail(e.getMessage());
         }
     }
 
@@ -95,7 +95,7 @@ public class RegulationController {
         try {
             return Msg.success().add("regulation",regulationService.findById(id));
         }catch (Exception e){
-            return Msg.fail(e);
+            return Msg.fail(e.getMessage());
         }
     }
 
@@ -107,7 +107,7 @@ public class RegulationController {
             List<Regulation> regulations=regulationService.findAll();
             return Msg.success().add("regulations",regulations);
         }catch (Exception e){
-            return Msg.fail(e);
+            return Msg.fail(e.getMessage());
         }
     }
 }

@@ -32,10 +32,10 @@ public class Msg {
 		return result;
 	}
 	
-	public static Msg fail(Exception e){
+	public static Msg fail(String msg){
 		Msg result = new Msg();
 		result.setCode(200);
-		result.setMsg(e.getMessage());
+		result.setMsg(msg);
 		return result;
 	}
 	public static Msg fail(){

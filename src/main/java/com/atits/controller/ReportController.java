@@ -37,7 +37,7 @@ public class ReportController {
             reportService.save(report);
             return Msg.success();
         }catch (Exception e){
-            return Msg.fail(e);
+            return Msg.fail(e.getMessage());
         }
     }
 
@@ -50,7 +50,7 @@ public class ReportController {
             reportService.deleteById(id);
             return Msg.success();
         }catch (Exception e){
-            return Msg.fail(e);
+            return Msg.fail(e.getMessage());
         }
     }
 
@@ -62,7 +62,7 @@ public class ReportController {
             reportService.deleteByIds(idList);
             return Msg.success();
         }catch (Exception e){
-            return Msg.fail(e);
+            return Msg.fail(e.getMessage());
         }
     }
 
@@ -83,7 +83,7 @@ public class ReportController {
             reportService.update(report);
             return Msg.success();
         }catch (Exception e){
-            return Msg.fail(e);
+            return Msg.fail(e.getMessage());
         }
     }
 
@@ -95,7 +95,7 @@ public class ReportController {
         try {
             return Msg.success().add("report",reportService.findById(id));
         }catch (Exception e){
-            return Msg.fail(e);
+            return Msg.fail(e.getMessage());
         }
     }
 
@@ -107,7 +107,7 @@ public class ReportController {
             List<Report> reports=reportService.findAll();
             return Msg.success().add("reports",reports);
         }catch (Exception e){
-            return Msg.fail(e);
+            return Msg.fail(e.getMessage());
         }
     }
 }

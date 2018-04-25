@@ -30,7 +30,7 @@ public class UserController {
             List<User> users = userService.findAll();
             return Msg.success().add("users",users);
         }catch(Exception e){
-            return Msg.fail(e);
+            return Msg.fail(e.getMessage());
         }
     }
 
