@@ -9,8 +9,9 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.Resource;
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 
@@ -27,40 +28,19 @@ public class FilesService {
     @Resource
     private FilesDao filesDao;// 注入dao数据
 
-    /* filesDao的get和set方法 */
-    public void setfilesDao(FilesDao filesDao) {
-        this.filesDao = filesDao;
+    private final String REAL_PATH="C:/File/";
+
+    private final static String VR_PATH="/File/";
+
+    public static String getVR_PATH() {
+        return VR_PATH;
     }
 
-    public void getfilesDao(FilesDao filesDao) {
-        this.filesDao = filesDao;
+    public Files findById(Integer id){
+        return filesDao.findById(id);
     }
 
-    /* 查询所有方法：findAll */
-    public List<Files> findAll() {// 与集合不同，列表通常允许重复元素
-        return filesDao.findAll();
-    }
 
-    /* 根据id进行查询 */
-    public Files findById(Integer id) {
-        return filesDao.findById(id);// 调用dao的方法
-    }
-
-    /* 根据多个id进行查询 */
-    public List<Files> findByIds(Integer[] ids) {
-        return filesDao.findByIds(ids);
-    }
-
-    /* 根据页数：进行分页 */
-    public List<Files> findByPage(int startRow, int pageSize) {
-        return filesDao.findByPage(startRow, pageSize);// 调用dao的方法
-    }
-
-    /* files:是实体类 */
-    public void save(Files files) {
-        filesDao.save(files);//
-
-    }
 
     /* files:是实体类 */
 //    public int upload(MultipartFile[] multipartFiles) throws IOException {
@@ -136,6 +116,48 @@ public class FilesService {
 //        return filesDao.getIdOfSave(files);
 //
 //    }
+
+    /**
+     * 保存一个文件（file）到服务器指定处（例如到File/Activity/system.id/user.id/fileName路径下等）
+     * 并返回一个实体类（Files）用于在上一层（例如ActivityController等）将file保存到数据库
+     */
+    public Set<Files> fileSave(MultipartFile[] multipartFiles, String fileType, int systemId, int userId, String date, String time) throws IOException {
+        //物理路径
+        String path=systemId+"/"+fileType+"/"+userId+"/";
+        String realPath = REAL_PATH + path;
+        Set<Files> filesSet=new HashSet<Files>();
+        for (MultipartFile multipartFile:multipartFiles){
+            String title = multipartFile.getOriginalFilename();
+            //获取文件后缀
+            String fileEnd = title.substring(title.lastIndexOf(".") + 1).toLowerCase();
+            //创建唯一文件名
+            String uuid= UUID.randomUUID().toString();
+            String fileName=uuid+"."+fileEnd;
+            File file = new File(realPath, fileName);
+            if (!file.getParentFile().exists()) {
+                file.getParentFile().mkdirs();
+            }
+            multipartFile.transferTo(new File(realPath + File.separator + fileName));
+            //数据库中要保存虚拟路径，才可用于下载
+            filesSet.add(new Files(fileName,fileType,title,path,time,date));
+        }
+        return filesSet;
+    }
+
+    /**
+     * 删除一个文件(file)
+     */
+    public void deleteFiles(Set<Files> filesSet){
+        for (Files files:filesSet){
+            String path=REAL_PATH + files.getPath();
+            String fileName=files.getName();
+            File file=new File(path,fileName);
+            if (file.exists()){
+                file.delete();
+            }
+        }
+    }
+
 //
 //
 //    /* 批量删除： */

@@ -16,23 +16,32 @@ public class Files {
 
     private String name;
 
-    private String type;
+    private String fileType;
 
     private String title;
 
     private String path;
 
-    private String fileType;
+    private String time;
 
-    public String getFileType() {
-        return fileType;
-    }
-
-    public void setFileType(String fileType) {
-        this.fileType = fileType;
-    }
+    private String date;
 
     private int state;
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
 
     public void setId(int id) {
         this.id = id;
@@ -50,12 +59,12 @@ public class Files {
         this.name = name;
     }
 
-    public String getType() {
-        return type;
+    public String getFileType() {
+        return fileType;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setFileType(String fileType) {
+        this.fileType = fileType;
     }
 
     public String getTitle() {
@@ -82,15 +91,27 @@ public class Files {
         this.state = state;
     }
 
+    public Files(String name, String fileType, String title, String path, String time, String date) {
+        this.name = name;
+        this.fileType = fileType;
+        this.title = title;
+        this.path = path;
+        this.time = time;
+        this.date = date;
+    }
+
+    public Files() { }
+
     @Override
     public String toString() {
         return "Files{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", type='" + type + '\'' +
+                ", fileType='" + fileType + '\'' +
                 ", title='" + title + '\'' +
                 ", path='" + path + '\'' +
-                ", fileType='" + fileType + '\'' +
+                ", time='" + time + '\'' +
+                ", date='" + date + '\'' +
                 ", state=" + state +
                 '}';
     }

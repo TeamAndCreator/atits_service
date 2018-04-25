@@ -1,6 +1,7 @@
 package com.atits.entity;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -24,7 +25,7 @@ public class Regulation {
     private String time;
 
     @OneToMany(cascade = CascadeType.ALL)
-    private Set<Files> files;
+    private Set<Files> files=new HashSet<Files>();
 
     @JoinColumn(nullable = false)
     @ManyToOne
@@ -33,6 +34,24 @@ public class Regulation {
     @JoinColumn(nullable = false)
     @ManyToOne
     private System system;
+
+    private String date;
+
+    public Set<Files> getFiles() {
+        return files;
+    }
+
+    public void setFiles(Set<Files> files) {
+        this.files = files;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
 
     private int state;
 
@@ -94,13 +113,15 @@ public class Regulation {
 
     @Override
     public String toString() {
-        return "Dynamic{" +
+        return "Regulation{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
                 ", time='" + time + '\'' +
-                ", editor=" + user +
+                ", files=" + files +
+                ", user=" + user +
                 ", system=" + system +
+                ", date='" + date + '\'' +
                 ", state=" + state +
                 '}';
     }

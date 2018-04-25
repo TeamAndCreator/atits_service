@@ -26,15 +26,9 @@ public class MyRealm extends AuthenticatingRealm {
 
         User user = userDao.findByUserName(username);
         if( user != null && user.getState() == 1) {
-            return new SimpleAuthenticationInfo(user.getId(),user.getPassword(), getName());
+            return new SimpleAuthenticationInfo(user.getUserName(),user.getPassword(), getName());
         }
-//        else
-//            if (user.getState() != 1){
-//            System.out.println("用户未激活！请联系管理员");
-//            return null;
-//        }
-        else
-            return  null;
+        return null;
     }
 
 }

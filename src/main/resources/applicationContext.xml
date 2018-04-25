@@ -60,7 +60,14 @@
          Shiro Components
          ========================================================= -->
 
-    <bean id="myRealm" class="com.atits.shiro.MyRealm"/>
+    <bean id="myRealm" class="com.atits.shiro.MyRealm">
+        <property name="credentialsMatcher">
+            <bean class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+                <property name="hashAlgorithmName" value="MD5"/>
+                <property name="hashIterations" value="1"/>
+            </bean>
+        </property>
+    </bean>
     <!--<bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">-->
 
     <!-- 缓存管理器使用 Ehcache 实现-->

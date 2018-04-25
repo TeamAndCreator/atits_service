@@ -31,7 +31,17 @@ public class Laboratory {
 
     private String time;
 
+    private String date;
+
     private int state;
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
 
     public int getId() {
         return id;
@@ -98,6 +108,7 @@ public class Laboratory {
                 ", company='" + company + '\'' +
                 ", system=" + system +
                 ", time='" + time + '\'' +
+                ", date='" + date + '\'' +
                 ", state=" + state +
                 '}';
     }

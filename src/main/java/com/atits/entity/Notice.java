@@ -2,6 +2,7 @@ package com.atits.entity;
 
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -23,7 +24,7 @@ public class Notice {
     private String time;
 
     @OneToMany(cascade = CascadeType.ALL)
-    private Set<Files> files;
+    private Set<Files> files=new HashSet<Files>();
 
     @JoinColumn(nullable = false)
     @ManyToOne
@@ -34,6 +35,24 @@ public class Notice {
     private System system;
 
     private int state;
+
+    private String date;
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public Set<Files> getFiles() {
+        return files;
+    }
+
+    public void setFiles(Set<Files> files) {
+        this.files = files;
+    }
 
     public int getState() {
         return state;
@@ -103,6 +122,7 @@ public class Notice {
                 ", user=" + user +
                 ", system=" + system +
                 ", state=" + state +
+                ", date='" + date + '\'' +
                 '}';
     }
 

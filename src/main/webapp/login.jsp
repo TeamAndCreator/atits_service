@@ -11,37 +11,26 @@
     <title>Title</title>
 </head>
 <body>
-<form action="login" method="post" id="loginForm" onsubmit="return checkLoginForm();">
-    usename:<input type="text" name="username" id="login_name"/>
+<form action="activity/save" enctype="multipart/form-data" method="post">
+    title:<input type="text" name="title" />
     <br/>
-    password:<input type="text" name="password" id="login_password"/>
+    content:<input type="text" name="content" />
     <br/>
-    <input name="sub" type="submit" value="提交"/>
-    <input name="reset" type="reset" value="重置">
+    time:<input type="text" name="time">
+    <br>
+    system.id<input type="text" name="system.id">
+    <br>
+    user.id<input type="text" name="user.id">
+    <br>
+    state<input type="text" name="state">
+    <br>
+    file<input type="file" name="multipartFiles" multiple>
+    <input type="submit" value="submit"/>
 </form>
 
-<script>
-
-    function checkLoginForm(){
-        var userAcct = $.trim($("#login_name").val());
-        var userPwd = $("#login_password").val();
-        // var errMsg = $("#login_errMsg");
-        // errMsg.html("");//？
-        var errMsg = "";
-        if(!userAcct){
-            errMsg.html("请输入用户名");
-            return false;
-        }
-        if(!userPwd){
-            errMsg.html("请输入密码");
-            return false;
-        }
-        if(userPwd.length < 6 || userPwd.length > 32){
-            errMsg.html("无效的密码");
-            return false;
-        }
-        return true;
-    }
-</script>
+<a href="files/download?id=46" download="16计算机科学与技术1班春游策划.docx">16计算机科学与技术1班春游策划.docx</a>
+<br>
+<a href="/files/download?id=37" download="download">txt</a>
+<button></button>
 </body>
 </html>
