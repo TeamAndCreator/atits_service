@@ -145,7 +145,7 @@ public class FilesService {
     }
 
     /**
-     * 删除一个文件(file)
+     * 删除一组文件(file)，不删除数据库记录，删除新闻时级联删除，用于删除新闻
      */
     public void deleteFiles(Set<Files> filesSet){
         for (Files files:filesSet){
@@ -157,7 +157,20 @@ public class FilesService {
             }
         }
     }
-
+    /**
+     * 删除一组文件(file),并删除数据库中记录，用于新闻更新
+     */
+    public void deleteDoubleFiles(Set<Files> filesSet){
+        for (Files files:filesSet){
+            filesDao.deleteById(files.getId());
+            String path=REAL_PATH + files.getPath();
+            String fileName=files.getName();
+            File file=new File(path,fileName);
+            if (file.exists()){
+                file.delete();
+            }
+        }
+    }
 //
 //
 //    /* 批量删除： */

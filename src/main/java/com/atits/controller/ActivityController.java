@@ -46,7 +46,7 @@ public class ActivityController {
             String date=GetTimeUtil.getDate();
             String time=GetTimeUtil.getTime();
             if (multipartFiles!=null){
-                Set<Files> filesSet=filesService.fileSave(multipartFiles,"Activity",activity.getSystem().getId(),activity.getUser().getId(),date,time);
+                Set<Files> filesSet=filesService.fileSave(multipartFiles,"重大活动",activity.getSystem().getId(),activity.getUser().getId(),date,time);
                 activity.setFiles(filesSet);
             }
             activity.setDate(date);
@@ -79,6 +79,11 @@ public class ActivityController {
     @RequestMapping(value = "deleteByIds",method = RequestMethod.DELETE)
     public Msg deleteByIds(@ApiParam(name = "idList",value = "需删除重大活动的id数组")@RequestParam List<Integer> idList){
         try {
+            for (Integer id:idList){
+                Activity activity=activityService.findById(id);
+                Set<Files> filesSet=activity.getFiles();
+                filesService.deleteFiles(filesSet);
+            }
             activityService.deleteByIds(idList);
             return Msg.success();
         }catch (Exception e){
@@ -98,8 +103,19 @@ public class ActivityController {
             @ApiImplicitParam(name = "state",value = "状态",paramType = "query")
     })
     @RequestMapping(value = "update",method = RequestMethod.PUT)
-    public Msg update(Activity activity){
+    public Msg update(Activity activity,MultipartFile[] multipartFiles){
         try {
+            String date=GetTimeUtil.getDate();
+            String time=GetTimeUtil.getTime();
+            //查出原文件并删除
+            Set<Files> oldFilesSet=activityService.getFiles(activity.getId());
+            filesService.deleteDoubleFiles(oldFilesSet);
+            if (multipartFiles!=null){
+                Set<Files> newFilesSet=filesService.fileSave(multipartFiles,"重大活动",activity.getSystem().getId(),activity.getUser().getId(),date,time);
+                activity.setFiles(newFilesSet);
+            }
+            activity.setDate(date);
+            activity.setTime(time);
             activityService.update(activity);
             return Msg.success();
         }catch (Exception e){

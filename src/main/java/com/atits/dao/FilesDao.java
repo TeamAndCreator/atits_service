@@ -30,4 +30,10 @@ public class FilesDao {
         return (Files) getSession().createQuery(hql).setParameter("id",id).uniqueResult();
     }
 
+
+    public void deleteById(Integer id){
+        Files files=findById(id);
+        getSession().delete(files);
+    }
+
 }

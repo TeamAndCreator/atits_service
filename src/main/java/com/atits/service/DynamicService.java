@@ -2,11 +2,13 @@ package com.atits.service;
 
 import com.atits.dao.DynamicDao;
 import com.atits.entity.Dynamic;
+import com.atits.entity.Files;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Set;
 
 @Transactional
 @Service
@@ -62,5 +64,12 @@ public class DynamicService {
     public List<Dynamic> findAll(){
         return dynamicDao.findAll();
     }
+
+    /**
+     * 查找Dynamic中的文件
+     * @param id
+     * @return
+     */
+    public Set<Files> getFiles(Integer id){return dynamicDao.getFiles(id);}
 
 }

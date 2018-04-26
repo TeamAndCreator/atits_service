@@ -2,11 +2,13 @@ package com.atits.service;
 
 import com.atits.dao.ActivityDao;
 import com.atits.entity.Activity;
+import com.atits.entity.Files;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author zys
@@ -65,4 +67,11 @@ public class ActivityService {
     public List<Activity> findAll(){
         return activityDao.findAll();
     }
+
+    /**
+     * 查找Activity中的文件
+     * @param id
+     * @return
+     */
+    public Set<Files> getFiles(Integer id){return activityDao.getFiles(id);}
 }
