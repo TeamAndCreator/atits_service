@@ -38,7 +38,7 @@ public class NoticeController {
             noticeService.save(notice);
             return Msg.success();
         }catch (Exception e){
-            return Msg.fail(e);
+            return Msg.fail(e.getMessage());
         }
     }
 
@@ -51,7 +51,7 @@ public class NoticeController {
             noticeService.deleteById(id);
             return Msg.success();
         }catch (Exception e){
-            return Msg.fail(e);
+            return Msg.fail(e.getMessage());
         }
     }
 
@@ -63,7 +63,7 @@ public class NoticeController {
             noticeService.deleteByIds(idList);
             return Msg.success();
         }catch (Exception e){
-            return Msg.fail(e);
+            return Msg.fail(e.getMessage());
         }
     }
 
@@ -84,7 +84,7 @@ public class NoticeController {
             noticeService.update(notice);
             return Msg.success();
         }catch (Exception e){
-            return Msg.fail(e);
+            return Msg.fail(e.getMessage());
         }
     }
 
@@ -96,7 +96,7 @@ public class NoticeController {
         try {
             return Msg.success().add("notice",noticeService.findById(id));
         }catch (Exception e){
-            return Msg.fail(e);
+            return Msg.fail(e.getMessage());
         }
     }
 
@@ -108,7 +108,7 @@ public class NoticeController {
             List<Notice> notices=noticeService.findAll();
             return Msg.success().add("notices",notices);
         }catch (Exception e){
-            return Msg.fail(e);
+            return Msg.fail(e.getMessage());
         }
     }
 

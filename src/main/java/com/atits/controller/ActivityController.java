@@ -54,7 +54,7 @@ public class ActivityController {
             activityService.save(activity);
             return Msg.success();
         }catch (Exception e){
-            return Msg.fail(e);
+            return Msg.fail(e.getMessage());
         }
     }
 
@@ -70,7 +70,7 @@ public class ActivityController {
             activityService.deleteById(id);
             return Msg.success();
         }catch (Exception e){
-            return Msg.fail(e);
+            return Msg.fail(e.getMessage());
         }
     }
 
@@ -87,7 +87,7 @@ public class ActivityController {
             activityService.deleteByIds(idList);
             return Msg.success();
         }catch (Exception e){
-            return Msg.fail(e);
+            return Msg.fail(e.getMessage());
         }
     }
 
@@ -119,7 +119,7 @@ public class ActivityController {
             activityService.update(activity);
             return Msg.success();
         }catch (Exception e){
-            return Msg.fail(e);
+            return Msg.fail(e.getMessage());
         }
     }
 
@@ -131,7 +131,7 @@ public class ActivityController {
         try {
             return Msg.success().add("Activity",activityService.findById(id));
         }catch (Exception e){
-            return Msg.fail(e);
+            return Msg.fail(e.getMessage());
         }
     }
 
@@ -143,7 +143,7 @@ public class ActivityController {
             List<Activity> Activitys=activityService.findAll();
             return Msg.success().add("Activitys",Activitys);
         }catch (Exception e){
-            return Msg.fail(e);
+            return Msg.fail(e.getMessage());
         }
     }
 }

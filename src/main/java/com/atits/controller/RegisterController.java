@@ -1,6 +1,7 @@
 package com.atits.controller;
 
 import com.atits.entity.Msg;
+import com.atits.entity.Role;
 import com.atits.entity.User;
 import com.atits.service.UserService;
 import io.swagger.annotations.*;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Controller
 @Api(description = "注册接口")
@@ -34,6 +37,7 @@ public class RegisterController {
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     @ResponseBody
     public Msg register(User user) {
+       System.out.println(user.toString());
         Object password = new SimpleHash("MD5", user.getPassword(), null, 1);
         user.setPassword(String.valueOf(password));
 
@@ -42,7 +46,7 @@ public class RegisterController {
             User findByUserName = this.userService.findByUserName(user.getUserName());
             if (findByUserName != null) {
                 System.out.println("用户名已存在！请重建用户名");
-                return Msg.fail();
+                return Msg.fail("用户名已存在！请重建用户名");
             }
             user.setState(2);//未激活
             try {
@@ -52,8 +56,7 @@ public class RegisterController {
                 this.userService.save(user);
             } catch (Exception e) {
                 System.out.println("保存用户信息异常！");
-                e.printStackTrace();
-                return Msg.fail();
+                return Msg.fail("保存用户信息异常！");
             }
         } catch (Exception e) {
             e.printStackTrace();

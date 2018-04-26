@@ -41,7 +41,7 @@ public class LaboratoryController {
             laboratoryService.save(laboratory);
             return Msg.success();
         }catch (Exception e){
-            return Msg.fail(e);
+            return Msg.fail(e.getMessage());
         }
     }
 
@@ -54,7 +54,7 @@ public class LaboratoryController {
             laboratoryService.deleteById(id);
             return Msg.success();
         }catch (Exception e){
-            return Msg.fail(e);
+            return Msg.fail(e.getMessage());
         }
     }
 
@@ -66,7 +66,7 @@ public class LaboratoryController {
             laboratoryService.deleteByIds(idList);
             return Msg.success();
         }catch (Exception e){
-            return Msg.fail(e);
+            return Msg.fail(e.getMessage());
         }
     }
 
@@ -90,7 +90,7 @@ public class LaboratoryController {
             laboratoryService.update(laboratory);
             return Msg.success();
         }catch (Exception e){
-            return Msg.fail(e);
+            return Msg.fail(e.getMessage());
         }
     }
 
@@ -102,7 +102,7 @@ public class LaboratoryController {
         try {
             return Msg.success().add("Laboratory",laboratoryService.findById(id));
         }catch (Exception e){
-            return Msg.fail(e);
+            return Msg.fail(e.getMessage());
         }
     }
 
@@ -115,7 +115,7 @@ public class LaboratoryController {
             List<Laboratory> laboratorys = laboratoryService.findAll();
             return Msg.success().add("Laboratory",laboratorys);
         }catch (Exception e){
-            return Msg.fail(e);
+            return Msg.fail(e.getMessage());
         }
     }
 

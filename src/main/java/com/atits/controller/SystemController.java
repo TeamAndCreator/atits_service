@@ -31,7 +31,7 @@ public class SystemController {
             systemService.save(system);
             return Msg.success();
         }catch (Exception e){
-            return Msg.fail(e);
+            return Msg.fail(e.getMessage());
         }
 
     }
@@ -45,7 +45,7 @@ public class SystemController {
             systemService.deleteById(id);
             return Msg.success();
         }catch (Exception e){
-            return Msg.fail(e);
+            return Msg.fail(e.getMessage());
         }
     }
 
@@ -57,7 +57,7 @@ public class SystemController {
             systemService.deleteByIds(idList);
             return Msg.success();
         }catch (Exception e){
-            return Msg.fail(e);
+            return Msg.fail(e.getMessage());
         }
     }
 
@@ -74,7 +74,7 @@ public class SystemController {
             systemService.update(system);
             return Msg.success();
         }catch (Exception e){
-            return Msg.fail(e);
+            return Msg.fail(e.getMessage());
         }
     }
 
@@ -86,7 +86,7 @@ public class SystemController {
         try {
             return Msg.success().add("systems",systemService.findAll());
         }catch (Exception e){
-            return Msg.fail(e);
+            return Msg.fail(e.getMessage());
         }
     }
 
@@ -100,7 +100,7 @@ public class SystemController {
             System system=systemService.findById(id);
             return Msg.success().add("system",system);
         }catch (Exception e){
-            return Msg.fail(e);
+            return Msg.fail(e.getMessage());
         }
     }
 
