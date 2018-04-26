@@ -39,7 +39,7 @@ public class StationController {
             stationService.save(station);
             return Msg.success();
         }catch (Exception e){
-            return Msg.fail(e);
+            return Msg.fail(e.getMessage());
         }
     }
 
@@ -52,7 +52,7 @@ public class StationController {
             stationService.deleteById(id);
             return Msg.success();
         }catch (Exception e){
-            return Msg.fail(e);
+            return Msg.fail(e.getMessage());
         }
     }
 
@@ -64,7 +64,7 @@ public class StationController {
             stationService.deleteByIds(idList);
             return Msg.success();
         }catch (Exception e){
-            return Msg.fail(e);
+            return Msg.fail(e.getMessage());
         }
     }
 
@@ -88,7 +88,7 @@ public class StationController {
             stationService.update(station);
             return Msg.success();
         }catch (Exception e){
-            return Msg.fail(e);
+            return Msg.fail(e.getMessage());
         }
     }
 
@@ -100,7 +100,7 @@ public class StationController {
         try {
             return Msg.success().add("station",stationService.findById(id));
         }catch (Exception e){
-            return Msg.fail(e);
+            return Msg.fail(e.getMessage());
         }
     }
 
@@ -113,7 +113,7 @@ public class StationController {
             List<Station> stations = stationService.findAll();
             return Msg.success().add("Station",stations);
         }catch (Exception e){
-            return Msg.fail(e);
+            return Msg.fail(e.getMessage());
         }
     }
 }

@@ -6,7 +6,8 @@ import io.swagger.annotations.ApiModelProperty;
 
 
 import javax.persistence.*;
-import java.util.Date;
+//import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -18,23 +19,24 @@ public class User {
     private int id;
 
     @JoinColumn(nullable = false,unique = true)
-    @ApiModelProperty(value = "用户登录账号", required = true)
     private String userName;
 
-    @ApiModelProperty(value = "用户登录密码", required = true)
     private String password;
     @ManyToOne
     private Laboratory laboratory;
     @ManyToOne
     private Station station;
     @ManyToOne
-    @JoinColumn(nullable = false)
+    @JoinColumn
     private System system;
     private String createTime;
     private int state; //1--已激活   2---未激活
     @ManyToMany
-    private Set<Role> roles;
+    private Set<Role> roles =new HashSet<>();
 
+    public User() {
+        roles.add(new Role());
+    }
 
     public Laboratory getLaboratory() {
         return laboratory;

@@ -56,19 +56,20 @@ public class LoginController {
                 currentUser.login(token);
             } catch (UnknownAccountException ua) {
                 System.out.println("未知账户！（提示：若已成功注册，请联系管理员查看用户是否已激活。）：" + ua.getMessage());
-                return Msg.fail(ua);
+                return Msg.fail("未知账户！（提示：若已成功注册，请联系管理员查看用户是否已激活。）");
             } catch (IncorrectCredentialsException ice) {
                 System.out.println("错误的凭证！：" + ice.getMessage());
-                return Msg.fail(ice);
+                return Msg.fail("错误的凭证!");
             } catch (LockedAccountException lae) {
                 System.out.println("账户已锁定！：" + lae.getMessage());
-                return Msg.fail(lae);
+                return Msg.fail("账户已锁定!");
             } catch (ExcessiveAttemptsException eae) {
                 System.out.println("错误次数过多！：" + eae.getMessage());
-                return Msg.fail(eae);
+                return Msg.fail("错误次数过多!");
             } catch (AuthenticationException ae) {
                 System.out.println("验证未通过！:" + ae.getMessage());
-                return Msg.fail();
+//                return Msg.fail();
+                return Msg.fail("验证未通过!");
             }
         }
         return Msg.success();
@@ -91,7 +92,7 @@ public class LoginController {
             try {
                 currentUser.logout();
             } catch (Exception e) {
-                return Msg.fail(e);
+                return Msg.fail(e.getMessage());
             }
         }
         return Msg.success();

@@ -37,7 +37,7 @@ public class HarvestController {
             harvestService.save(harvest);
             return Msg.success();
         }catch (Exception e){
-            return Msg.fail(e);
+            return Msg.fail(e.getMessage());
         }
     }
 
@@ -50,7 +50,7 @@ public class HarvestController {
             harvestService.deleteById(id);
             return Msg.success();
         }catch (Exception e){
-            return Msg.fail(e);
+            return Msg.fail(e.getMessage());
         }
     }
 
@@ -62,7 +62,7 @@ public class HarvestController {
             harvestService.deleteByIds(idList);
             return Msg.success();
         }catch (Exception e){
-            return Msg.fail(e);
+            return Msg.fail(e.getMessage());
         }
     }
 
@@ -83,7 +83,7 @@ public class HarvestController {
             harvestService.update(harvest);
             return Msg.success();
         }catch (Exception e){
-            return Msg.fail(e);
+            return Msg.fail(e.getMessage());
         }
     }
 
@@ -95,7 +95,7 @@ public class HarvestController {
         try {
             return Msg.success().add("harvest",harvestService.findById(id));
         }catch (Exception e){
-            return Msg.fail(e);
+            return Msg.fail(e.getMessage());
         }
     }
 
@@ -107,7 +107,7 @@ public class HarvestController {
             List<Harvest> harvests=harvestService.findAll();
             return Msg.success().add("harvests",harvests);
         }catch (Exception e){
-            return Msg.fail(e);
+            return Msg.fail(e.getMessage());
         }
     }
 }
