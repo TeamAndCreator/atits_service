@@ -11,7 +11,10 @@
     <title>Title</title>
 </head>
 <body>
-<form action="activity/save" enctype="multipart/form-data" method="post">
+<form action="activity/update" enctype="multipart/form-data" method="post">
+    <input type="hidden" name="_method" value="PUT">
+    id:<input type="text" name="id" />
+    <br/>
     title:<input type="text" name="title" />
     <br/>
     content:<input type="text" name="content" />
