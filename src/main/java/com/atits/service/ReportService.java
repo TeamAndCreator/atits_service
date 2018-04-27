@@ -35,8 +35,10 @@ public class ReportService {
      * 根据id数组批量删除Report
      * @param idList
      */
-    public void deleteByIds(List<Integer> idList){
-        reportDao.deleteByIds(idList);
+    public void deleteByIds(List<Integer> idList) {
+        for (Integer id : idList) {
+            reportDao.deleteById(id);
+        }
     }
 
     /**

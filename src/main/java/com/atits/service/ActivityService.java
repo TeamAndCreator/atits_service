@@ -40,8 +40,10 @@ public class ActivityService {
      * 根据id数组批量删除Activity
      * @param idList
      */
-    public void deleteByIds(List<Integer> idList){
-        activityDao.deleteByIds(idList);
+    public void deleteByIds(List<Integer> idList) {
+        for (Integer id : idList) {
+            activityDao.deleteById(id);
+        }
     }
 
     /**

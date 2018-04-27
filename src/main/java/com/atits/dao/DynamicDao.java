@@ -41,14 +41,6 @@ public class DynamicDao {
     }
 
     /**
-     * 根据id数组批量删除Dynamic
-     * @param idList
-     */
-    public void deleteByIds(List<Integer> idList){
-        getSession().createQuery("delete from Dynamic where id in:idList").setParameterList("idList",idList).executeUpdate();
-    }
-
-    /**
      * 更新一个Dynamic
      * @param dynamic
      */

@@ -37,8 +37,10 @@ public class DynamicService {
      * 根据id数组批量删除Dynamic
      * @param idList
      */
-    public void deleteByIds(List<Integer> idList){
-        dynamicDao.deleteByIds(idList);
+    public void deleteByIds(List<Integer> idList) {
+        for (Integer id : idList) {
+            dynamicDao.deleteById(id);
+        }
     }
 
     /**

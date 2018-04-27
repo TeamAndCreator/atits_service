@@ -39,14 +39,6 @@ public class NoticeDao {
     }
 
     /**
-     * 根据id数组批量删除Notice
-     * @param idList
-     */
-    public void deleteByIds(List<Integer> idList){
-        getSession().createQuery("delete from Notice where id in:idList").setParameterList("idList",idList).executeUpdate();
-    }
-
-    /**
      * 更新一个Notice
      * @param notice
      */

@@ -36,7 +36,9 @@ public class RegulationService {
      * @param idList
      */
     public void deleteByIds(List<Integer> idList){
-        regulationDao.deleteByIds(idList);
+        for (Integer id:idList){
+            regulationDao.deleteById(id);
+        }
     }
 
     /**
