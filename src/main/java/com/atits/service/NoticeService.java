@@ -39,8 +39,10 @@ public class NoticeService {
      * 根据id数组批量删除Notice
      * @param idList
      */
-    public void deleteByIds(List<Integer> idList){
-        noticeDao.deleteByIds(idList);
+    public void deleteByIds(List<Integer> idList) {
+        for (Integer id : idList) {
+            noticeDao.deleteById(id);
+        }
     }
 
     /**
