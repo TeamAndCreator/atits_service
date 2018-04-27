@@ -11,7 +11,14 @@
     <title>Title</title>
 </head>
 <body>
+<<<<<<< HEAD
 <form action="dynamic/save" enctype="multipart/form-data" method="post">
+=======
+<form action="activity/update" enctype="multipart/form-data" method="post">
+    <input type="hidden" name="_method" value="PUT">
+    id:<input type="text" name="id" />
+    <br/>
+>>>>>>> f2c36d32bc8432ed15e6550b1be665d11995a0aa
     title:<input type="text" name="title" />
     <br/>
     content:<input type="text" name="content" />

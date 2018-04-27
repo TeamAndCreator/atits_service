@@ -8,10 +8,7 @@ import com.atits.service.FilesService;
 import com.atits.utils.GetTimeUtil;
 import io.swagger.annotations.*;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
@@ -103,6 +100,7 @@ public class ActivityController {
             @ApiImplicitParam(name = "state",value = "状态",paramType = "query")
     })
     @RequestMapping(value = "update",method = RequestMethod.PUT)
+<<<<<<< HEAD
     public Msg update(Activity activity,MultipartFile[] multipartFiles){
         try {
             String date=GetTimeUtil.getDate();
@@ -116,6 +114,17 @@ public class ActivityController {
             }
             activity.setDate(date);
             activity.setTime(time);
+=======
+    public Msg update(Activity activity, MultipartFile[] multipartFiles){
+        System.out.println(activity.toString());
+        try {
+            String date=GetTimeUtil.getDate();
+            String time=GetTimeUtil.getTime();
+            if (multipartFiles!=null){
+                Set<Files> filesSet=filesService.fileSave(multipartFiles,"Activity",activity.getSystem().getId(),activity.getUser().getId(),date,time);
+                activity.setFiles(filesSet);
+            }
+>>>>>>> f2c36d32bc8432ed15e6550b1be665d11995a0aa
             activityService.update(activity);
             return Msg.success();
         }catch (Exception e){
