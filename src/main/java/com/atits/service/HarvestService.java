@@ -36,7 +36,9 @@ public class HarvestService {
      * @param idList
      */
     public void deleteByIds(List<Integer> idList){
-        harvestDao.deleteByIds(idList);
+        for (Integer id:idList){
+            harvestDao.deleteById(id);
+        }
     }
 
     /**

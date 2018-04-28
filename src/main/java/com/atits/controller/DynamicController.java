@@ -1,17 +1,22 @@
 package com.atits.controller;
 
 import com.atits.entity.Dynamic;
+import com.atits.entity.Files;
 import com.atits.entity.Msg;
 import com.atits.service.DynamicService;
+import com.atits.service.FilesService;
+import com.atits.utils.GetTimeUtil;
 import io.swagger.annotations.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @Api(description = "体系动态")
@@ -19,6 +24,9 @@ import java.util.List;
 public class DynamicController {
     @Resource
     private DynamicService dynamicService;
+
+    @Resource
+    private FilesService filesService;
 
     @ResponseBody
     @ApiOperation(value = "增加一个体系动态")
@@ -31,9 +39,18 @@ public class DynamicController {
             @ApiImplicitParam(name = "user.id",value = "编辑人id",paramType = "query"),
             @ApiImplicitParam(name = "state",value = "状态",paramType = "query")
     })
+
     @RequestMapping(value = "save",method = RequestMethod.POST)
-    public Msg save(Dynamic dynamic){
+    public Msg save(Dynamic dynamic, MultipartFile[] multipartFiles){
         try {
+            String date=GetTimeUtil.getDate();
+            String time=GetTimeUtil.getTime();
+            if (multipartFiles!=null){
+                Set<Files> filesSet=filesService.fileSave(multipartFiles,"体系动态",dynamic.getSystem().getId(),dynamic.getUser().getId(),date,time);
+                dynamic.setFiles(filesSet);
+            }
+            dynamic.setDate(date);
+            dynamic.setTime(time);
             dynamicService.save(dynamic);
             return Msg.success();
         }catch (Exception e){
@@ -47,6 +64,9 @@ public class DynamicController {
     @RequestMapping(value = "delete",method = RequestMethod.DELETE)
     public Msg delete(Integer id){
         try {
+            Dynamic dynamic=dynamicService.findById(id);
+            Set<Files> filesSet=dynamic.getFiles();
+            filesService.deleteFiles(filesSet);
             dynamicService.deleteById(id);
             return Msg.success();
         }catch (Exception e){
@@ -59,6 +79,11 @@ public class DynamicController {
     @RequestMapping(value = "deleteByIds",method = RequestMethod.DELETE)
     public Msg deleteByIds(@ApiParam(name = "idList",value = "需删除体系动态的id数组")@RequestParam List<Integer> idList){
         try {
+            for (Integer id:idList){
+                Dynamic dynamic=dynamicService.findById(id);
+                Set<Files> filesSet=dynamic.getFiles();
+                filesService.deleteFiles(filesSet);
+            }
             dynamicService.deleteByIds(idList);
             return Msg.success();
         }catch (Exception e){
@@ -78,8 +103,19 @@ public class DynamicController {
             @ApiImplicitParam(name = "state",value = "状态",paramType = "query")
     })
     @RequestMapping(value = "update",method = RequestMethod.PUT)
-    public Msg update(Dynamic dynamic){
+    public Msg update(Dynamic dynamic,MultipartFile[] multipartFiles){
         try {
+            String date=GetTimeUtil.getDate();
+            String time=GetTimeUtil.getTime();
+            //查出原文件并删除
+            Set<Files> oldFilesSet=dynamicService.getFiles(dynamic.getId());
+            filesService.deleteDoubleFiles(oldFilesSet);
+            if (multipartFiles!=null){
+                Set<Files> newFilesSet=filesService.fileSave(multipartFiles,"体系动态",dynamic.getSystem().getId(),dynamic.getUser().getId(),date,time);
+                dynamic.setFiles(newFilesSet);
+            }
+            dynamic.setDate(date);
+            dynamic.setTime(time);
             dynamicService.update(dynamic);
             return Msg.success();
         }catch (Exception e){
