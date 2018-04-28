@@ -122,6 +122,7 @@ public class Activity {
                 ", user=" + user +
                 ", system=" + system +
                 ", state=" + state +
+                ", date='" + date + '\'' +
                 '}';
     }
 }

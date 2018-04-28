@@ -1,12 +1,14 @@
 package com.atits.service;
 
 import com.atits.dao.HarvestDao;
+import com.atits.entity.Files;
 import com.atits.entity.Harvest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Set;
 
 @Transactional
 @Service
@@ -64,4 +66,12 @@ public class HarvestService {
     public List<Harvest> findAll(){
         return harvestDao.findAll();
     }
+
+    /**
+     * 查找Dynamic中的文件
+     * @param id
+     * @return
+     */
+    public Set<Files> getFiles(Integer id){return harvestDao.getFiles(id);}
+
 }
