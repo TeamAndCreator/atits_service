@@ -39,12 +39,12 @@ public class UserDao {
 
 
     public User findByUserName(String username) {
-        String hql = "from t_user where userName=:username";
+        String hql = "from User where userName=:username";
         return (User) getSession().createQuery(hql).setParameter("username", username).uniqueResult();
     }
 
     public User findById(int id) {
-        String hql = "from t_user where id=:id";
+        String hql = "from User where id=:id";
         return (User) getSession().createQuery(hql).setParameter("id", id).uniqueResult();
     }
 
