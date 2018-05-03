@@ -1,20 +1,18 @@
 package com.atits.service;
 
 import com.atits.dao.NoticeDao;
+import com.atits.entity.Files;
 import com.atits.entity.Notice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Set;
 
-/**
- * @author zys
- */
 @Transactional
 @Service
 public class NoticeService {
-
     @Resource
     private NoticeDao noticeDao;
 
@@ -68,4 +66,12 @@ public class NoticeService {
     public List<Notice> findAll(){
         return noticeDao.findAll();
     }
+
+    /**
+     * 查找Notice中的文件
+     * @param id
+     * @return
+     */
+    public Set<Files> getFiles(Integer id){return noticeDao.getFiles(id);}
+
 }

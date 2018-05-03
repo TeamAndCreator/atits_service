@@ -1,24 +1,33 @@
 package com.atits.controller;
 
-import com.atits.entity.Msg;
 import com.atits.entity.Report;
+import com.atits.entity.Files;
+import com.atits.entity.Msg;
 import com.atits.service.ReportService;
+import com.atits.service.FilesService;
+import com.atits.utils.GetTimeUtil;
 import io.swagger.annotations.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @Api(description = "重大文件")
 @RequestMapping(value = "report")
 public class ReportController {
+
     @Resource
     private ReportService reportService;
+
+    @Resource
+    private FilesService filesService;
 
     @ResponseBody
     @ApiOperation(value = "增加一个重大文件")
@@ -32,8 +41,16 @@ public class ReportController {
             @ApiImplicitParam(name = "state",value = "状态",paramType = "query")
     })
     @RequestMapping(value = "save",method = RequestMethod.POST)
-    public Msg save(Report report){
+    public Msg save(Report report, MultipartFile[] multipartFiles){
         try {
+            String date= GetTimeUtil.getDate();
+            String time=GetTimeUtil.getTime();
+            if (!multipartFiles[0].isEmpty()){
+                Set<Files> filesSet=filesService.fileSave(multipartFiles,"重大文件",report.getSystem().getId(),report.getUser().getId(),date,time);
+                report.setFiles(filesSet);
+            }
+            report.setDate(date);
+            report.setTime(time);
             reportService.save(report);
             return Msg.success();
         }catch (Exception e){
@@ -47,6 +64,9 @@ public class ReportController {
     @RequestMapping(value = "delete",method = RequestMethod.DELETE)
     public Msg delete(Integer id){
         try {
+            Report report=reportService.findById(id);
+            Set<Files> filesSet=report.getFiles();
+            filesService.deleteFiles(filesSet);
             reportService.deleteById(id);
             return Msg.success();
         }catch (Exception e){
@@ -59,6 +79,11 @@ public class ReportController {
     @RequestMapping(value = "deleteByIds",method = RequestMethod.DELETE)
     public Msg deleteByIds(@ApiParam(name = "idList",value = "需删除重大文件的id数组")@RequestParam List<Integer> idList){
         try {
+            for (Integer id:idList){
+                Report report=reportService.findById(id);
+                Set<Files> filesSet=report.getFiles();
+                filesService.deleteFiles(filesSet);
+            }
             reportService.deleteByIds(idList);
             return Msg.success();
         }catch (Exception e){
@@ -78,8 +103,19 @@ public class ReportController {
             @ApiImplicitParam(name = "state",value = "状态",paramType = "query")
     })
     @RequestMapping(value = "update",method = RequestMethod.PUT)
-    public Msg update(Report report){
+    public Msg update(Report report,MultipartFile[] multipartFiles){
         try {
+            String date=GetTimeUtil.getDate();
+            String time=GetTimeUtil.getTime();
+            //查出原文件并删除
+            Set<Files> oldFilesSet=reportService.getFiles(report.getId());
+            filesService.deleteDoubleFiles(oldFilesSet);
+            if (!multipartFiles[0].isEmpty()){
+                Set<Files> newFilesSet=filesService.fileSave(multipartFiles,"重大文件",report.getSystem().getId(),report.getUser().getId(),date,time);
+                report.setFiles(newFilesSet);
+            }
+            report.setDate(date);
+            report.setTime(time);
             reportService.update(report);
             return Msg.success();
         }catch (Exception e){

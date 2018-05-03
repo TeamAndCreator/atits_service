@@ -39,13 +39,12 @@ public class DynamicController {
             @ApiImplicitParam(name = "user.id",value = "编辑人id",paramType = "query"),
             @ApiImplicitParam(name = "state",value = "状态",paramType = "query")
     })
-
     @RequestMapping(value = "save",method = RequestMethod.POST)
     public Msg save(Dynamic dynamic, MultipartFile[] multipartFiles){
         try {
             String date=GetTimeUtil.getDate();
             String time=GetTimeUtil.getTime();
-            if (multipartFiles!=null){
+            if (!multipartFiles[0].isEmpty()){
                 Set<Files> filesSet=filesService.fileSave(multipartFiles,"体系动态",dynamic.getSystem().getId(),dynamic.getUser().getId(),date,time);
                 dynamic.setFiles(filesSet);
             }
@@ -110,7 +109,7 @@ public class DynamicController {
             //查出原文件并删除
             Set<Files> oldFilesSet=dynamicService.getFiles(dynamic.getId());
             filesService.deleteDoubleFiles(oldFilesSet);
-            if (multipartFiles!=null){
+            if (!multipartFiles[0].isEmpty()){
                 Set<Files> newFilesSet=filesService.fileSave(multipartFiles,"体系动态",dynamic.getSystem().getId(),dynamic.getUser().getId(),date,time);
                 dynamic.setFiles(newFilesSet);
             }

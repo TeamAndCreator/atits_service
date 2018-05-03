@@ -1,12 +1,14 @@
 package com.atits.service;
 
 import com.atits.dao.RegulationDao;
+import com.atits.entity.Files;
 import com.atits.entity.Regulation;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Set;
 
 @Transactional
 @Service
@@ -64,4 +66,12 @@ public class RegulationService {
     public List<Regulation> findAll(){
         return regulationDao.findAll();
     }
+
+    /**
+     * 查找Regulation中的文件
+     * @param id
+     * @return
+     */
+    public Set<Files> getFiles(Integer id){return regulationDao.getFiles(id);}
+
 }

@@ -1,24 +1,33 @@
 package com.atits.controller;
 
+import com.atits.entity.Files;
 import com.atits.entity.Msg;
 import com.atits.entity.Regulation;
+import com.atits.service.FilesService;
 import com.atits.service.RegulationService;
+import com.atits.utils.GetTimeUtil;
 import io.swagger.annotations.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @Api(description = "规章制度")
 @RequestMapping(value = "regulation")
 public class RegulationController {
+
     @Resource
     private RegulationService regulationService;
+
+    @Resource
+    private FilesService filesService;
 
     @ResponseBody
     @ApiOperation(value = "增加一个规章制度")
@@ -32,8 +41,16 @@ public class RegulationController {
             @ApiImplicitParam(name = "state",value = "状态",paramType = "query")
     })
     @RequestMapping(value = "save",method = RequestMethod.POST)
-    public Msg save(Regulation regulation){
+    public Msg save(Regulation regulation, MultipartFile[] multipartFiles){
         try {
+            String date= GetTimeUtil.getDate();
+            String time=GetTimeUtil.getTime();
+            if (!multipartFiles[0].isEmpty()){
+                Set<Files> filesSet=filesService.fileSave(multipartFiles,"规章制度",regulation.getSystem().getId(),regulation.getUser().getId(),date,time);
+                regulation.setFiles(filesSet);
+            }
+            regulation.setDate(date);
+            regulation.setTime(time);
             regulationService.save(regulation);
             return Msg.success();
         }catch (Exception e){
@@ -47,6 +64,9 @@ public class RegulationController {
     @RequestMapping(value = "delete",method = RequestMethod.DELETE)
     public Msg delete(Integer id){
         try {
+            Regulation regulation=regulationService.findById(id);
+            Set<Files> filesSet=regulation.getFiles();
+            filesService.deleteFiles(filesSet);
             regulationService.deleteById(id);
             return Msg.success();
         }catch (Exception e){
@@ -59,6 +79,11 @@ public class RegulationController {
     @RequestMapping(value = "deleteByIds",method = RequestMethod.DELETE)
     public Msg deleteByIds(@ApiParam(name = "idList",value = "需删除规章制度的id数组")@RequestParam List<Integer> idList){
         try {
+            for (Integer id:idList){
+                Regulation regulation=regulationService.findById(id);
+                Set<Files> filesSet=regulation.getFiles();
+                filesService.deleteFiles(filesSet);
+            }
             regulationService.deleteByIds(idList);
             return Msg.success();
         }catch (Exception e){
@@ -78,8 +103,19 @@ public class RegulationController {
             @ApiImplicitParam(name = "state",value = "状态",paramType = "query")
     })
     @RequestMapping(value = "update",method = RequestMethod.PUT)
-    public Msg update(Regulation regulation){
+    public Msg update(Regulation regulation,MultipartFile[] multipartFiles){
         try {
+            String date=GetTimeUtil.getDate();
+            String time=GetTimeUtil.getTime();
+            //查出原文件并删除
+            Set<Files> oldFilesSet=regulationService.getFiles(regulation.getId());
+            filesService.deleteDoubleFiles(oldFilesSet);
+            if (!multipartFiles[0].isEmpty()){
+                Set<Files> newFilesSet=filesService.fileSave(multipartFiles,"规章制度",regulation.getSystem().getId(),regulation.getUser().getId(),date,time);
+                regulation.setFiles(newFilesSet);
+            }
+            regulation.setDate(date);
+            regulation.setTime(time);
             regulationService.update(regulation);
             return Msg.success();
         }catch (Exception e){

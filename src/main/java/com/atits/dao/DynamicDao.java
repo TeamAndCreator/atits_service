@@ -66,7 +66,7 @@ public class DynamicDao {
         return (Dynamic) getSession().createQuery(hql).setParameter("id",id).uniqueResult();
     }
     /**
-     * 根据activity的id查找其files
+     * 根据Dynamic的id查找其files
      * 用于更新文件
      */
     public Set<Files> getFiles(Integer id){
