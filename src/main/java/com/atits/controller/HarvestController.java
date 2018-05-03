@@ -1,24 +1,33 @@
 package com.atits.controller;
 
 import com.atits.entity.Harvest;
+import com.atits.entity.Files;
 import com.atits.entity.Msg;
 import com.atits.service.HarvestService;
+import com.atits.service.FilesService;
+import com.atits.utils.GetTimeUtil;
 import io.swagger.annotations.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @Api(description = "重大成果")
 @RequestMapping(value = "harvest")
 public class HarvestController {
+
     @Resource
     private HarvestService harvestService;
+
+    @Resource
+    private FilesService filesService;
 
     @ResponseBody
     @ApiOperation(value = "增加一个重大成果")
@@ -32,8 +41,16 @@ public class HarvestController {
             @ApiImplicitParam(name = "state",value = "状态",paramType = "query")
     })
     @RequestMapping(value = "save",method = RequestMethod.POST)
-    public Msg save(Harvest harvest){
+    public Msg save(Harvest harvest, MultipartFile[] multipartFiles){
         try {
+            String date= GetTimeUtil.getDate();
+            String time=GetTimeUtil.getTime();
+            if (!multipartFiles[0].isEmpty()){
+                Set<Files> filesSet=filesService.fileSave(multipartFiles,"重大成果",harvest.getSystem().getId(),harvest.getUser().getId(),date,time);
+                harvest.setFiles(filesSet);
+            }
+            harvest.setDate(date);
+            harvest.setTime(time);
             harvestService.save(harvest);
             return Msg.success();
         }catch (Exception e){
@@ -47,6 +64,9 @@ public class HarvestController {
     @RequestMapping(value = "delete",method = RequestMethod.DELETE)
     public Msg delete(Integer id){
         try {
+            Harvest harvest=harvestService.findById(id);
+            Set<Files> filesSet=harvest.getFiles();
+            filesService.deleteFiles(filesSet);
             harvestService.deleteById(id);
             return Msg.success();
         }catch (Exception e){
@@ -59,6 +79,11 @@ public class HarvestController {
     @RequestMapping(value = "deleteByIds",method = RequestMethod.DELETE)
     public Msg deleteByIds(@ApiParam(name = "idList",value = "需删除重大成果的id数组")@RequestParam List<Integer> idList){
         try {
+            for (Integer id:idList){
+                Harvest harvest=harvestService.findById(id);
+                Set<Files> filesSet=harvest.getFiles();
+                filesService.deleteFiles(filesSet);
+            }
             harvestService.deleteByIds(idList);
             return Msg.success();
         }catch (Exception e){
@@ -78,8 +103,19 @@ public class HarvestController {
             @ApiImplicitParam(name = "state",value = "状态",paramType = "query")
     })
     @RequestMapping(value = "update",method = RequestMethod.PUT)
-    public Msg update(Harvest harvest){
+    public Msg update(Harvest harvest,MultipartFile[] multipartFiles){
         try {
+            String date=GetTimeUtil.getDate();
+            String time=GetTimeUtil.getTime();
+            //查出原文件并删除
+            Set<Files> oldFilesSet=harvestService.getFiles(harvest.getId());
+            filesService.deleteDoubleFiles(oldFilesSet);
+            if (!multipartFiles[0].isEmpty()){
+                Set<Files> newFilesSet=filesService.fileSave(multipartFiles,"重大成果",harvest.getSystem().getId(),harvest.getUser().getId(),date,time);
+                harvest.setFiles(newFilesSet);
+            }
+            harvest.setDate(date);
+            harvest.setTime(time);
             harvestService.update(harvest);
             return Msg.success();
         }catch (Exception e){

@@ -12,7 +12,7 @@
 </head>
 <body>
 <h1>Hello Page</h1>
-    <form action="dynamic/update" enctype="multipart/form-data" method="post">
+    <form action="report/update" enctype="multipart/form-data" method="post">
         <input type="hidden" name="_method" value="PUT">
         id:<input type="text" name="id" />
         <br/>

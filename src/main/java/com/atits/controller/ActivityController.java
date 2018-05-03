@@ -42,7 +42,7 @@ public class ActivityController {
         try {
             String date=GetTimeUtil.getDate();
             String time=GetTimeUtil.getTime();
-            if (multipartFiles!=null){
+            if (!multipartFiles[0].isEmpty()){
                 Set<Files> filesSet=filesService.fileSave(multipartFiles,"重大活动",activity.getSystem().getId(),activity.getUser().getId(),date,time);
                 activity.setFiles(filesSet);
             }
@@ -107,7 +107,7 @@ public class ActivityController {
             //查出原文件并删除
             Set<Files> oldFilesSet=activityService.getFiles(activity.getId());
             filesService.deleteDoubleFiles(oldFilesSet);
-            if (multipartFiles!=null){
+            if (!multipartFiles[0].isEmpty()){
                 Set<Files> newFilesSet=filesService.fileSave(multipartFiles,"重大活动",activity.getSystem().getId(),activity.getUser().getId(),date,time);
                 activity.setFiles(newFilesSet);
             }
