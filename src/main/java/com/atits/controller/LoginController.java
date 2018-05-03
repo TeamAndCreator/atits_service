@@ -1,5 +1,10 @@
 package com.atits.controller;
 
+import com.atits.entity.Station;
+import com.atits.entity.User;
+import com.atits.entity.Msg;
+import com.atits.service.StationService;
+import com.atits.service.UserService;
 import com.atits.entity.Msg;
 import com.atits.entity.User;
 import com.atits.service.UserService;
@@ -63,12 +68,12 @@ public class LoginController {
                 return Msg.fail("错误次数过多!");
             } catch (AuthenticationException ae) {
                 System.out.println("验证未通过！:" + ae.getMessage());
+//                return Msg.fail();
                 return Msg.fail("验证未通过!");
             }
         }
         return Msg.success();
     }
-
 
     @ApiOperation(value = "用户退出登录")
     @ApiResponses({
