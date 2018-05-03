@@ -23,17 +23,13 @@ public class TestManage {
     @JoinColumn
     private User examedner; //被评分人
 
-    private String examinerOfJob;//评分人的职位
-
-    private String examednerOfJob; //被评分人的职位
-
     @ManyToOne
     @JoinColumn
     private System system;
 
     private String date;//考评日期
 
-    private int mstate;//考评状态：0是未考评，1是已考评
+    private int state;//考评状态：0是未考评，1是已考评
 
     public int getId() {
         return id;
@@ -67,22 +63,6 @@ public class TestManage {
         this.examedner = examedner;
     }
 
-    public String getExaminerOfJob() {
-        return examinerOfJob;
-    }
-
-    public void setExaminerOfJob(String examinerOfJob) {
-        this.examinerOfJob = examinerOfJob;
-    }
-
-    public String getExamednerOfJob() {
-        return examednerOfJob;
-    }
-
-    public void setExamednerOfJob(String examednerOfJob) {
-        this.examednerOfJob = examednerOfJob;
-    }
-
     public System getSystem() {
         return system;
     }
@@ -99,12 +79,12 @@ public class TestManage {
         this.date = date;
     }
 
-    public int getMstate() {
-        return mstate;
+    public int getState() {
+        return state;
     }
 
-    public void setMstate(int mstate) {
-        this.mstate = mstate;
+    public void setState(int state) {
+        this.state = state;
     }
 
     @Override
@@ -114,11 +94,9 @@ public class TestManage {
                 ", year='" + year + '\'' +
                 ", examiner=" + examiner +
                 ", examedner=" + examedner +
-                ", examinerOfJob='" + examinerOfJob + '\'' +
-                ", examednerOfJob='" + examednerOfJob + '\'' +
                 ", system=" + system +
                 ", date='" + date + '\'' +
-                ", mstate=" + mstate +
+                ", state=" + state +
                 '}';
     }
 }

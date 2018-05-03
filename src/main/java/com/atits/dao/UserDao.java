@@ -24,10 +24,9 @@ public class UserDao {
     /**
      * 查找所有user
      */
-    public List<User> findAll() {
-        String hql = "from t_user ";
-        List list = getSession().createQuery(hql).list();
-        return list;
+    public List findAll() {
+        String hql = "from User ";
+        return getSession().createQuery(hql).list();
     }
 
     /**
