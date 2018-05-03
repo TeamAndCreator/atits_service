@@ -3,6 +3,12 @@
     <output-path>$PROJECT_DIR$/target</output-path>
     <root id="archive" name="atits_service.war">
       <element id="artifact" artifact-name="atits_service:war exploded" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="Maven: org.hamcrest:hamcrest-core:1.3" />
+          <element id="library" level="project" name="Maven: junit:junit:4.12" />
+        </element>
+      </element>
     </root>
   </artifact>
 </component>

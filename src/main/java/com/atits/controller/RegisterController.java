@@ -52,7 +52,8 @@ public class RegisterController {
             try {
                 Date time = new Date();
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-                user.setTime(dateFormat.format(time));
+                user.setCreateTime(dateFormat.format(time));
+//                user.setTime(dateFormat.format(time));
                 this.userService.save(user);
             } catch (Exception e) {
                 System.out.println("保存用户信息异常！");

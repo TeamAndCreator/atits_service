@@ -20,6 +20,7 @@ public class Msg {
 	//提示信息
 	@ApiModelProperty(value = "提示信息")
 	private String msg;
+
 	
 	//用户要返回给浏览器的数据
 	@ApiModelProperty(value = "返回的数据")
