@@ -51,6 +51,11 @@ public class System {
         this.overView = overView;
     }
 
+    public System(int id,String systemName) {
+        this.systemName = systemName;
+        this.id=id;
+    }
+    public System(){}
 
     @Override
     public String toString() {
