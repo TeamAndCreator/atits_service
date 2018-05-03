@@ -22,6 +22,7 @@ import java.util.Set;
 @Api(description = "重大成果")
 @RequestMapping(value = "harvest")
 public class HarvestController {
+
     @Resource
     private HarvestService harvestService;
 
