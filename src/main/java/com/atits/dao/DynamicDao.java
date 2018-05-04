@@ -75,4 +75,22 @@ public class DynamicDao {
         Set<Files> filesSet=new HashSet(list);
         return filesSet;
     }
+
+    /**
+     * 分页
+     */
+    public List findPage(int startRow,int pageSize){
+        String hql="select new Dynamic(id,title) from Dynamic order by id";
+        return getSession().createQuery(hql).setFirstResult(startRow).setMaxResults(pageSize).list();
+    }
+
+    /**
+     * 获取个数
+     */
+    public int getCount(){
+        String hql="select count(*) from Dynamic ";
+        Long temp=(long)getSession().createQuery(hql).uniqueResult();
+        int count=temp.intValue();
+        return count;
+    }
 }

@@ -111,6 +111,13 @@ public class Dynamic {
         this.files = files;
     }
 
+    public Dynamic(){}
+
+    public Dynamic(int id , String title){
+        this.id=id;
+        this.title=title;
+    }
+
     @Override
     public String toString() {
         return "Dynamic{" +
