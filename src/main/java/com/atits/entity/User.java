@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 
 import javax.persistence.*;
+//import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -28,8 +29,8 @@ public class User {
     @ManyToOne
     @JoinColumn
     private System system;
-    private String time;
-    private int state;
+    private String createTime;
+    private int state; //1--已激活   2---未激活
     @ManyToMany
     private Set<Role> roles =new HashSet<>();
 
@@ -61,12 +62,12 @@ public class User {
         this.system = system;
     }
 
-    public String getTime() {
-        return time;
+    public String getCreateTime() {
+        return createTime;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
     }
 
     public int getState() {
@@ -118,7 +119,7 @@ public class User {
                 ", laboratory=" + laboratory +
                 ", station=" + station +
                 ", system=" + system+
-                ", time='" + time + '\'' +
+                ", time='" + createTime + '\'' +
                 ", state=" + state +
                 ", roles=" + roles +
                 '}';
