@@ -74,4 +74,18 @@ public class RegulationService {
      */
     public Set<Files> getFiles(Integer id){return regulationDao.getFiles(id);}
 
+    /**
+     * 分页
+     */
+    public List findPage(int startRow,int pageSize){
+        return regulationDao.findPage(startRow,pageSize);
+    }
+
+    /**
+     * 获取个数
+     */
+    public int getCount(){
+        return regulationDao.getCount();
+    }
+
 }

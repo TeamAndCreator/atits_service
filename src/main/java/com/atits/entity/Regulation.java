@@ -111,6 +111,13 @@ public class Regulation {
         this.state = state;
     }
 
+    public Regulation(){}
+
+    public Regulation(int id , String title){
+        this.id=id;
+        this.title=title;
+    }
+
     @Override
     public String toString() {
         return "Regulation{" +

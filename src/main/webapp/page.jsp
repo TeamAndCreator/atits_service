@@ -11,14 +11,14 @@
     <title>Title</title>
 </head>
 <body>
-    <form action="harvest/findPage" method="get">
+    <form action="report/findPage" method="get">
         page:<input name="page" type="text">
         <br>
         <input type="submit" name="sub">
 
     </form>
     <br>
-    <a href="harvest/findPage?page=2">2</a>
+    <a href="report/findPage?page=2">2</a>
 
 </body>
 </html>
