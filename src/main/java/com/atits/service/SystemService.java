@@ -62,4 +62,18 @@ public class SystemService {
     public List<System> findAll(){
         return systemDao.findAll();
     }
+
+    /**
+     * 分页
+     */
+    public List findPage(int startRow,int pageSize){
+        return systemDao.findPage(startRow,pageSize);
+    }
+
+    /**
+     * 获取个数
+     */
+    public int getCount(){
+        return systemDao.getCount();
+    }
 }
