@@ -87,6 +87,13 @@ public class Station {
         this.state = state;
     }
 
+    public Station(){}
+
+    public Station(int id , String staName){
+        this.id=id;
+        this.staName=staName;
+    }
+
     @Override
     public String toString() {
         return "Station{" +

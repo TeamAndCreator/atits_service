@@ -11,14 +11,14 @@
     <title>Title</title>
 </head>
 <body>
-    <form action="report/findPage" method="get">
+    <form action="station/findPage" method="get">
         page:<input name="page" type="text">
         <br>
         <input type="submit" name="sub">
 
     </form>
     <br>
-    <a href="report/findPage?page=2">2</a>
+    <a href="station/findPage?page=2">2</a>
 
 </body>
 </html>
