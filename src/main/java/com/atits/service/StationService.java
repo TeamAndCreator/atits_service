@@ -64,4 +64,17 @@ public class StationService {
         return stationDao.findAll();
     }
 
+    /**
+     * 分页
+     */
+    public List findPage(int startRow,int pageSize){
+        return stationDao.findPage(startRow,pageSize);
+    }
+
+    /**
+     * 获取个数
+     */
+    public int getCount(){
+        return stationDao.getCount();
+    }
 }

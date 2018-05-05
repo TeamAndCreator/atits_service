@@ -76,4 +76,22 @@ public class NoticeDao {
         Set<Files> filesSet=new HashSet(list);
         return filesSet;
     }
+
+    /**
+     * 分页
+     */
+    public List findPage(int startRow,int pageSize){
+        String hql="select new Notice (id,title)from Notice order by id";
+        return getSession().createQuery(hql).setFirstResult(startRow).setMaxResults(pageSize).list();
+    }
+
+    /**
+     * 获取个数
+     */
+    public int getCount(){
+        String hql="select count(*) from Notice ";
+        Long temp=(long)getSession().createQuery(hql).uniqueResult();
+        int count=temp.intValue();
+        return count;
+    }
 }

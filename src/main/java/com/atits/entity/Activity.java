@@ -111,6 +111,12 @@ public class Activity {
         this.state = state;
     }
 
+    public Activity(int id , String title){
+        this.id=id;
+        this.title=title;
+    }
+    public Activity(){}
+
     @Override
     public String toString() {
         return "Activity{" +

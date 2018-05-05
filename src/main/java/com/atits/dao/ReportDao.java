@@ -76,4 +76,22 @@ public class ReportDao {
         Set<Files> filesSet=new HashSet(list);
         return filesSet;
     }
+
+    /**
+     * 分页
+     */
+    public List findPage(int startRow,int pageSize){
+        String hql="select new Report (id,title)from Report order by id";
+        return getSession().createQuery(hql).setFirstResult(startRow).setMaxResults(pageSize).list();
+    }
+
+    /**
+     * 获取个数
+     */
+    public int getCount(){
+        String hql="select count(*) from Report ";
+        Long temp=(long)getSession().createQuery(hql).uniqueResult();
+        int count=temp.intValue();
+        return count;
+    }
 }

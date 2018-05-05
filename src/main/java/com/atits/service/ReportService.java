@@ -74,4 +74,17 @@ public class ReportService {
      */
     public Set<Files> getFiles(Integer id){return reportDao.getFiles(id);}
 
+    /**
+     * 分页
+     */
+    public List findPage(int startRow,int pageSize){
+        return reportDao.findPage(startRow,pageSize);
+    }
+
+    /**
+     * 获取个数
+     */
+    public int getCount(){
+        return reportDao.getCount();
+    }
 }

@@ -74,4 +74,17 @@ public class NoticeService {
      */
     public Set<Files> getFiles(Integer id){return noticeDao.getFiles(id);}
 
+    /**
+     * 分页
+     */
+    public List findPage(int startRow,int pageSize){
+        return noticeDao.findPage(startRow,pageSize);
+    }
+
+    /**
+     * 获取个数
+     */
+    public int getCount(){
+        return noticeDao.getCount();
+    }
 }

@@ -110,6 +110,13 @@ public class Report {
         this.state = state;
     }
 
+    public Report(){}
+
+    public Report(int id , String title){
+        this.id=id;
+        this.title=title;
+    }
+
     @Override
     public String toString() {
         return "Report{" +

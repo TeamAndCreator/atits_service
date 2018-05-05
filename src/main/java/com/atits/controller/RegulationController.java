@@ -146,4 +146,26 @@ public class RegulationController {
             return Msg.fail(e.getMessage());
         }
     }
+
+    @ResponseBody
+    @ApiOperation(value = "分页查找若干个规章制度",notes = "分页查找若干个规章制度")
+    @RequestMapping(value = "findPage",method = RequestMethod.GET)
+    public Msg findPage(Integer page/*第几页*/){
+        //声明每页显示的个数
+        final int pageSize=10;
+        //获取总个数
+        int count=regulationService.getCount();
+        //声明页数
+        int pageTime;
+        //计算页数
+        if(count%pageSize==0){
+            pageTime=count/pageSize;
+        }else{
+            pageTime=count/pageSize+1;
+        }
+        //获取该页所显示的名称，和对应id
+        List regulations=regulationService.findPage((page-1)*pageSize,pageSize);
+        //返回该页所需显示的名称和id，及总页数
+        return Msg.success().add("regulations",regulations).add("pageTime",pageTime);
+    }
 }
