@@ -121,21 +121,25 @@ public class StationController {
     @ApiOperation(value = "分页查找若干个实验站",notes = "分页查找若干个实验站")
     @RequestMapping(value = "findPage",method = RequestMethod.GET)
     public Msg findPage(Integer page/*第几页*/){
-        //声明每页显示的个数
-        final int pageSize=10;
-        //获取总个数
-        int count=stationService.getCount();
-        //声明页数
-        int pageTime;
-        //计算页数
-        if(count%pageSize==0){
-            pageTime=count/pageSize;
-        }else{
-            pageTime=count/pageSize+1;
+        try {
+            //声明每页显示的个数
+            final int pageSize=10;
+            //获取总个数
+            int count=stationService.getCount();
+            //声明页数
+            int pageTime;
+            //计算页数
+            if(count%pageSize==0){
+                pageTime=count/pageSize;
+            }else{
+                pageTime=count/pageSize+1;
+            }
+            //获取该页所显示的名称，和对应id
+            List stations=stationService.findPage((page-1)*pageSize,pageSize);
+            //返回该页所需显示的名称和id，及总页数
+            return Msg.success().add("stations",stations).add("pageTime",pageTime);
+        }catch (Exception e){
+            return Msg.fail(e.getMessage());
         }
-        //获取该页所显示的名称，和对应id
-        List stations=stationService.findPage((page-1)*pageSize,pageSize);
-        //返回该页所需显示的名称和id，及总页数
-        return Msg.success().add("stations",stations).add("pageTime",pageTime);
     }
 }
