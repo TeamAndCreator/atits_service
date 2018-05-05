@@ -85,6 +85,14 @@ public class DynamicDao {
     }
 
     /**
+     * 获取所有id,title,date
+     */
+    public List findAll1(){
+        String hql="select new Dynamic(id,title,date) from Dynamic order by id";
+        return getSession().createQuery(hql).list();
+    }
+
+    /**
      * 获取个数
      */
     public int getCount(){
