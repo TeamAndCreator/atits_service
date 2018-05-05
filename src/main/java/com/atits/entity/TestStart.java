@@ -1,5 +1,7 @@
 package com.atits.entity;
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "t_test_start")
@@ -12,16 +14,10 @@ public class TestStart {
     private String year;// 考评年度
     private String date;//考评日期
     private String address;//考评地点
-
-    @ManyToOne
-    @JoinColumn
-    private System system;
-
-//    private String eptId;
-
-    private String userId;
-
+    @ManyToMany
+    private Set<User> users=new HashSet<>();//考评人员
     private int state;//考评状态 ：1、启动考评，2、考评开始，3、考评结束
+
 
     public int getId() {
         return id;
@@ -55,14 +51,13 @@ public class TestStart {
         this.address = address;
     }
 
-    public System getSystem() {
-        return system;
+    public Set<User> getUsers() {
+        return users;
     }
 
-    public void setSystem(System system) {
-        this.system = system;
+    public void setUsers(Set<User> users) {
+        this.users = users;
     }
-
 
     public int getState() {
         return state;
@@ -72,14 +67,6 @@ public class TestStart {
         this.state = state;
     }
 
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
     @Override
     public String toString() {
         return "TestStart{" +
@@ -87,8 +74,7 @@ public class TestStart {
                 ", year='" + year + '\'' +
                 ", date='" + date + '\'' +
                 ", address='" + address + '\'' +
-                ", system=" + system +
-                ", userId='" + userId + '\'' +
+                ", users=" + users +
                 ", state=" + state +
                 '}';
     }
