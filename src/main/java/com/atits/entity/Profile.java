@@ -14,10 +14,6 @@ public class Profile {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(nullable = false)
-    private User user;//对应用户
-
     private String name;//姓名
 
     private int phoneNumber;//个人电话
@@ -77,14 +73,6 @@ public class Profile {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user=user;
     }
 
     public String getName() {
@@ -291,7 +279,6 @@ public class Profile {
     public String toString() {
         return "Profile{" +
                 "id=" + id +
-                ", user=" + user +
                 ", name='" + name + '\'' +
                 ", phoneNumber=" + phoneNumber +
                 ", officePhone=" + officePhone +
