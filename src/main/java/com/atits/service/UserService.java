@@ -22,6 +22,8 @@ public class UserService {
         return userDao.findAll();
     }
 
+    public List<User> findBySysId(int sysId){return userDao.findBySysId(sysId);}
+
     public User findByUserName(String username){
         return userDao.findByUserName(username);
     }

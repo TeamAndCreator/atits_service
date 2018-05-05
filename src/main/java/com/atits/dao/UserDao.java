@@ -47,6 +47,18 @@ public class UserDao {
         return (User) getSession().createQuery(hql).setParameter("id", id).uniqueResult();
     }
 
+    //获取该体系的所有用户
+    public List<User> findBySysId(int sysId){
+        String hql = "from User where system.id=:sysId";
+        return getSession().createQuery(hql).setParameter("sysId",sysId).list();
+    }
+
+    //根据角色id获取该角色的所有用户
+//    public List<User> findByRoleId(int roleId){
+//        String hql = "from User where roles.id =: roleId";
+//        return getSession().createQuery(hql).setParameter("roleId",roleId).list();
+//    }
+
 //    public User findByUserName(String username) {
 //        String hql = "from User where userName=:username";
 //        return (User) getSession().createQuery(hql).setParameter("username", username).uniqueResult();

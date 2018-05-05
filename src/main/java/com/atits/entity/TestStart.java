@@ -15,7 +15,6 @@ public class TestStart {
     private String date;//考评日期
     private String address;//考评地点
 
-
     @ManyToMany
     private Set<User> users=new HashSet<>();//考评人员
 
