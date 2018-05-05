@@ -113,9 +113,10 @@ public class Regulation {
 
     public Regulation(){}
 
-    public Regulation(int id , String title){
+    public Regulation(int id , String title,String date){
         this.id=id;
         this.title=title;
+        this.date=date;
     }
 
     @Override

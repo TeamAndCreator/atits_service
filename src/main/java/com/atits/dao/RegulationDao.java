@@ -81,8 +81,16 @@ public class RegulationDao {
      * 分页
      */
     public List findPage(int startRow,int pageSize){
-        String hql="select new Regulation (id,title)from Regulation order by id";
+        String hql="select new Regulation (id,title,date)from Regulation order by id";
         return getSession().createQuery(hql).setFirstResult(startRow).setMaxResults(pageSize).list();
+    }
+
+    /**
+     * 获取所有id,title,date
+     */
+    public List findAll1(){
+        String hql="select new Regulation (id,title,date) from Regulation order by id";
+        return getSession().createQuery(hql).list();
     }
 
     /**

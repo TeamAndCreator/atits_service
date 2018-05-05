@@ -81,6 +81,10 @@ public class DynamicService {
         return dynamicDao.findPage(startRow,pageSize);
     }
 
+    /**
+     * 获取所有id，title，date
+     * @return
+     */
     public List findAll1(){
         return dynamicDao.findAll1();
     }

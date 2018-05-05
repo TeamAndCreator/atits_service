@@ -82,6 +82,14 @@ public class NoticeService {
     }
 
     /**
+     * 获取所有id，title，date
+     * @return
+     */
+    public List findAll1(){
+        return noticeDao.findAll1();
+    }
+
+    /**
      * 获取个数
      */
     public int getCount(){

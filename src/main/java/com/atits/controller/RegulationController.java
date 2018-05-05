@@ -172,4 +172,17 @@ public class RegulationController {
             return Msg.fail(e.getMessage());
         }
     }
+
+    @ResponseBody
+    @ApiOperation(value = "获取所有id，title，date")
+    @RequestMapping(value = "findAll1",method = RequestMethod.GET)
+    public Msg findAll1(){
+        try {
+            List regulations=regulationService.findAll1();
+            return Msg.success().add("regulations",regulations);
+        }catch (Exception e){
+            return Msg.fail(e.getMessage());
+        }
+
+    }
 }

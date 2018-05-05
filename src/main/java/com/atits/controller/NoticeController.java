@@ -172,4 +172,17 @@ public class NoticeController {
             return Msg.fail(e.getMessage());
         }
     }
+
+    @ResponseBody
+    @ApiOperation(value = "获取所有id，title，date")
+    @RequestMapping(value = "findAll1",method = RequestMethod.GET)
+    public Msg findAll1(){
+        try {
+            List notices=noticeService.findAll1();
+            return Msg.success().add("notices",notices);
+        }catch (Exception e){
+            return Msg.fail(e.getMessage());
+        }
+
+    }
 }

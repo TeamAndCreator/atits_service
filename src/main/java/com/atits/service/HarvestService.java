@@ -82,6 +82,14 @@ public class HarvestService {
     }
 
     /**
+     * 获取所有id，title，date
+     * @return
+     */
+    public List findAll1(){
+        return harvestDao.findAll1();
+    }
+
+    /**
      * 获取个数
      */
     public int getCount(){

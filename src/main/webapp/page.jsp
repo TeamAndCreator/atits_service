@@ -11,14 +11,14 @@
     <title>Title</title>
 </head>
 <body>
-    <form action="dynamic/findAll1" method="get">
+    <form action="report/findAll1" method="get">
         page:<input name="page" type="text">
         <br>
         <input type="submit" name="sub">
 
     </form>
     <br>
-    <a href="dynamic/findAll1?page=2">2</a>
+    <a href="report/findAll1?page=2">2</a>
 
 </body>
 </html>

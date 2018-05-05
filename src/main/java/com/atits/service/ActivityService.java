@@ -85,6 +85,14 @@ public class ActivityService {
     }
 
     /**
+     * 获取所有id，title，date
+     * @return
+     */
+    public List findAll1(){
+        return activityDao.findAll1();
+    }
+
+    /**
      * 获取个数
      */
     public int getCount(){

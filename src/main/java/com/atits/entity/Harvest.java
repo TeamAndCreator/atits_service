@@ -111,9 +111,10 @@ public class Harvest {
 
     public Harvest(){}
 
-    public Harvest(int id,String title){
+    public Harvest(int id,String title,String date){
         this.id=id;
         this.title=title;
+        this.date=date;
     }
 
 
