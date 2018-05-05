@@ -81,6 +81,10 @@ public class DynamicService {
         return dynamicDao.findPage(startRow,pageSize);
     }
 
+    public List findAll1(){
+        return dynamicDao.findAll1();
+    }
+
     /**
      * 获取个数
      */
