@@ -11,6 +11,8 @@ public class TestWeight {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    private String year;
+    private Role rolename;
     /*
     考评比例设置
      */
@@ -86,11 +88,28 @@ public class TestWeight {
         this.chief_subChief = chief_subChief;
     }
 
+    public String getYear() {
+        return year;
+    }
+
+    public void setYear(String year) {
+        this.year = year;
+    }
+
+    public Role getRolename() {
+        return rolename;
+    }
+
+    public void setRolename(Role rolename) {
+        this.rolename = rolename;
+    }
 
     @Override
     public String toString() {
         return "TestWeight{" +
                 "id=" + id +
+                ", year='" + year + '\'' +
+                ", rolename=" + rolename +
                 ", nongWei=" + nongWei +
                 ", expert=" + expert +
                 ", subChief_sta_lib=" + subChief_sta_lib +
