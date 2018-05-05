@@ -12,7 +12,10 @@ public class TestWeight {
     private int id;
 
     private String year;
-    private Role rolename;
+
+    @OneToOne
+    @JoinColumn
+    private Role role;
     /*
     考评比例设置
      */
@@ -96,12 +99,12 @@ public class TestWeight {
         this.year = year;
     }
 
-    public Role getRolename() {
-        return rolename;
+    public Role getRole() {
+        return role;
     }
 
-    public void setRolename(Role rolename) {
-        this.rolename = rolename;
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     @Override
@@ -109,7 +112,7 @@ public class TestWeight {
         return "TestWeight{" +
                 "id=" + id +
                 ", year='" + year + '\'' +
-                ", rolename=" + rolename +
+                ", role=" + role +
                 ", nongWei=" + nongWei +
                 ", expert=" + expert +
                 ", subChief_sta_lib=" + subChief_sta_lib +
