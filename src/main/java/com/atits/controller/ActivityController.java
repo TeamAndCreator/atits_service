@@ -169,4 +169,17 @@ public class ActivityController {
         }
 
     }
+
+    @ResponseBody
+    @ApiOperation(value = "获取所有id，title，date")
+    @RequestMapping(value = "findAll1",method = RequestMethod.GET)
+    public Msg findAll1(){
+        try {
+            List activitys=activityService.findAll1();
+            return Msg.success().add("activitys",activitys);
+        }catch (Exception e){
+            return Msg.fail(e.getMessage());
+        }
+
+    }
 }

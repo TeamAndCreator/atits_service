@@ -81,8 +81,16 @@ public class HarvestDao {
      * 分页
      */
     public List findPage(int startRow,int pageSize){
-        String hql="select new Harvest (id,title)from Harvest order by id";
+        String hql="select new Harvest (id,title,date)from Harvest order by id";
         return getSession().createQuery(hql).setFirstResult(startRow).setMaxResults(pageSize).list();
+    }
+
+    /**
+     * 获取所有id,title,date
+     */
+    public List findAll1(){
+        String hql="select new Harvest (id,title,date) from Harvest order by id";
+        return getSession().createQuery(hql).list();
     }
 
     /**

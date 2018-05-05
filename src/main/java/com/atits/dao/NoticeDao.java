@@ -81,8 +81,16 @@ public class NoticeDao {
      * 分页
      */
     public List findPage(int startRow,int pageSize){
-        String hql="select new Notice (id,title)from Notice order by id";
+        String hql="select new Notice (id,title,date)from Notice order by id";
         return getSession().createQuery(hql).setFirstResult(startRow).setMaxResults(pageSize).list();
+    }
+
+    /**
+     * 获取所有id,title,date
+     */
+    public List findAll1(){
+        String hql="select new Notice (id,title,date) from Notice order by id";
+        return getSession().createQuery(hql).list();
     }
 
     /**
