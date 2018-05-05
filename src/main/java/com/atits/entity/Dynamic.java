@@ -113,9 +113,10 @@ public class Dynamic {
 
     public Dynamic(){}
 
-    public Dynamic(int id , String title){
+    public Dynamic(int id , String title,String date){
         this.id=id;
         this.title=title;
+        this.date=date;
     }
 
     @Override

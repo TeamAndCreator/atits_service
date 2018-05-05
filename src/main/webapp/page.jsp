@@ -11,14 +11,14 @@
     <title>Title</title>
 </head>
 <body>
-    <form action="station/findPage" method="get">
+    <form action="dynamic/findPage" method="get">
         page:<input name="page" type="text">
         <br>
         <input type="submit" name="sub">
 
     </form>
     <br>
-    <a href="station/findPage?page=2">2</a>
+    <a href="dynamic/findPage?page=2">2</a>
 
 </body>
 </html>

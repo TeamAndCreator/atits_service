@@ -80,7 +80,7 @@ public class DynamicDao {
      * 分页
      */
     public List findPage(int startRow,int pageSize){
-        String hql="select new Dynamic(id,title) from Dynamic order by id";
+        String hql="select new Dynamic(id,title,date) from Dynamic order by id";
         return getSession().createQuery(hql).setFirstResult(startRow).setMaxResults(pageSize).list();
     }
 

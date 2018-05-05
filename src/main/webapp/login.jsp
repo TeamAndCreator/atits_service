@@ -11,7 +11,7 @@
     <title>Title</title>
 </head>
 <body>
-<form action="station/save" enctype="multipart/form-data" method="post">
+<form action="dynamic/save" enctype="multipart/form-data" method="post">
     title:<input type="text" name="title" />
     <br/>
     content:<input type="text" name="content" />
