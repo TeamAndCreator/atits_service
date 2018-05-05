@@ -12,8 +12,8 @@ public class TestManage {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-
     private String year;//考评年度
+    private String date;//考评日期
 
     @OneToOne
     @JoinColumn
@@ -22,12 +22,6 @@ public class TestManage {
     @OneToOne
     @JoinColumn
     private User examedner; //被评分人
-
-    @ManyToOne
-    @JoinColumn
-    private System system;
-
-    private String date;//考评日期
 
     private int state;//考评状态：0是未考评，1是已考评
 
@@ -63,13 +57,6 @@ public class TestManage {
         this.examedner = examedner;
     }
 
-    public System getSystem() {
-        return system;
-    }
-
-    public void setSystem(System system) {
-        this.system = system;
-    }
 
     public String getDate() {
         return date;
@@ -94,7 +81,6 @@ public class TestManage {
                 ", year='" + year + '\'' +
                 ", examiner=" + examiner +
                 ", examedner=" + examedner +
-                ", system=" + system +
                 ", date='" + date + '\'' +
                 ", state=" + state +
                 '}';

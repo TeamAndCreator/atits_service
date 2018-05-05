@@ -14,8 +14,11 @@ public class TestStart {
     private String year;// 考评年度
     private String date;//考评日期
     private String address;//考评地点
+
+
     @ManyToMany
     private Set<User> users=new HashSet<>();//考评人员
+
     private int state;//考评状态 ：1、启动考评，2、考评开始，3、考评结束
 
 

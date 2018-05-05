@@ -11,12 +11,8 @@ public class TestWeight {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private String year;// 考评年度
-
-    private String testObject;
-
     /*
-    以下字段待定，待我五一归来再详细推敲
+    考评比例设置
      */
     private double nongWei;
     private double expert;
@@ -32,22 +28,6 @@ public class TestWeight {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public String getYear() {
-        return year;
-    }
-
-    public void setYear(String year) {
-        this.year = year;
-    }
-
-    public String getTestObject() {
-        return testObject;
-    }
-
-    public void setTestObject(String testObject) {
-        this.testObject = testObject;
     }
 
     public double getNongWei() {
@@ -111,8 +91,6 @@ public class TestWeight {
     public String toString() {
         return "TestWeight{" +
                 "id=" + id +
-                ", year='" + year + '\'' +
-                ", testObject='" + testObject + '\'' +
                 ", nongWei=" + nongWei +
                 ", expert=" + expert +
                 ", subChief_sta_lib=" + subChief_sta_lib +
