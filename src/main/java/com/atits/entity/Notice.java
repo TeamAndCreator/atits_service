@@ -110,6 +110,12 @@ public class Notice {
         this.system = system;
     }
 
+    public Notice(){}
+
+    public Notice(int id,String title){
+        this.id=id;
+        this.title=title;
+    }
 
     @Override
     public String toString() {

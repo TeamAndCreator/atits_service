@@ -74,4 +74,21 @@ public class DynamicService {
      */
     public Set<Files> getFiles(Integer id){return dynamicDao.getFiles(id);}
 
+    /**
+     * 分页
+     */
+    public List findPage(int startRow,int pageSize){
+        return dynamicDao.findPage(startRow,pageSize);
+    }
+
+    public List findAll1(){
+        return dynamicDao.findAll1();
+    }
+
+    /**
+     * 获取个数
+     */
+    public int getCount(){
+        return dynamicDao.getCount();
+    }
 }

@@ -76,4 +76,18 @@ public class ActivityService {
      * @return
      */
     public Set<Files> getFiles(Integer id){return activityDao.getFiles(id);}
+
+    /**
+     * 分页
+     */
+    public List findPage(int startRow,int pageSize){
+        return activityDao.findPage(startRow,pageSize);
+    }
+
+    /**
+     * 获取个数
+     */
+    public int getCount(){
+        return activityDao.getCount();
+    }
 }

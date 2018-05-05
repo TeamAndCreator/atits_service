@@ -74,4 +74,17 @@ public class HarvestService {
      */
     public Set<Files> getFiles(Integer id){return harvestDao.getFiles(id);}
 
+    /**
+     * 分页
+     */
+    public List findPage(int startRow,int pageSize){
+        return harvestDao.findPage(startRow,pageSize);
+    }
+
+    /**
+     * 获取个数
+     */
+    public int getCount(){
+        return harvestDao.getCount();
+    }
 }

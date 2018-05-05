@@ -99,6 +99,13 @@ public class Laboratory {
         this.state = state;
     }
 
+    public Laboratory(){}
+
+    public Laboratory(int id ,String labName){
+        this.id=id;
+        this.labName=labName;
+    }
+
     @Override
     public String toString() {
         return "Laboratory{" +

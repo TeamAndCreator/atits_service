@@ -145,4 +145,45 @@ public class DynamicController {
             return Msg.fail(e.getMessage());
         }
     }
+
+    @ResponseBody
+    @ApiOperation(value = "分页查找若干个体系动态",notes = "分页查找若干个体系动态")
+    @RequestMapping(value = "findPage",method = RequestMethod.GET)
+    public Msg findPage(Integer page/*第几页*/){
+        try {
+            //声明每页显示的个数
+            final int pageSize = 10;
+            //获取总个数
+            int count = dynamicService.getCount();
+            //声明页数
+            int pageTime;
+            //计算页数
+            if (count % pageSize == 0) {
+                pageTime = count / pageSize;
+            } else {
+                pageTime = count / pageSize + 1;
+            }
+            //获取该页所显示的名称，和对应id
+            List dynamics = dynamicService.findPage((page - 1) * pageSize, pageSize);
+            //返回该页所需显示的名称和id，及总页数
+            return Msg.success().add("dynamics", dynamics).add("pageTime", pageTime);
+        }catch (Exception e){
+            return Msg.fail(e.getMessage());
+        }
+    }
+
+    @ResponseBody
+    @ApiOperation(value = "获取所有id，title，date")
+    @RequestMapping(value = "findAll1",method = RequestMethod.GET)
+    public Msg findAll1(){
+        try {
+            List dynamics=dynamicService.findAll1();
+            return Msg.success().add("dynamics",dynamics);
+        }catch (Exception e){
+            return Msg.fail(e.getMessage());
+        }
+
+    }
+
+
 }

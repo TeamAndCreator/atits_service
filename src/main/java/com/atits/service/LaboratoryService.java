@@ -62,5 +62,19 @@ public class LaboratoryService {
     public List<Laboratory> findAll(){
         return laboratoryDao.findAll();
     }
+
+    /**
+     * 分页
+     */
+    public List findPage(int startRow,int pageSize){
+        return laboratoryDao.findPage(startRow,pageSize);
+    }
+
+    /**
+     * 获取个数
+     */
+    public int getCount(){
+        return laboratoryDao.getCount();
+    }
 }
 
