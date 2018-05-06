@@ -106,6 +106,18 @@ public class Laboratory {
         this.labName=labName;
     }
 
+    public Laboratory(int id,String labName, String content, String company,String systemName, String time, String date, int state) {
+        this.id=id;
+        this.labName = labName;
+        this.content = content;
+        this.company = company;
+        this.system=new System();
+        this.system.setSystemName(systemName);
+        this.time = time;
+        this.date = date;
+        this.state = state;
+    }
+
     @Override
     public String toString() {
         return "Laboratory{" +

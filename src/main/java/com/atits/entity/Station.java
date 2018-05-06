@@ -29,7 +29,17 @@ public class Station {
 
     private String time;
 
+    private String date;
+
     private int state;
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
 
     public int getId() {
         return id;
@@ -94,6 +104,17 @@ public class Station {
         this.staName=staName;
     }
 
+    public Station(int id,String staName, String content, String company,String systemName, String time,String date, int state) {
+        this.id=id;
+        this.staName = staName;
+        this.content = content;
+        this.company = company;
+        this.system.setSystemName(systemName);
+        this.time = time;
+        this.date=date;
+        this.state = state;
+    }
+
     @Override
     public String toString() {
         return "Station{" +
@@ -103,6 +124,7 @@ public class Station {
                 ", company='" + company + '\'' +
                 ", system=" + system +
                 ", time='" + time + '\'' +
+                ", date='" + date + '\'' +
                 ", state=" + state +
                 '}';
     }
