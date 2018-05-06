@@ -80,6 +80,23 @@ public class StationDao {
     }
 
     /**
+     * 获取某个体系的所有实验站id,name
+     * @return
+     */
+    public List findAllInSystem(int systemId){
+        String hql="select new Station (id,staName)from Station where system.id=:systemId";
+        return getSession().createQuery(hql).setParameter("systemId",systemId).list();
+    }
+
+    /**
+     * 获取某个实验站具有某个权限的所有user
+     */
+    public List findUserInRole(int stationId,int roleId){
+        String hql="SELECT p.name from User u join u.roles r,Profile p where u.station.id=:stationId and r.id=:roleId and u.profile=p ";
+        return getSession().createQuery(hql).setParameter("stationId",stationId).setParameter("roleId",roleId).list();
+    }
+
+    /**
      * 获取个数
      */
     public int getCount(){

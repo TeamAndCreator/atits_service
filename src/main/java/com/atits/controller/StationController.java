@@ -93,12 +93,14 @@ public class StationController {
     }
 
     @ResponseBody
-    @ApiOperation(value = "根据id查找一个station")
+    @ApiOperation(value = "根据id查找一个station及综合实验站站长")
     @ApiImplicitParam(name = "id",value = "要查找的实验站id",paramType = "query",dataType = "long")
     @RequestMapping(value = "findById",method = RequestMethod.GET)
     public Msg findById(Integer id){
         try {
-            return Msg.success().add("station",stationService.findById(id));
+            Station station=stationService.findById(id);
+            List station_master=stationService.findUserInRole(id,7);
+            return Msg.success().add("station",station).add("station_master",station_master);
         }catch (Exception e){
             return Msg.fail(e.getMessage());
         }
@@ -142,4 +144,17 @@ public class StationController {
             return Msg.fail(e.getMessage());
         }
     }
+
+    @ResponseBody
+    @ApiOperation(value = "获取某个体系的所有实验站id,name")
+    @RequestMapping(value = "findAllInSystem",method = RequestMethod.GET)
+    public Msg findAllInSystem(Integer systemId){
+        try {
+            List stations=stationService.findAllInSystem(systemId);
+            return Msg.success().add("stations",stations);
+        }catch (Exception e){
+            return Msg.fail(e.getMessage());
+        }
+    }
+
 }

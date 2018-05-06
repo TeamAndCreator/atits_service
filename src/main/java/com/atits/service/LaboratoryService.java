@@ -71,6 +71,20 @@ public class LaboratoryService {
     }
 
     /**
+     * 获取某个体系的所有研究室id,name
+     */
+    public List findAllInSystem(int systemId){
+        return laboratoryDao.findAllInSystem(systemId);
+    }
+
+    /**
+     * 获取某个研究室具有某个权限的所有user
+     */
+    public List findUserInRole(int laboratoryId,int roleId){
+        return laboratoryDao.findUserInRole(laboratoryId,roleId);
+    }
+
+    /**
      * 获取个数
      */
     public int getCount(){

@@ -71,6 +71,20 @@ public class SystemService {
     }
 
     /**
+     * 获取所有体系名称及id
+     */
+    public List findAll1(){
+        return systemDao.findAll1();
+    }
+
+    /**
+     * 获取某个体系里具有某个权限的所有人
+     */
+    public List findUserInRole(int systemId,int roleId){
+        return systemDao.findUserInRole(systemId,roleId);
+    }
+
+    /**
      * 获取个数
      */
     public int getCount(){
