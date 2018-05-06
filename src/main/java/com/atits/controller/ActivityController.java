@@ -125,7 +125,7 @@ public class ActivityController {
     @RequestMapping(value = "findById", method = RequestMethod.GET)
     public Msg findById(Integer id) {
         try {
-            return Msg.success().add("Activity", activityService.findById(id));
+            return Msg.success().add("activity", activityService.findById(id));
         } catch (Exception e) {
             return Msg.fail(e.getMessage());
         }
