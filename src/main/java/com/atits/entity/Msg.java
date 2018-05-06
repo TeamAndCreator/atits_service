@@ -36,7 +36,10 @@ public class Msg {
 	public static Msg fail(String msg){
 		Msg result = new Msg();
 		result.setCode(200);
-		result.setMsg(msg);
+		if (msg !=null)
+			result.setMsg(msg);
+		else
+			result.setMsg("处理失败！");
 		return result;
 	}
 	public static Msg fail(){

@@ -23,19 +23,22 @@ public class UserService {
         return userDao.findAll();
     }
 
-    public List<User> findBySysId(int sysId){return userDao.findBySysId(sysId);}
-
-    public List<User> findByRoleId(int roleId){return userDao.findByRoleId(roleId);}
-
-//    public List<Role> find(){return userDao.find();}
-
     public List<User> findTestPer(int sysId,int roleId){
         return userDao.findTestPer(sysId,roleId);
     }
 
+//    public List<User> findBySysId(int sysId){
+//        return userDao.findBySysId(sysId);
+//    }
+//
+//    public List<User> findByRoleId(int roleId){
+//        return userDao.findByRoleId(roleId);
+//    }
+
     public User findByUserName(String username){
         return userDao.findByUserName(username);
     }
+
     /**
      *添加一个user
      */
