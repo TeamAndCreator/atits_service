@@ -2,6 +2,7 @@ package com.atits.controller;
 
 
 import com.atits.entity.Msg;
+import com.atits.entity.Role;
 import com.atits.entity.User;
 import com.atits.service.UserService;
 import io.swagger.annotations.Api;
@@ -30,7 +31,11 @@ public class TestStartController {
     public Msg start(){
         try {
 
-            List<User> users = userService.findBySysId(14);//需要获取到当前用户的体系id
+//            List<User> roleUsers = userService.findByRoleId(6);
+//            List<User> sysUsers = userService.findBySysId(14);//需要获取到当前用户的体系id
+            List<User> users = userService.findTestPer(14,6);
+//            Msg.success().add("roleUsers",roleUsers);
+//            Msg.success().add("users",sysUsers);
             return Msg.success().add("users",users);
         }catch(Exception e){
             return Msg.fail(e.getMessage());

@@ -1,6 +1,7 @@
 package com.atits.entity;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 /**
  *权限

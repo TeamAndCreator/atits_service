@@ -1,5 +1,6 @@
 package com.atits.dao;
 
+import com.atits.entity.Role;
 import com.atits.entity.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -54,9 +55,20 @@ public class UserDao {
     }
 
     //根据角色id获取该角色的所有用户
-//    public List<User> findByRoleId(int roleId){
-//        String hql = "from User where roles.id =: roleId";
-//        return getSession().createQuery(hql).setParameter("roleId",roleId).list();
+    public List<User> findByRoleId(int roleId){
+        String hql = "select new User(u.id,u.userName) from User as u inner join u.roles as r where r.id =:roleId";
+        return getSession().createQuery(hql).setParameter("roleId",roleId).list();
+    }
+
+    //根据体系id和角色id来获取该体系与该角色的所有用户
+    public List<User> findTestPer(int sysId,int roleId){
+        String hql = "select new User(u.id,u.userName) from User as u inner join u.roles as r where r.id =:roleId or u.system.id =:sysId";
+        return getSession().createQuery(hql).setParameter("sysId",sysId).setParameter("roleId",roleId).list();
+    }
+
+//    public List<Role> find(){
+//        String hql = "from User.roles";
+//        return getSession().createQuery(hql).list();
 //    }
 
 //    public User findByUserName(String username) {
