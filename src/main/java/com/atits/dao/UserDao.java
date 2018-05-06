@@ -48,27 +48,19 @@ public class UserDao {
         return (User) getSession().createQuery(hql).setParameter("id", id).uniqueResult();
     }
 
-    //获取该体系的所有用户
-    public List<User> findBySysId(int sysId){
-        String hql = "from User where system.id=:sysId";
-        return getSession().createQuery(hql).setParameter("sysId",sysId).list();
-    }
-
-    //根据角色id获取该角色的所有用户
-    public List<User> findByRoleId(int roleId){
-        String hql = "select new User(u.id,u.userName) from User as u inner join u.roles as r where r.id =:roleId";
-        return getSession().createQuery(hql).setParameter("roleId",roleId).list();
-    }
 
     //根据体系id和角色id来获取该体系与该角色的所有用户
     public List<User> findTestPer(int sysId,int roleId){
-        String hql = "select new User(u.id,u.userName) from User as u inner join u.roles as r where r.id =:roleId or u.system.id =:sysId";
+        String hql = "select distinct new User(u.id,u.userName) from User as u inner join u.roles as r where r.id =:roleId or u.system.id =:sysId";
         return getSession().createQuery(hql).setParameter("sysId",sysId).setParameter("roleId",roleId).list();
     }
-
-//    public List<Role> find(){
-//        String hql = "from User.roles";
-//        return getSession().createQuery(hql).list();
+//    public List<User> findBySysId(int sysId){
+//        String hql = "from User where system.id =: sysId";
+//        return getSession().createQuery(hql).setParameter("sysId",sysId).list();
+//    }
+//    public List<User> findByRoleId(int roleId){
+//        String hql = "select distinct new User(u.id,u.userName) from User as u inner join u.roles as r where r.id =:roleId";
+//        return getSession().createQuery(hql).setParameter("roleId",roleId).list();
 //    }
 
 //    public User findByUserName(String username) {

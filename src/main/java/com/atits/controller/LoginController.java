@@ -43,15 +43,8 @@ public class LoginController {
     public Msg login(User user) {
         Subject currentUser = SecurityUtils.getSubject();
         if (!currentUser.isAuthenticated()) {
-//            String hashAlgorithmName = "MD5";
-//            Object credentials = user.getPassword();
-//            Object salt = null;
-//            int hashIterations = 1;
-//            Object result = new SimpleHash(hashAlgorithmName, credentials, null, hashIterations);
-//            System.out.println(result);
             UsernamePasswordToken token = new UsernamePasswordToken(user.getUserName(), user.getPassword());
             token.setRememberMe(true);
-
             try {
                 currentUser.login(token);
             } catch (UnknownAccountException ua) {
