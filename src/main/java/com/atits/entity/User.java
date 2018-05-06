@@ -2,12 +2,12 @@ package com.atits.entity;
 
 
 import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 
 
 import javax.persistence.*;
 //import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -22,6 +22,10 @@ public class User {
     private String userName;
 
     private String password;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    private Profile profile;
+
     @ManyToOne
     private Laboratory laboratory;
     @ManyToOne
@@ -36,6 +40,14 @@ public class User {
 
     public User() {
         roles.add(new Role());
+    }
+
+    public User(int id,String userName,String sysName,Set<Role> roles) {
+        this.system=new System();
+        this.id=id;
+        this.userName = userName;
+        this.system.setSystemName(sysName);
+        this.roles=roles;
     }
 
     public Laboratory getLaboratory() {
@@ -102,6 +114,14 @@ public class User {
         this.password = password;
     }
 
+    public Profile getProfile() {
+        return profile;
+    }
+
+    public void setProfile(Profile profile) {
+        this.profile = profile;
+    }
+
     public Set<Role> getRoles() {
         return roles;
     }
@@ -116,10 +136,11 @@ public class User {
                 "id=" + id +
                 ", userName='" + userName + '\'' +
                 ", password='" + password + '\'' +
+                ", profile=" + profile +
                 ", laboratory=" + laboratory +
                 ", station=" + station +
-                ", system=" + system+
-                ", time='" + createTime + '\'' +
+                ", system=" + system +
+                ", createTime='" + createTime + '\'' +
                 ", state=" + state +
                 ", roles=" + roles +
                 '}';
