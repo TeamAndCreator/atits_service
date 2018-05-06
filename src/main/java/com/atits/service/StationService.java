@@ -72,6 +72,20 @@ public class StationService {
     }
 
     /**
+     * 获取某个体系的所有实验站的id,name
+     */
+    public List findAllInSystem(int systemId){
+        return stationDao.findAllInSystem(systemId);
+    }
+
+    /**
+     * 获取某个实验站具有某个权限的所有user
+     */
+    public List findUserInRole(int stationId,int roleId){
+        return stationDao.findUserInRole(stationId,roleId);
+    }
+
+    /**
      * 获取个数
      */
     public int getCount(){

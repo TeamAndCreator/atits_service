@@ -95,12 +95,15 @@ public class LaboratoryController {
     }
 
     @ResponseBody
-    @ApiOperation(value = "根据id查找一个Laboratory")
+    @ApiOperation(value = "根据id查找一个Laboratory及研究室主任，岗位专家")
     @ApiImplicitParam(name = "id",value = "要查找的研究室id",paramType = "query",dataType = "long")
     @RequestMapping(value = "findById",method = RequestMethod.GET)
     public Msg findById(Integer id){
         try {
-            return Msg.success().add("Laboratory",laboratoryService.findById(id));
+            Laboratory laboratory=laboratoryService.findById(id);
+            List research_director=laboratoryService.findUserInRole(id,5);
+            List job_expert=laboratoryService.findUserInRole(id,6);
+            return Msg.success().add("laboratory",laboratory).add("research_director",research_director).add("job_expert",job_expert);
         }catch (Exception e){
             return Msg.fail(e.getMessage());
         }
@@ -144,4 +147,31 @@ public class LaboratoryController {
             return Msg.fail(e.getMessage());
         }
     }
+
+    @ResponseBody
+    @ApiOperation(value = "获取某个体系的所有研究室id,name")
+    @RequestMapping(value = "findAllInSystem",method = RequestMethod.GET)
+    public Msg findAllInSystem(Integer systemId){
+        try {
+            List laboratorys=laboratoryService.findAllInSystem(systemId);
+            return Msg.success().add("laboratorys",laboratorys);
+        }catch (Exception e){
+            return Msg.fail(e.getMessage());
+        }
+    }
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

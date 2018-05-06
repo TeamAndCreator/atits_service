@@ -81,6 +81,23 @@ public class LaboratoryDao {
     }
 
     /**
+     * 获取某个研究室具有某个权限的所有user
+     */
+    public List findUserInRole(int laboratoryId,int roleId){
+        String hql="SELECT p.name from User u join u.roles r,Profile p where u.laboratory.id=:laboratoryId and r.id=:roleId and u.profile=p ";
+        return getSession().createQuery(hql).setParameter("laboratoryId",laboratoryId).setParameter("roleId",roleId).list();
+    }
+
+    /**
+     * 获取某个体系的所有研究室id,name
+     * @return
+     */
+    public List findAllInSystem(int systemId){
+        String hql="select new Laboratory (id,labName)from Laboratory where system.id=:systemId";
+        return getSession().createQuery(hql).setParameter("systemId",systemId).list();
+    }
+
+    /**
      * 获取个数
      */
     public int getCount(){
