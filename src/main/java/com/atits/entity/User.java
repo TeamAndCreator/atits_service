@@ -50,6 +50,10 @@ public class User {
         this.system.setSystemName(sysName);
         this.roles=roles;
     }
+    public User(int id,String userName) {
+        this.id=id;
+        this.userName = userName;
+    }
 
     public Laboratory getLaboratory() {
         return laboratory;
