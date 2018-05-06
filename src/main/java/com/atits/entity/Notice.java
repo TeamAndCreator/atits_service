@@ -112,9 +112,10 @@ public class Notice {
 
     public Notice(){}
 
-    public Notice(int id,String title){
+    public Notice(int id,String title,String date){
         this.id=id;
         this.title=title;
+        this.date=date;
     }
 
     @Override

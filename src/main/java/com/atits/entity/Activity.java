@@ -111,9 +111,10 @@ public class Activity {
         this.state = state;
     }
 
-    public Activity(int id , String title){
+    public Activity(int id , String title,String date){
         this.id=id;
         this.title=title;
+        this.date=date;
     }
     public Activity(){}
 

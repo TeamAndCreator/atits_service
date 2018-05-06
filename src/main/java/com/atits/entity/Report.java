@@ -112,9 +112,10 @@ public class Report {
 
     public Report(){}
 
-    public Report(int id , String title){
+    public Report(int id , String title,String date){
         this.id=id;
         this.title=title;
+        this.date=date;
     }
 
     @Override
