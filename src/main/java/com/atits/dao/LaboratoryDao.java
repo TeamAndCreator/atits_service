@@ -63,12 +63,12 @@ public class LaboratoryDao {
     }
 
     /**
-     * 根据id查找一个Laboratory
+     * 根据id查找一个Laboratory,system只包括systemName
      * @param id
      * @return
      */
     public Laboratory findById(Integer id){
-        String hql="from Laboratory where id=:id";
+        String hql="select new Laboratory (id,labName,content,company,system.systemName,time,date,state)from Laboratory  where id=:id";
         return (Laboratory) getSession().createQuery(hql).setParameter("id",id).uniqueResult();
     }
 

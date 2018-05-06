@@ -67,7 +67,7 @@ public class StationDao {
      * @return
      */
     public Station findById(Integer id){
-        String hql="from Station where id=:id";
+        String hql="select new Station (id,staName,content,company,system.systemName,time,date,state)from Station where id=:id";
         return (Station) getSession().createQuery(hql).setParameter("id",id).uniqueResult();
     }
 
