@@ -130,5 +130,28 @@ public class SystemController {
         }
     }
 
+    @ResponseBody
+    @ApiOperation(value = "获取所有体系名称及id")
+    @RequestMapping(value = "findAll1",method = RequestMethod.GET)
+    public Msg findAll1(){
+        try {
+            List systems=systemService.findAll1();
+            return Msg.success().add("systems",systems);
+        }catch (Exception e){
+            return Msg.fail(e.getMessage());
+        }
+    }
+
+    @ResponseBody
+    @ApiOperation(value = "获取某个体系里具有某个权限的所有人")
+    @RequestMapping(value = "findUserInRole",method = RequestMethod.GET)
+    public Msg findUserInRole(Integer systemId,Integer roleId){
+        try {
+            List users=systemService.findUserInRole(systemId,roleId);
+            return Msg.success().add("users",users);
+        }catch (Exception e){
+            return Msg.fail(e.getMessage());
+        }
+    }
 
 }

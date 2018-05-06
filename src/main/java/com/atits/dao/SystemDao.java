@@ -82,6 +82,23 @@ public class SystemDao {
     }
 
     /**
+     * 获取所有体系名称及id
+     */
+    public List findAll1(){
+        String hql="select new System (id,systemName) from System ";
+        return getSession().createQuery(hql).list();
+    }
+
+    /**
+     * 获取某个体系里具有某个权限的所有人
+     */
+    public List findUserInRole(int systemId,int roleId){
+        String hql="select p.name from User u join u.roles r,Profile p where u.system.id=:systemId and r.id=:roleId and u.profile=p";
+        return getSession().createQuery(hql).setParameter("systemId",systemId).setParameter("roleId",roleId).list();
+    }
+
+
+    /**
      * 获取个数
      */
     public int getCount(){
