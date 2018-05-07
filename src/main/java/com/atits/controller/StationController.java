@@ -108,7 +108,7 @@ public class StationController {
 
 
     @ResponseBody
-    @ApiOperation(value="获取所有实验站的id和name")
+    @ApiOperation(value="获取所有实验站的id，name，state")
     @RequestMapping(value = "findAll", method = RequestMethod.GET)
     public Msg findAll() {
         try {
