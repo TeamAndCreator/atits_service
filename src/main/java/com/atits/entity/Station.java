@@ -104,6 +104,11 @@ public class Station {
         this.staName=staName;
     }
 
+    public Station(int id , String staName,int state){
+        this.id=id;
+        this.staName=staName;
+        this.state=state;
+    }
     public Station(int id,String staName, String content, String company,String systemName, String time,String date, int state) {
         this.id=id;
         this.staName = staName;
