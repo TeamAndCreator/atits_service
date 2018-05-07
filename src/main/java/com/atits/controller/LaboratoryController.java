@@ -111,7 +111,7 @@ public class LaboratoryController {
 
 
     @ResponseBody
-    @ApiOperation(value="获取所有研究室详细信息")
+    @ApiOperation(value="获取所有研究室的id和name")
     @RequestMapping(value = "findAll", method = RequestMethod.GET)
     public Msg findAll() {
         try {
