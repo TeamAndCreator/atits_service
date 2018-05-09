@@ -1,0 +1,21 @@
+package com.atits.dao;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+@Repository
+public class TestStartDao {
+
+    @Autowired
+    private SessionFactory sessionFactory;
+    private Session getSession(){return sessionFactory.getCurrentSession();}
+
+    public List findAll(){
+        String hql = "from TestStart";
+        return getSession().createQuery(hql).list();
+    }
+}
