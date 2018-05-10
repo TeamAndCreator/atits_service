@@ -17,4 +17,6 @@ public class TestStartService {
 
     public List findAll(){return testStartDao.findAll();}
 
+    public void save(TestStart testStart){testStartDao.save(testStart);}
+
 }

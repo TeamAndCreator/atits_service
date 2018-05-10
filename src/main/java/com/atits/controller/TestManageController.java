@@ -44,12 +44,17 @@ public class TestManageController {
         }
     }
 
-    @ApiOperation(value = "启动后，自动导入考评记录")
+
+    @ApiOperation(value = "启动后，自动导入考评记录,-->未完成！")
     @RequestMapping(value = "import_evaluations",method = RequestMethod.GET)
     @ResponseBody
     public Msg importAuto(){
         try{
             List<TestManage> testManages = testManageService.insertAuto();
+            for(TestManage testManage:testManages){
+                testManage.setState(2);
+                testManageService.save(testManage);
+            }
             return Msg.success().add("testManages",testManages);
         }catch (Exception e){
             return Msg.fail(e.getMessage());

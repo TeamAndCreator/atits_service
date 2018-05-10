@@ -1,6 +1,7 @@
 package com.atits.service;
 
 import com.atits.dao.TestManageDao;
+import com.atits.entity.TestManage;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -18,5 +19,7 @@ public class TestManageService {
     public List findAll(){return testManageDao.findAll();}
 
     public List insertAuto(){return testManageDao.insertAuto();}
+
+    public void save(TestManage testManage){testManageDao.save(testManage);}
 
 }

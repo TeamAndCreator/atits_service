@@ -1,5 +1,6 @@
 package com.atits.dao;
 
+import com.atits.entity.TestStart;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,5 +18,9 @@ public class TestStartDao {
     public List findAll(){
         String hql = "from TestStart";
         return getSession().createQuery(hql).list();
+    }
+
+    public void save(TestStart testStart){
+        getSession().save(testStart);
     }
 }

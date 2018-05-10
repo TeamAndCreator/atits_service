@@ -1,5 +1,6 @@
 package com.atits.dao;
 
+import com.atits.entity.TestManage;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +21,13 @@ public class TestManageDao {
 /*
  testStart:state=2表示考评已经开始，此时TestManage.state=0表示未考评
  */
-    public List insertAuto(){
-        String hql = "from TestStart t where t.state = 2";
+    public List insertAuto(){//还需要插入考评人员
+        String hql = "insert into TestManage(year,date) select t.year,t.date from TestStart t where t.state = 2";
         return getSession().createQuery(hql).list();
+    }
+
+    public void save(TestManage testManage){
+        getSession().save(testManage);
     }
 
 }
