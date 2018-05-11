@@ -4,6 +4,8 @@ import com.atits.entity.Msg;
 import com.atits.entity.TestManage;
 import com.atits.service.TestManageService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.objenesis.instantiator.sun.MagicInstantiator;
 import org.springframework.stereotype.Controller;
@@ -12,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -45,16 +49,32 @@ public class TestManageController {
     }
 
 
-    @ApiOperation(value = "启动后，自动导入考评记录,-->未完成！")
-    @RequestMapping(value = "import_evaluations",method = RequestMethod.GET)
+    /*
+    实现自动导入---？
+
+     */
+    @ApiOperation(value = "启动后，自动导入考评记录！！+++未完成")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id",value = "考评管理ID",paramType = "query",dataType = "int"),
+            @ApiImplicitParam(name = "date",value = "考评日期（自动获取当前系统时间）",paramType = "query",dataType = "String"),
+            @ApiImplicitParam(name = "year",value = "考评年份（自动获取启动表中的年份）",paramType = "query",dataType = "String"),
+            @ApiImplicitParam(name = "examiner",value = "评分人",paramType = "query",dataType = "String",required = true),
+            @ApiImplicitParam(name = "examedner",value = "被评分人",paramType = "query",dataType = "String",required = true),
+            @ApiImplicitParam(name = "state",value = "考评状态（0：未考评,1：已考评）",paramType = "query",dataType = "int",required = true)
+    })
+    @RequestMapping(value = "manage_save",method = RequestMethod.POST)
     @ResponseBody
-    public Msg importAuto(){
+    public Msg save(){
         try{
-            List<TestManage> testManages = testManageService.insertAuto();
-            for(TestManage testManage:testManages){
-                testManage.setState(2);
+            List<TestManage> testManages = testManageService.insertAuto();//插入年份、考评人员 考评人员怎么插入？
+            for (TestManage testManage:testManages){
+//                testManage.setState(0);//默认为未考评状态
+                Date date = new Date();
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+                testManage.setDate(simpleDateFormat.format(date));
                 testManageService.save(testManage);
             }
+//            }
             return Msg.success().add("testManages",testManages);
         }catch (Exception e){
             return Msg.fail(e.getMessage());

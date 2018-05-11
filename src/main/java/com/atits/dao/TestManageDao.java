@@ -22,7 +22,7 @@ public class TestManageDao {
  testStart:state=2表示考评已经开始，此时TestManage.state=0表示未考评
  */
     public List insertAuto(){//还需要插入考评人员
-        String hql = "insert into TestManage(year,date) select t.year,t.date from TestStart t where t.state = 2";
+        String hql = "insert into TestManage(year)  select t.year from TestStart t where t.state = 2";
         return getSession().createQuery(hql).list();
     }
 

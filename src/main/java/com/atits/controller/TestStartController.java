@@ -52,32 +52,31 @@ public class TestStartController {
 
 /*
 未完成
+考评人员要怎么添加进去？???
  */
-    @ApiOperation(value = "添加考评记录--》未完成！！！")
+    @ApiOperation(value = "添加考评记录")
     @ApiImplicitParams({
-        @ApiImplicitParam(name = "address",value = "考评地址",paramType = "query",dataType = "String"),
-        @ApiImplicitParam(name = "year",value = "考评年份",paramType = "query",dataType = "String")
+            @ApiImplicitParam(name = "id",value = "考评ID（自增长模式）",paramType = "query",dataType = "int"),
+            @ApiImplicitParam(name = "address",value = "考评地址",paramType = "query",dataType = "String",required = true),
+            @ApiImplicitParam(name = "date",value = "考评时间（自动获取当前系统时间）",paramType = "query",dataType = "String"),
+            @ApiImplicitParam(name = "year",value = "考评年份",paramType = "query",dataType = "String",required = true),
+            @ApiImplicitParam(name = "state",value = "考评状态（1:启动考评，2:考评开始，3:考评结束）",paramType = "query",dataType = "List",required = true)
 })
-    @RequestMapping(value = "save",method = RequestMethod.POST)
+    @RequestMapping(value = "start_save",method = RequestMethod.POST)
     @ResponseBody
-    public Msg save(){
-        //year:当前年份的第二年  address 手动输入     state初始化为1：“启动考评”  date：自动获取插入时间
-        //实现把页面输入的数据插入表中
-        //考评人员、年份、地址要怎么获取到表中？当考评人员为空时不可添加
+    public Msg save(TestStart testStart){
         //当选中要添加的考评人员后，实现以下的自动插入
         try{
-            TestStart testStart = new TestStart();
-            if (testStart.getUsers()!= null){
-                testStart.setState(1);//初始状态：“启动考评”
+//                testStart.setState(1);//初始状态：“启动考评”
                 Date date = new Date();
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
                 testStart.setDate(simpleDateFormat.format(date));
-//            testStart.setYear(date.);
                 testStartService.save(testStart);
-                return Msg.success().add("testStarts",testStartService.findAll());
-            }else {
-                return Msg.fail("未添加考评人员！");
-            }
+                return Msg.success().add("testStart",testStart);
+//                return Msg.success().add("testStarts",testStartService.findAll());
+//            }else {
+//                return Msg.fail("未添加考评人员！");
+//            }
         }catch (Exception e){
             return Msg.fail(e.getMessage());
         }

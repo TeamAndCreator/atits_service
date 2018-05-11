@@ -18,7 +18,7 @@ public class TestManageService {
 
     public List findAll(){return testManageDao.findAll();}
 
-    public List insertAuto(){return testManageDao.insertAuto();}
+    public List insertAuto(){ return testManageDao.insertAuto();}
 
     public void save(TestManage testManage){testManageDao.save(testManage);}
 

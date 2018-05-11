@@ -11,7 +11,7 @@ public class TestStart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private Integer year;// 考评年度
+    private String year;// 考评年度
     private String date;//考评日期
     private String address;//考评地点
 
@@ -29,11 +29,11 @@ public class TestStart {
         this.id = id;
     }
 
-    public Integer getYear() {
+    public String getYear() {
         return year;
     }
 
-    public void setYear(Integer year) {
+    public void setYear(String year) {
         this.year = year;
     }
 
