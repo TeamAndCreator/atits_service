@@ -30,7 +30,7 @@
 
 <a href="files/download?id=181" download="16计算机科学与技术1班春游策划.docx">16计算机科学与技术1班春游策划.docx</a>
 <br>
-<a href="/files/download?id=37" download="download">txt</a>
+<a href="/File/1/重大文件/1/b93de87b-e1d0-4ca0-84d8-765d447b6b16.docx" download="download">txt</a>
 <button></button>
 </body>
 </html>
