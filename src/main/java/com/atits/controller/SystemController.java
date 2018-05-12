@@ -136,6 +136,7 @@ public class SystemController {
     public Msg findAll1(){
         try {
             List systems=systemService.findAll1();
+            systems.remove(0);
             return Msg.success().add("systems",systems);
         }catch (Exception e){
             return Msg.fail(e.getMessage());
