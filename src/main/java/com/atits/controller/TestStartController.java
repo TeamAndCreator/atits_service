@@ -68,12 +68,12 @@ public class TestStartController {
         //当选中要添加的考评人员后，实现以下的自动插入
         try{
 //                testStart.setState(1);//初始状态：“启动考评”
+//            if (testStart.getUsers()!=null){
                 Date date = new Date();
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
                 testStart.setDate(simpleDateFormat.format(date));
                 testStartService.save(testStart);
                 return Msg.success().add("testStart",testStart);
-//                return Msg.success().add("testStarts",testStartService.findAll());
 //            }else {
 //                return Msg.fail("未添加考评人员！");
 //            }
