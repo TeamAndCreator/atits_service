@@ -106,10 +106,12 @@ public class Laboratory {
         this.labName=labName;
     }
 
-    public Laboratory(int id ,String labName,int state){
+    public Laboratory(int id ,String labName,String systemName,int state){
         this.id=id;
         this.labName=labName;
         this.state=state;
+        this.system=new System();
+        this.system.setSystemName(systemName);
     }
 
     public Laboratory(int id,String labName, String content, String company,String systemName, String time, String date, int state) {

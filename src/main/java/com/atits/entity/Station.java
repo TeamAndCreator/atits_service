@@ -104,10 +104,12 @@ public class Station {
         this.staName=staName;
     }
 
-    public Station(int id , String staName,int state){
+    public Station(int id , String staName,String systemName,int state){
         this.id=id;
         this.staName=staName;
         this.state=state;
+        this.system=new System();
+        this.system.setSystemName(systemName);
     }
     public Station(int id,String staName, String content, String company,String systemName, String time,String date, int state) {
         this.id=id;
