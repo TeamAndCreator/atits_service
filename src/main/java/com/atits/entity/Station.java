@@ -116,6 +116,7 @@ public class Station {
         this.staName = staName;
         this.content = content;
         this.company = company;
+        this.system=new System();
         this.system.setSystemName(systemName);
         this.time = time;
         this.date=date;
