@@ -13,8 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Controller
 @Api(description = "考评启动")
@@ -67,20 +66,14 @@ public class TestStartController {
     public Msg save(TestStart testStart){
         //当选中要添加的考评人员后，实现以下的自动插入
         try{
-//                testStart.setState(1);//初始状态：“启动考评”
-//            if (testStart.getUsers()!=null){
                 Date date = new Date();
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
                 testStart.setDate(simpleDateFormat.format(date));
                 testStartService.save(testStart);
                 return Msg.success().add("testStart",testStart);
-//            }else {
-//                return Msg.fail("未添加考评人员！");
-//            }
         }catch (Exception e){
             return Msg.fail(e.getMessage());
         }
-
     }
 
     @ApiOperation(value = "获取启动表的所有记录")
@@ -94,6 +87,34 @@ public class TestStartController {
             return Msg.fail(e.getMessage());
         }
     }
+
+
+//    @ApiOperation(value = "获取所有参加考评人员")
+//    @RequestMapping(value = "find_users",method = RequestMethod.GET)
+//    @ResponseBody
+//    public Msg findUsers(@RequestParam("id") int id){
+//        try{
+//            TestStart testStart = testStartService.findById(id);
+//            Set<User> users= testStart.getUsers();
+//            for (User user:users){//一个人可能有多个角色
+//                if (user.getSystem().getId()){}
+////            List<TestStart> testStarts = testStartService.findAll();
+////            List<Map> list = new ArrayList<>();
+////            for (TestStart testStart:testStarts){
+////                Map<String,Object> map = new HashMap<>();
+////                map.put("testStarts",testStart);
+////                if (testStart.getUsers() != null){
+////
+////                }
+////
+////            }
+//
+//            }
+//            return Msg.success().add("users",users);
+//        }catch (Exception e){
+//            return Msg.fail(e.getMessage());
+//        }
+//    }
 
 
 }

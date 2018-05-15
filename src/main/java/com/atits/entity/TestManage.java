@@ -25,6 +25,13 @@ public class TestManage {
 
     private int state;//考评状态：0是未考评，1是已考评
 
+    public TestManage() {
+    }
+
+    public TestManage(User examedner) {
+        this.examedner = examedner;
+    }
+
     public int getId() {
         return id;
     }

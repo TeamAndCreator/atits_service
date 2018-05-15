@@ -19,4 +19,9 @@ public class TestStartService {
 
     public void save(TestStart testStart){testStartDao.save(testStart);}
 
+    public TestStart findById(int id){
+        return testStartDao.findById(id);
+    }
+
+    public List<TestStart> findByState(int state){return testStartDao.findByState(state);}
 }
