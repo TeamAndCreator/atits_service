@@ -89,9 +89,6 @@ public class TestManageController {
                                         testManage.setExamedner(user2);
                                         testManageService.save(testManage);
                                     }
-//                                    else {
-//                                        continue;
-//                                    }
                             }
                         }
                     }

@@ -24,11 +24,6 @@ public class TestStartDao {
         getSession().save(testStart);
     }
 
-    public TestStart findById(int id){
-        String hql="from TestStart where TestStart.id=:id";
-        return (TestStart) getSession().createQuery(hql).setParameter("id",id).uniqueResult();
-    }
-
     public List<TestStart> findByState(int state){
         String hql = "from TestStart where state=:state";
         return getSession().createQuery(hql).setParameter("state",state).list();

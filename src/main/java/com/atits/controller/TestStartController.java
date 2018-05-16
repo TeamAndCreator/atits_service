@@ -31,10 +31,6 @@ public class TestStartController {
      */
 
     @ApiOperation(value = "通过体系ID、角色ID来筛选出参评人员，再从中挑选出此次的参评人员")//通过体系ID、角色ID来查找参评人员
-//    @ApiImplicitParams({
-//            @ApiImplicitParam(name = "year",value = "考评年份",paramType = "query",required = true,dataType = "String"),
-//            @ApiImplicitParam(name = "address",value = "考评地址",paramType = "query",required = true,dataType = "String")
-//    })
     @RequestMapping(value = "import_persons",method = RequestMethod.GET)
     @ResponseBody
     public Msg importPersons(Integer sysId, Integer roleId){
@@ -49,11 +45,10 @@ public class TestStartController {
         }
     }
 
-/*
-未完成
-考评人员要怎么添加进去？???
- */
-    @ApiOperation(value = "添加考评记录")
+    /*
+    尚需完善
+     */
+    @ApiOperation(value = "添加考评记录,考评人员需要前端选中后保存到数据库中，目前测试采取直接输入数据库方式")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id",value = "考评ID（自增长模式）",paramType = "query",dataType = "int"),
             @ApiImplicitParam(name = "address",value = "考评地址",paramType = "query",dataType = "String",required = true),
@@ -87,33 +82,5 @@ public class TestStartController {
             return Msg.fail(e.getMessage());
         }
     }
-
-//    @ApiOperation(value = "获取所有参加考评人员")
-//    @RequestMapping(value = "find_users",method = RequestMethod.GET)
-//    @ResponseBody
-//    public Msg findUsers(@RequestParam("id") int id){
-//        try{
-//            TestStart testStart = testStartService.findById(id);
-//            Set<User> users= testStart.getUsers();
-//            for (User user:users){//一个人可能有多个角色
-//                if (user.getSystem().getId()){}
-////            List<TestStart> testStarts = testStartService.findAll();
-////            List<Map> list = new ArrayList<>();
-////            for (TestStart testStart:testStarts){
-////                Map<String,Object> map = new HashMap<>();
-////                map.put("testStarts",testStart);
-////                if (testStart.getUsers() != null){
-////
-////                }
-////
-////            }
-//
-//            }
-//            return Msg.success().add("users",users);
-//        }catch (Exception e){
-//            return Msg.fail(e.getMessage());
-//        }
-//    }
-
 
 }

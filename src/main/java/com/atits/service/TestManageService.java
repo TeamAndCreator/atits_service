@@ -19,14 +19,7 @@ public class TestManageService {
 
     public List findAll(){return testManageDao.findAll();}
 
-    public List insertAuto(){ return testManageDao.insertAuto();}
-
     public void save(TestManage testManage){testManageDao.save(testManage);}
 
-    public List<TestManage> insertExamedner(){
-        return testManageDao.insertExamedner();
-    }
-
-    public List findAllPart(){return testManageDao.findAllPart();}
 
 }
