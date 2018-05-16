@@ -19,6 +19,12 @@ public class TestManageDao {
         String hql = "from TestManage";
         return getSession().createQuery(hql).list();
     }
+
+    public List findAllPart(){
+        String hql = "select TestManage (id,examiner.id,examiner.userName,examiner.system.systemName,examiner.roles" +
+                ",examedner.id,examedner.userName,examedner.system.systemName,examedner.roles)from TestManage ";
+        return getSession().createQuery(hql).list();
+    }
 /*
  testStart:state=2表示考评已经开始，此时TestManage.state=0表示未考评
  */

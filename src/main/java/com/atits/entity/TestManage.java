@@ -28,6 +28,11 @@ public class TestManage {
     public TestManage() {
     }
 
+    public TestManage(User examiner, User examedner) {
+        this.examiner = examiner;
+        this.examedner = examedner;
+    }
+
     public TestManage(User examedner) {
         this.examedner = examedner;
     }

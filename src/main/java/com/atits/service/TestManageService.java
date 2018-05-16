@@ -27,4 +27,6 @@ public class TestManageService {
         return testManageDao.insertExamedner();
     }
 
+    public List findAllPart(){return testManageDao.findAllPart();}
+
 }

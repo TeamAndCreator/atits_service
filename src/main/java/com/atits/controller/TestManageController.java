@@ -57,47 +57,72 @@ public class TestManageController {
 
 
     @ApiOperation(value = "启动后，自动导入考评记录")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "id",value = "考评管理ID",paramType = "query",dataType = "int"),
-            @ApiImplicitParam(name = "date",value = "考评日期（自动获取当前系统时间）",paramType = "query",dataType = "String"),
-//            @ApiImplicitParam(name = "state",value = "考评状态（0：未考评,1：已考评）",paramType = "query",dataType = "int",required = true)
-    })
     @RequestMapping(value = "manage_save",method = RequestMethod.POST)
     @ResponseBody
-    public Msg save(TestManage testManage){
+    public Msg save(){
         try{
                 /*
                 导入启动表中的考评人员，并且自动分成考评人与被考评人
                  */
                 List<TestStart> testStarts = testStartService.findByState(2);//考评状态 ：1、启动考评，2、考评开始，3、考评结束
                 for (TestStart testStart:testStarts){
+
                     Set<User> users = testStart.getUsers();//获取到启动表中的考评人员
-                    for (User user1 : users){
-                        for (User user2 : users){
-                            //①农委或外聘专家对体系人员考评
-                            if (user1.getSystem() == null & user2.getSystem() !=null){
-                                testManage.setDate(testStart.getDate());
-                                testManage.setYear(testStart.getYear());
-                                testManage.setState(0);//初始化默认为考评中
-                                testManage.setExaminer(user1);
-                                testManage.setExamedner(user2);
-                                testManageService.save(testManage);
-                            }
-                            //②体系内互评
-                            if(user1.getSystem()!= null & user2.getSystem() != null){
-                                if (user1.equals(user2))
-                                    continue;
-                                testManage.setDate(testStart.getDate());
-                                testManage.setYear(testStart.getYear());
-                                testManage.setState(0);
-                                testManage.setExaminer(user1);
-                                testManage.setExamedner(user2);
-                                testManageService.save(testManage);
+
+                    //①农委或外聘专家对体系人员考评
+                    for (User user1 : users) {
+                        for (User user2 : users) {
+                            if (user1.getSystem() == null & user2.getSystem() != null) {
+                                    List<TestManage> testManages = testManageService.findAll();
+                                    int i;
+                                    for (i=0;i<testManages.size();i++){
+                                        if (testManages.get(i).getExaminer() == user1 & testManages.get(i).getExamedner()==user2){
+                                            break;
+                                        }
+                                    }
+                                    if (i>=testManages.size()){//说明没有相同记录，则进行保存
+                                        TestManage testManage = new TestManage();
+                                        testManage.setDate(testStart.getDate());
+                                        testManage.setYear(testStart.getYear());
+                                        testManage.setState(0);//初始化默认为考评中
+                                        testManage.setExaminer(user1);
+                                        testManage.setExamedner(user2);
+                                        testManageService.save(testManage);
+                                    }
+//                                    else {
+//                                        continue;
+//                                    }
                             }
                         }
                     }
+                    //②体系内互评
+                    for (User user11 : users){
+                        for (User user22 :users){
+                            if(user11.getSystem()!= null & user22.getSystem() != null){
+                                if (user11.equals(user22))
+                                    continue;
+                                List<TestManage> testManages = testManageService.findAll();
+                                int j;
+                                for (j=0;j<testManages.size();j++){
+                                    if (testManages.get(j).getExaminer() == user11 & testManages.get(j).getExamedner()==user22){
+                                        break;
+                                    }
+                                }
+                                if (j>=testManages.size()){
+                                    TestManage testManage = new TestManage();
+                                    testManage.setDate(testStart.getDate());
+                                    testManage.setYear(testStart.getYear());
+                                    testManage.setState(0);
+                                    testManage.setExaminer(user11);
+                                    testManage.setExamedner(user22);
+                                    testManageService.save(testManage);
+                                }
+                            }
+                        }
+                    }
+
                 }
-            return Msg.success().add("testManage",testManage);
+            return Msg.success().add("testManage",testManageService.findAll());
         }catch (Exception e){
             return Msg.fail(e.getMessage());
         }
