@@ -1,6 +1,7 @@
 package com.atits.controller;
 
 import com.atits.entity.Msg;
+import com.atits.entity.Role;
 import com.atits.entity.User;
 import com.atits.service.UserService;
 import io.swagger.annotations.Api;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @Api(description = "用户")
