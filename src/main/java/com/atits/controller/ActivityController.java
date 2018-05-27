@@ -7,6 +7,8 @@ import com.atits.service.ActivityService;
 import com.atits.service.FilesService;
 import com.atits.utils.GetTimeUtil;
 import io.swagger.annotations.*;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -124,11 +126,16 @@ public class ActivityController {
     @ApiImplicitParam(name = "id", value = "要查找的重大活动的id", paramType = "query", dataType = "long")
     @RequestMapping(value = "findById", method = RequestMethod.GET)
     public Msg findById(Integer id) {
-        try {
-            return Msg.success().add("activity", activityService.findById(id));
-        } catch (Exception e) {
-            return Msg.fail(e.getMessage());
+        Subject currentUser = SecurityUtils.getSubject();
+        if(currentUser.hasRole("chief")){
+
+            try {
+                return Msg.success().add("activity", activityService.findById(id));
+            } catch (Exception e) {
+                return Msg.fail(e.getMessage());
+            }
         }
+        return Msg.fail("没有权限");
     }
 
     @RequestMapping(value = "findAll", method = RequestMethod.GET)

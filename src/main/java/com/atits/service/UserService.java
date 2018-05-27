@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Set;
 
 @Transactional
 @Service
@@ -44,6 +45,10 @@ public class UserService {
      */
     public void save(User user){
         userDao.save(user);
+    }
+
+    public List findRoleById(String userName){
+        return userDao.findRoleById(userName);
     }
 
 
