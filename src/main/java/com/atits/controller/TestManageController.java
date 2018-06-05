@@ -69,55 +69,40 @@ public class TestManageController {
 
                     Set<User> users = testStart.getUsers();//获取到启动表中的考评人员
 
-                    //①农委或外聘专家对体系人员考评
-                    for (User user1 : users) {
-                        for (User user2 : users) {
-                            if (user1.getSystem() == null & user2.getSystem() != null) {
-                                    List<TestManage> testManages = testManageService.findAll();
-                                    int i;
-                                    for (i=0;i<testManages.size();i++){
-                                        if (testManages.get(i).getExaminer() == user1 & testManages.get(i).getExamedner()==user2){
-                                            break;
-                                        }
-                                    }
-                                    if (i>=testManages.size()){//说明没有相同记录，则进行保存
-                                        TestManage testManage = new TestManage();
-                                        testManage.setDate(testStart.getDate());
-                                        testManage.setYear(testStart.getYear());
-                                        testManage.setState(0);//初始化默认为考评中
-                                        testManage.setExaminer(user1);
-                                        testManage.setExamedner(user2);
-                                        testManageService.save(testManage);
-                                    }
+
+                    /*
+                       直接通过角色来判断
+                     */
+                    for (User user1:users){
+                        for (User user2:users){
+                            //user1:评分人   user2:被评分人（除去两种情况）
+                            if (user2.getRoles().toString().contains("省体系办") || user2.getRoles().toString().contains("行业主管部门")){
+                                continue;
                             }
-                        }
-                    }
-                    //②体系内互评
-                    for (User user11 : users){
-                        for (User user22 :users){
-                            if(user11.getSystem()!= null & user22.getSystem() != null){
-                                if (user11.equals(user22))
-                                    continue;
+                            //不能自评
+                            if (user1.equals(user2)){
+                                continue;
+                            }
+                                //遍历查询表中是否已存在相同记录“评分人-》被评分人”
                                 List<TestManage> testManages = testManageService.findAll();
-                                int j;
-                                for (j=0;j<testManages.size();j++){
-                                    if (testManages.get(j).getExaminer() == user11 & testManages.get(j).getExamedner()==user22){
+                                int i;
+                                for (i=0;i<testManages.size();i++){
+                                    if (testManages.get(i).getExaminer() == user1 & testManages.get(i).getExamedner()==user2){
                                         break;
                                     }
                                 }
-                                if (j>=testManages.size()){
+
+                                if (i>=testManages.size()){//说明没有相同记录，则进行保存
                                     TestManage testManage = new TestManage();
                                     testManage.setDate(testStart.getDate());
                                     testManage.setYear(testStart.getYear());
-                                    testManage.setState(0);
-                                    testManage.setExaminer(user11);
-                                    testManage.setExamedner(user22);
+                                    testManage.setState(0);//初始化默认为考评中
+                                    testManage.setExaminer(user1);
+                                    testManage.setExamedner(user2);
                                     testManageService.save(testManage);
                                 }
-                            }
                         }
                     }
-
                 }
             return Msg.success().add("testManage",testManageService.findAll());
         }catch (Exception e){
