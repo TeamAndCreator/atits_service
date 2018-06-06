@@ -68,8 +68,6 @@ public class TestManageController {
                 for (TestStart testStart:testStarts){
 
                     Set<User> users = testStart.getUsers();//获取到启动表中的考评人员
-
-
                     /*
                        直接通过角色来判断
                      */

@@ -20,4 +20,12 @@ public class TestStartService {
     public void save(TestStart testStart){testStartDao.save(testStart);}
 
     public List<TestStart> findByState(int state){return testStartDao.findByState(state);}
+
+    public void deleteByIds(List<Integer> idList){testStartDao.deleteByIds(idList);}
+
+    public void deleteById(Integer id){testStartDao.deleteById(id);}
+
+    public TestStart findById(Integer id){return testStartDao.findById(id);}
+
+    public void update(TestStart testStart){testStartDao.update(testStart);}
 }

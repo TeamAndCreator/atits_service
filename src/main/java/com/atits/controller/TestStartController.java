@@ -30,7 +30,7 @@ public class TestStartController {
     通过体系id、角色查找
      */
 
-    @ApiOperation(value = "通过体系ID、角色ID来筛选出参评人员，再从中挑选出此次的参评人员")//通过体系ID、角色ID来查找参评人员
+    @ApiOperation(value = "通过体系ID、角色ID来筛选出参评人员（显示在页面），再从中挑选出此次的参评人员(前端挑选后存入数据库)")//通过体系ID、角色ID来查找参评人员
     @RequestMapping(value = "import_persons",method = RequestMethod.GET)
     @ResponseBody
     public Msg importPersons(Integer sysId, Integer roleId){
@@ -56,7 +56,7 @@ public class TestStartController {
             @ApiImplicitParam(name = "year",value = "考评年份",paramType = "query",dataType = "String",required = true),
             @ApiImplicitParam(name = "state",value = "考评状态（1:启动考评，2:考评开始，3:考评结束）",paramType = "query",dataType = "List",required = true)
 })
-    @RequestMapping(value = "start_save",method = RequestMethod.POST)
+    @RequestMapping(value = "save",method = RequestMethod.POST)
     @ResponseBody
     public Msg save(TestStart testStart){
         //当选中要添加的考评人员后，实现以下的自动插入
@@ -71,8 +71,56 @@ public class TestStartController {
         }
     }
 
+    @ApiOperation(value = "根据id删除启动记录。仅能删除从未启动过的记录（前端页面显示控制）")
+    @RequestMapping(value = "deleteById",method = RequestMethod.DELETE)
+    @ResponseBody
+    public Msg deleteById(@RequestParam Integer id){
+        try{
+            testStartService.deleteById(id);
+            return Msg.success();
+        }catch (Exception e){
+            return Msg.fail(e.getMessage());
+        }
+    }
+
+    @ApiOperation(value = "根据id数组批量删除启动记录。仅能删除从未启动过的记录（前端页面显示控制）")
+    @RequestMapping(value = "deleteByIds",method = RequestMethod.DELETE)
+    @ResponseBody
+    public Msg deleteByIds(
+            @ApiParam(name = "idList",value = "需删除启动记录的id数组")@RequestParam List<Integer> idList){
+        try{
+           testStartService.deleteByIds(idList);
+           return Msg.success();
+        }catch (Exception e){
+            return Msg.fail(e.getMessage());
+        }
+    }
+
+
+    @ApiOperation(value = "更新一个启动记录")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id",value = "需更新的启动记录id",paramType = "query",dataType = "int",required = true),
+            @ApiImplicitParam(name = "address",value = "考评地址",paramType = "query",dataType = "String"),
+            @ApiImplicitParam(name = "date",value = "考评时间（自动获取当前系统时间）",paramType = "query",dataType = "String"),
+            @ApiImplicitParam(name = "year",value = "考评年份",paramType = "query",dataType = "String"),
+            @ApiImplicitParam(name = "state",value = "考评状态（1:启动考评，2:考评开始，3:考评结束）",paramType = "query",dataType = "List")
+    })
+    @RequestMapping(value = "update",method = RequestMethod.PUT)
+    @ResponseBody
+    public Msg update(TestStart testStart){
+        try{
+            Date date = new Date();
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+            testStart.setDate(simpleDateFormat.format(date));
+            testStartService.update(testStart);
+            return Msg.success().add("testStart",testStart);
+        }catch (Exception e){
+            return Msg.fail(e.getMessage());
+        }
+    }
+
     @ApiOperation(value = "获取启动表的所有记录")
-    @RequestMapping(value = "start_list",method = RequestMethod.GET)
+    @RequestMapping(value = "list",method = RequestMethod.GET)
     @ResponseBody
     public Msg findAll(){
         try{
