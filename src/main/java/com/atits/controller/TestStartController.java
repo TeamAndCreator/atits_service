@@ -17,7 +17,7 @@ import java.util.*;
 
 @Controller
 @Api(description = "考评启动")
-@RequestMapping(value = "evaluate")
+@RequestMapping(value = "teststart")
 public class TestStartController {
 
     @Resource
@@ -83,11 +83,11 @@ public class TestStartController {
         }
     }
 
-    @ApiOperation(value = "根据id数组批量删除启动记录。仅能删除从未启动过的记录（前端页面显示控制）")
+    @ApiOperation(value = "根据id数组批量删除启动记录，依次以英文逗号隔开输入")
     @RequestMapping(value = "deleteByIds",method = RequestMethod.DELETE)
     @ResponseBody
     public Msg deleteByIds(
-            @ApiParam(name = "idList",value = "需删除启动记录的id数组")@RequestParam List<Integer> idList){
+            @ApiParam(name = "idList",value = "需删除启动记录的id数组,依次以英文逗号间隔输入")@RequestParam List<Integer> idList){
         try{
            testStartService.deleteByIds(idList);
            return Msg.success();
@@ -120,7 +120,7 @@ public class TestStartController {
     }
 
     @ApiOperation(value = "获取启动表的所有记录")
-    @RequestMapping(value = "list",method = RequestMethod.GET)
+    @RequestMapping(value = "findAll",method = RequestMethod.GET)
     @ResponseBody
     public Msg findAll(){
         try{
@@ -130,5 +130,18 @@ public class TestStartController {
             return Msg.fail(e.getMessage());
         }
     }
+
+    @ApiOperation(value = "根据id查询一条考评启动记录")
+    @RequestMapping(value = "findById",method = RequestMethod.GET)
+    @ResponseBody
+    public Msg findById(Integer id){
+        try{
+            TestStart testStart = testStartService.findById(id);
+            return Msg.success().add("testStart",testStart);
+        }catch (Exception e){
+            return Msg.fail(e.getMessage());
+        }
+    }
+
 
 }

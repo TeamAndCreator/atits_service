@@ -10,6 +10,8 @@ public class TestScore {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    private String time; //打分时间
+
     @OneToOne
     @JoinColumn
     private TestManage testManage;
@@ -95,10 +97,19 @@ public class TestScore {
         this.sum = sum;
     }
 
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
     @Override
     public String toString() {
         return "TestScore{" +
                 "id=" + id +
+                ", time='" + time + '\'' +
                 ", testManage=" + testManage +
                 ", A1=" + A1 +
                 ", A2=" + A2 +

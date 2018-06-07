@@ -24,6 +24,7 @@ public class TestStartDao {
         String hql = "from TestStart Where id=:id";
         return (TestStart)getSession().createQuery(hql).setParameter("id",id).uniqueResult();
     }
+
     public void save(TestStart testStart){
         getSession().save(testStart);
     }

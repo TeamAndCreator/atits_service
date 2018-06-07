@@ -20,6 +20,11 @@ public class TestManageDao {
         return getSession().createQuery(hql).list();
     }
 
+    public TestManage findById(Integer id){
+        String hql = "from TestManage Where id=:id";
+        return (TestManage) getSession().createQuery(hql).setParameter("id",id).uniqueResult();
+    }
+
 //    #找出testStart中的被考评人（考评中，本体系人员）
 //    SELECT * FROM  t_test_start tts ,t_test_start_t_user ttstu,t_user tu WHERE tts.id = ttstu.TestStart_id AND ttstu.users_id = tu.id AND tts.state=2 AND tu.system_id = 14;
 //#找出testStart中的考评人（考评中，省体系办、外聘专家、本体系人员）

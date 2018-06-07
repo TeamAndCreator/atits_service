@@ -13,19 +13,21 @@ public class TestWeight {
 
     private String year;
 
+    private String time;
+
     @OneToOne
     @JoinColumn
     private Role role;
     /*
     考评比例设置
      */
-    private double nongWei;
-    private double expert;
-    private double subChief_sta_lib;
-    private double sta_lib;
-    private double chief;
-    private double nongwei_expert;
-    private double chief_subChief;
+    private double nongWei; //农委
+    private double expert; //外聘专家
+    private double subChief_sta_lib; //副首席-岗位专家-综合试验站站长
+    private double sta_lib; //岗位专家-综合试验站站长
+    private double chief;//首席
+    private double nongwei_expert;//农委-外聘专家
+    private double chief_subChief;//首席-副首席
 
     public int getId() {
         return id;
@@ -107,11 +109,20 @@ public class TestWeight {
         this.role = role;
     }
 
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
     @Override
     public String toString() {
         return "TestWeight{" +
                 "id=" + id +
                 ", year='" + year + '\'' +
+                ", time='" + time + '\'' +
                 ", role=" + role +
                 ", nongWei=" + nongWei +
                 ", expert=" + expert +

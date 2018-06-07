@@ -24,7 +24,7 @@ import java.util.Set;
 
 @Controller
 @Api(description = "考评管理")
-@RequestMapping(value = "evaluate")
+@RequestMapping(value = "testmanage")
 public class TestManageController {
     @Resource
     private TestManageService testManageService;
@@ -42,22 +42,8 @@ public class TestManageController {
     启动表中，state = 2 的记录——导入管理表
      */
 
-    @ApiOperation(value = "获取需要考评的所有记录")
-    @RequestMapping(value = "manage_list",method = RequestMethod.GET)
-    @ResponseBody
-    public Msg findAll(){
-        try{
-            List<TestManage> testManages = testManageService.findAll();
-            return Msg.success().add("testManages",testManages);
-        }catch (Exception e){
-            return Msg.fail(e.getMessage());
-        }
-    }
-
-
-
     @ApiOperation(value = "启动后，自动导入考评记录")
-    @RequestMapping(value = "manage_save",method = RequestMethod.POST)
+    @RequestMapping(value = "save",method = RequestMethod.POST)
     @ResponseBody
     public Msg save(){
         try{
@@ -107,6 +93,32 @@ public class TestManageController {
             return Msg.fail(e.getMessage());
         }
     }
+
+
+    @ApiOperation(value = "获取需要考评的所有记录")
+    @RequestMapping(value = "findAll",method = RequestMethod.GET)
+    @ResponseBody
+    public Msg findAll(){
+        try{
+            List<TestManage> testManages = testManageService.findAll();
+            return Msg.success().add("testManages",testManages);
+        }catch (Exception e){
+            return Msg.fail(e.getMessage());
+        }
+    }
+
+    @ApiOperation(value = "根据id查询一条考评管理记录")
+    @RequestMapping(value = "findById",method = RequestMethod.GET)
+    @ResponseBody
+    public Msg findById(Integer id){
+        try{
+            TestManage testManage = testManageService.findById(id);
+            return Msg.success().add("testManage",testManage);
+        }catch (Exception e){
+            return Msg.fail(e.getMessage());
+        }
+    }
+
 
 
 }

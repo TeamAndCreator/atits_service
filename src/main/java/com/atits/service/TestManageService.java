@@ -19,6 +19,8 @@ public class TestManageService {
 
     public List findAll(){return testManageDao.findAll();}
 
+    public TestManage findById(Integer id){return testManageDao.findById(id);}
+
     public void save(TestManage testManage){testManageDao.save(testManage);}
 
 
