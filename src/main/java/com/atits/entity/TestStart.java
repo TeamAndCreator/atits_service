@@ -18,6 +18,14 @@ public class TestStart {
     @ManyToMany
     private Set<User> users=new HashSet<>();//考评人员
 
+    public TestStart() {
+        users.add(new User());
+    }
+
+    public TestStart(Set<User> users) {
+        this.users = users;
+    }
+
     private int state;//考评状态 ：1、启动考评，2、考评开始，3、考评结束
 
 

@@ -1,9 +1,8 @@
 package com.atits.controller;
 
 
-import com.atits.entity.Msg;
-import com.atits.entity.Role;
-import com.atits.entity.User;
+import com.atits.entity.*;
+import com.atits.service.TestStartService;
 import com.atits.service.UserService;
 import io.swagger.annotations.*;
 import org.springframework.stereotype.Controller;
@@ -13,34 +12,133 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Controller
 @Api(description = "考评启动")
-@RequestMapping(value = "evaluate")
+@RequestMapping(value = "teststart")
 public class TestStartController {
 
     @Resource
     private UserService userService;
-    //从User表中导入体系内部人员、农委以及外聘人员
-    //通过体系id、角色查找
-    @ApiOperation(value = "通过体系ID、角色ID来查找参评人员")
-//    @ApiImplicitParams({
-//            @ApiImplicitParam(name = "system.id",value = "体系ID",paramType = "query",dataType = "Integer"),
-//            @ApiImplicitParam(name = "roles.id",value = "角色ID",paramType = "query",dataType = "Integer")
-//    })
-    @RequestMapping(value = "start",method = RequestMethod.GET)
+    @Resource
+    private TestStartService testStartService;
+    /*
+    显示所有可能参加考评的人员（前端从中挑选出此次参评人员）
+    从User表中导入体系内部人员、农委以及外聘人员
+    通过体系id、角色查找
+     */
+
+    @ApiOperation(value = "通过体系ID、角色ID来筛选出参评人员（显示在页面），再从中挑选出此次的参评人员(前端挑选后存入数据库)")//通过体系ID、角色ID来查找参评人员
+    @RequestMapping(value = "import_persons",method = RequestMethod.GET)
     @ResponseBody
-    public Msg start(Integer sysId, Integer roleId){
+    public Msg importPersons(Integer sysId, Integer roleId){
         try {
             if (sysId !=null && roleId!=null){
-                List<User> users = userService.findTestPer(sysId,roleId);//sysId=1 时未显示人员
-                //异常：两者必须同时输入
-                //user为空时也不代表失败，只能说没有人员。这里是同时输入两个值即处理成功，并不一定存在，需要容错处理
+                List<User> users = userService.findTestPer(sysId,roleId);//返回是一个仅含有用户名的数组
                 return Msg.success().add("users",users);
             }else
                 return Msg.fail("均不能为空！");
         }catch(Exception e){
+            return Msg.fail(e.getMessage());
+        }
+    }
+
+    /*
+    尚需完善
+     */
+    @ApiOperation(value = "添加考评记录,考评人员需要前端选中后保存到数据库中，目前测试采取直接输入数据库方式")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id",value = "考评ID（自增长模式）",paramType = "query",dataType = "int"),
+            @ApiImplicitParam(name = "address",value = "考评地址",paramType = "query",dataType = "String",required = true),
+            @ApiImplicitParam(name = "date",value = "考评时间（自动获取当前系统时间）",paramType = "query",dataType = "String"),
+            @ApiImplicitParam(name = "year",value = "考评年份",paramType = "query",dataType = "String",required = true),
+            @ApiImplicitParam(name = "state",value = "考评状态（1:启动考评，2:考评开始，3:考评结束）",paramType = "query",dataType = "List",required = true)
+})
+    @RequestMapping(value = "save",method = RequestMethod.POST)
+    @ResponseBody
+    public Msg save(TestStart testStart){
+        //当选中要添加的考评人员后，实现以下的自动插入
+        try{
+                Date date = new Date();
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+                testStart.setDate(simpleDateFormat.format(date));
+                testStartService.save(testStart);
+                return Msg.success().add("testStart",testStart);
+        }catch (Exception e){
+            return Msg.fail(e.getMessage());
+        }
+    }
+
+    @ApiOperation(value = "根据id删除启动记录。仅能删除从未启动过的记录（前端页面显示控制）")
+    @RequestMapping(value = "deleteById",method = RequestMethod.DELETE)
+    @ResponseBody
+    public Msg deleteById(@RequestParam Integer id){
+        try{
+            testStartService.deleteById(id);
+            return Msg.success();
+        }catch (Exception e){
+            return Msg.fail(e.getMessage());
+        }
+    }
+
+    @ApiOperation(value = "根据id数组批量删除启动记录，依次以英文逗号隔开输入")
+    @RequestMapping(value = "deleteByIds",method = RequestMethod.DELETE)
+    @ResponseBody
+    public Msg deleteByIds(
+            @ApiParam(name = "idList",value = "需删除启动记录的id数组,依次以英文逗号间隔输入")@RequestParam List<Integer> idList){
+        try{
+           testStartService.deleteByIds(idList);
+           return Msg.success();
+        }catch (Exception e){
+            return Msg.fail(e.getMessage());
+        }
+    }
+
+
+    @ApiOperation(value = "更新一个启动记录")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id",value = "需更新的启动记录id",paramType = "query",dataType = "int",required = true),
+            @ApiImplicitParam(name = "address",value = "考评地址",paramType = "query",dataType = "String"),
+            @ApiImplicitParam(name = "date",value = "考评时间（自动获取当前系统时间）",paramType = "query",dataType = "String"),
+            @ApiImplicitParam(name = "year",value = "考评年份",paramType = "query",dataType = "String"),
+            @ApiImplicitParam(name = "state",value = "考评状态（1:启动考评，2:考评开始，3:考评结束）",paramType = "query",dataType = "List")
+    })
+    @RequestMapping(value = "update",method = RequestMethod.PUT)
+    @ResponseBody
+    public Msg update(TestStart testStart){
+        try{
+            Date date = new Date();
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+            testStart.setDate(simpleDateFormat.format(date));
+            testStartService.update(testStart);
+            return Msg.success().add("testStart",testStart);
+        }catch (Exception e){
+            return Msg.fail(e.getMessage());
+        }
+    }
+
+    @ApiOperation(value = "获取启动表的所有记录")
+    @RequestMapping(value = "findAll",method = RequestMethod.GET)
+    @ResponseBody
+    public Msg findAll(){
+        try{
+            List<TestStart> testStarts = testStartService.findAll();
+            return Msg.success().add("testStarts",testStarts);
+        }catch (Exception e){
+            return Msg.fail(e.getMessage());
+        }
+    }
+
+    @ApiOperation(value = "根据id查询一条考评启动记录")
+    @RequestMapping(value = "findById",method = RequestMethod.GET)
+    @ResponseBody
+    public Msg findById(Integer id){
+        try{
+            TestStart testStart = testStartService.findById(id);
+            return Msg.success().add("testStart",testStart);
+        }catch (Exception e){
             return Msg.fail(e.getMessage());
         }
     }

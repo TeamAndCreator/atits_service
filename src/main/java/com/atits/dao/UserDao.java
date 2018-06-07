@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author zys
@@ -25,7 +26,7 @@ public class UserDao {
     /**
      * 查找所有user
      */
-    public List findAll() {
+    public List<User> findAll() {
         String hql = "from User ";
         return getSession().createQuery(hql).list();
     }
@@ -50,7 +51,7 @@ public class UserDao {
 
 
     //根据体系id和角色id来获取该体系与该角色的所有用户
-    public List<User> findTestPer(int sysId,int roleId){
+    public List<User> findTestPer(int sysId, int roleId){
         String hql = "select distinct new User(u.id,u.userName) from User as u inner join u.roles as r where r.id =:roleId or u.system.id =:sysId";
         return getSession().createQuery(hql).setParameter("sysId",sysId).setParameter("roleId",roleId).list();
     }
