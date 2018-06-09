@@ -57,7 +57,7 @@ public class StationDao {
      *查找所有station
      */
     public List<Station> findAll(){
-        String hql="select new Station (id,staName,state)from Station ";
+        String hql="select new Station (id,staName,system.systemName,state)from Station ";
         return getSession().createQuery(hql).list();
     }
 

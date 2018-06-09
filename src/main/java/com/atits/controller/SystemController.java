@@ -136,6 +136,7 @@ public class SystemController {
     public Msg findAll1(){
         try {
             List systems=systemService.findAll1();
+            systems.remove(0);
             return Msg.success().add("systems",systems);
         }catch (Exception e){
             return Msg.fail(e.getMessage());
@@ -143,14 +144,15 @@ public class SystemController {
     }
 
     @ResponseBody
-    @ApiOperation(value = "获取某个体系里的首席，岗位专家，综合实验站站长")
+    @ApiOperation(value = "获取某个体系里的首席，副首席，岗位专家，综合实验站站长")
     @RequestMapping(value = "findUsers",method = RequestMethod.GET)
     public Msg findUsers(Integer systemId){
         try {
             List chief = systemService.findUserInRole(systemId, 3);
+            List sub_chief=systemService.findUserInRole(systemId,4);
             List job_expert = systemService.findUserInRole(systemId, 6);
             List station_master = systemService.findUserInRole(systemId, 7);
-            return Msg.success().add("chief",chief).add("job_expert",job_expert).add("station_master",station_master);
+            return Msg.success().add("chief",chief).add("sub_chief",sub_chief).add("job_expert",job_expert).add("station_master",station_master);
         }catch (Exception e){
             return Msg.fail(e.getMessage());
         }

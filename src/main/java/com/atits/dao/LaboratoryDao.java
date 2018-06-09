@@ -55,10 +55,10 @@ public class LaboratoryDao {
     }
 
     /**
-     *查找所有Laboratory的id和name
+     *查找所有Laboratory的id,name,systemName,state
      */
     public List<Laboratory> findAll(){
-        String hql="SELECT new Laboratory (id,labName,state)from Laboratory ";
+        String hql="SELECT new Laboratory (id,labName,system.systemName,state)from Laboratory ";
         return getSession().createQuery(hql).list();
     }
 

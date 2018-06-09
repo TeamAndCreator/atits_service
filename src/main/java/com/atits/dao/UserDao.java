@@ -55,22 +55,10 @@ public class UserDao {
         String hql = "select distinct new User(u.id,u.userName) from User as u inner join u.roles as r where r.id =:roleId or u.system.id =:sysId";
         return getSession().createQuery(hql).setParameter("sysId",sysId).setParameter("roleId",roleId).list();
     }
-//    public List<User> findBySysId(int sysId){
-//        String hql = "from User where system.id =: sysId";
-//        return getSession().createQuery(hql).setParameter("sysId",sysId).list();
-//    }
-//    public List<User> findByRoleId(int roleId){
-//        String hql = "select distinct new User(u.id,u.userName) from User as u inner join u.roles as r where r.id =:roleId";
-//        return getSession().createQuery(hql).setParameter("roleId",roleId).list();
-//    }
 
-//    public User findByUserName(String username) {
-//        String hql = "from User where userName=:username";
-//        return (User) getSession().createQuery(hql).setParameter("username", username).uniqueResult();
-//    }
+    public List<Role> findRoleById(String userName){
+        String hql="select u.roles from User as u where u.userName=:userName";
+        return getSession().createQuery(hql).setParameter("userName",userName).list();
+    }
 
-//    public User findUser(int id) {
-////        String hql = "from User where id=:id";
-////        return (User) getSession().createQuery(hql).setParameter("id", id).uniqueResult();
-////    }
 }

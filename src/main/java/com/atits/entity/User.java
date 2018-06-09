@@ -42,6 +42,10 @@ public class User {
         roles.add(new Role());
     }
 
+    public User(Set<Role> roles){
+        this.roles=roles;
+    }
+
 
     public User(int id,String userName,String sysName,Set<Role> roles) {
         this.system=new System();
