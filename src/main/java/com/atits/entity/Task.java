@@ -18,37 +18,30 @@ public class Task {
 
     @ManyToOne
     @JoinColumn(nullable = false)
-    private User user;
+    private User user;//负责人
 
     @ManyToOne
     @JoinColumn(nullable = false)
-    private System system;
+    private System system;//任务所属体系-负责人所属体系
 
-    private String title;
+    private String title;//任务名称
+
+    private String time;//发布时间
+
+//    private String date;
+
+    //任务起止时间
+    private String stratTime;
+
+    private String endTime;
 
     @Column(length = 100000)
     private String content;
 
-    private String time;
-
-    private String date;
-
-    private String stratDate;
-
-    private String endDate;
-
-    private int state;
+//    private int state;
 
     @OneToMany(cascade = CascadeType.ALL)
     private Set<Files> files=new HashSet<Files>();
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
 
     public int getId() {
         return id;
@@ -82,14 +75,6 @@ public class Task {
         this.title = title;
     }
 
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
     public String getTime() {
         return time;
     }
@@ -98,29 +83,37 @@ public class Task {
         this.time = time;
     }
 
-    public String getStratDate() {
-        return stratDate;
+    public String getStratTime() {
+        return stratTime;
     }
 
-    public void setStratDate(String stratDate) {
-        this.stratDate = stratDate;
+    public void setStratTime(String stratTime) {
+        this.stratTime = stratTime;
     }
 
-    public String getEndDate() {
-        return endDate;
+    public String getEndTime() {
+        return endTime;
     }
 
-    public void setEndDate(String endDate) {
-        this.endDate = endDate;
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
     }
 
-    public int getState() {
-        return state;
+    public String getContent() {
+        return content;
     }
 
-    public void setState(int state) {
-        this.state = state;
+    public void setContent(String content) {
+        this.content = content;
     }
+
+//    public int getState() {
+//        return state;
+//    }
+//
+//    public void setState(int state) {
+//        this.state = state;
+//    }
 
     public Set<Files> getFiles() {
         return files;
@@ -137,12 +130,11 @@ public class Task {
                 ", user=" + user +
                 ", system=" + system +
                 ", title='" + title + '\'' +
-                ", content='" + content + '\'' +
                 ", time='" + time + '\'' +
-                ", date='" + date + '\'' +
-                ", stratDate='" + stratDate + '\'' +
-                ", endDate='" + endDate + '\'' +
-                ", state=" + state +
+                ", stratTime='" + stratTime + '\'' +
+                ", endTime='" + endTime + '\'' +
+                ", content='" + content + '\'' +
+//                ", state=" + state +
                 ", files=" + files +
                 '}';
     }
