@@ -9,7 +9,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "t_taskprogress")
-public class taskProgress {
+public class TaskProgress {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,12 +26,12 @@ public class taskProgress {
 
     private String time;
 
-    private String date;
+//    private String date;
 
     @OneToMany(cascade = CascadeType.ALL)
     private Set<Files> files;
 
-    private int state;
+    private int state;//1-通过  2-不通过  0-审核中
 
     public int getId() {
         return id;
@@ -73,14 +73,6 @@ public class taskProgress {
         this.time = time;
     }
 
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
     public Set<Files> getFiles() {
         return files;
     }
@@ -105,7 +97,6 @@ public class taskProgress {
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
                 ", time='" + time + '\'' +
-                ", date='" + date + '\'' +
                 ", files=" + files +
                 ", state=" + state +
                 '}';
