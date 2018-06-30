@@ -19,7 +19,7 @@ import java.util.Date;
 import java.util.List;
 
 @Controller
-@Api(description = "工作任务")
+@Api(description = "体系任务")
 @RequestMapping(value = "task")
 public class TaskController {
 
@@ -89,6 +89,7 @@ public class TaskController {
     @ResponseBody
     @ApiOperation(value = "更新（修改）一个工作任务")
     @ApiImplicitParams({
+            @ApiImplicitParam(name = "id",value = "任务id（已存在的）",paramType = "query",dataType = "Integer",required = true),
             @ApiImplicitParam(name = "title",value = "任务名称",paramType = "query",dataType = "String",required = true),
             @ApiImplicitParam(name = "system.id",value = "任务所属体系",paramType = "query",dataType = "Integer",required = true),
             @ApiImplicitParam(name = "user.id",value = "所选体系首席（根据所选体系自动匹配为该体系首席）",dataType = "Integer",paramType = "query",required = true),
@@ -102,9 +103,9 @@ public class TaskController {
         try{
             Date date = new Date();
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-            task.setTime(simpleDateFormat.format(date));
-            taskService.update(task);
-            return Msg.success().add("task",task);
+            task.setTime(simpleDateFormat.format(date));//发布时间
+                taskService.update(task);
+                return Msg.success().add("task",task);
         }catch (Exception e){
             return Msg.fail(e.getMessage());
         }

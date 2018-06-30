@@ -18,26 +18,26 @@ public class SubTask {
 
     @OneToOne
     @JoinColumn(nullable = false)
-    private User bearer;
+    private User bearer;//承担人
 
     @Column( length = 100000)
     private String content;
 
-    private int state;
+//    private int state;
 
-    private String title;
+    private String title;//子任务名称
 
     @ManyToOne
     @JoinColumn(nullable = false)
-    private Task fatherTask;
+    private Task fatherTask;//所属任务
 
-    private String time;
+    private String time;//发布时间
 
-    private String date;
+//    private String date;
 
-    private String startDate;
+    private String startTime;
 
-    private String endDate;
+    private String endTime;
 
     @OneToMany(cascade = CascadeType.ALL)
     private Set<Files> files=new HashSet<Files>();
@@ -66,14 +66,6 @@ public class SubTask {
         this.content = content;
     }
 
-    public int getState() {
-        return state;
-    }
-
-    public void setState(int state) {
-        this.state = state;
-    }
-
     public String getTitle() {
         return title;
     }
@@ -98,28 +90,20 @@ public class SubTask {
         this.time = time;
     }
 
-    public String getDate() {
-        return date;
+    public String getStartTime() {
+        return startTime;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
     }
 
-    public String getStartDate() {
-        return startDate;
+    public String getEndTime() {
+        return endTime;
     }
 
-    public void setStartDate(String startDate) {
-        this.startDate = startDate;
-    }
-
-    public String getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(String endDate) {
-        this.endDate = endDate;
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
     }
 
     public Set<Files> getFiles() {
@@ -136,13 +120,11 @@ public class SubTask {
                 "id=" + id +
                 ", bearer=" + bearer +
                 ", content='" + content + '\'' +
-                ", state=" + state +
                 ", title='" + title + '\'' +
                 ", fatherTask=" + fatherTask +
                 ", time='" + time + '\'' +
-                ", date='" + date + '\'' +
-                ", startDate='" + startDate + '\'' +
-                ", endDate='" + endDate + '\'' +
+                ", startTime='" + startTime + '\'' +
+                ", endTime='" + endTime + '\'' +
                 ", files=" + files +
                 '}';
     }
