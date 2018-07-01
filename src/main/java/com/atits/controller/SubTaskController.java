@@ -1,10 +1,13 @@
 package com.atits.controller;
 
+import com.atits.entity.Files;
 import com.atits.entity.Msg;
 import com.atits.entity.SubTask;
 import com.atits.entity.Task;
+import com.atits.service.FilesService;
 import com.atits.service.SubTaskService;
 import com.atits.service.TaskService;
+import com.atits.utils.GetTimeUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -14,11 +17,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @Api(description = "子任务")
@@ -29,36 +34,31 @@ public class SubTaskController {
     private SubTaskService subTaskService;
     @Resource
     private TaskService taskService;
+    @Resource
+    private FilesService filesService;
 
     @ResponseBody
     @ApiOperation(value = "添加一个子任务")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "title",value = "子任务标题",paramType = "query",dataType = "Integer",required = true),
             @ApiImplicitParam(name = "bearer.id",value = "承担者ID",paramType = "query",dataType = "Integer",required = true),
-            @ApiImplicitParam(name = "fatherTask.id",value = "所属体系任务ID（已存在的承担人的本体系任务）",paramType = "query",dataType = "Integer",required = true),
+//            @ApiImplicitParam(name = "fatherTask.id",value = "所属体系任务ID（已存在的承担人的本体系任务）",paramType = "query",dataType = "Integer",required = true),
             @ApiImplicitParam(name = "startTime",value = "子任务开始时间（格式：yyyy-mm-dd）",paramType = "query",dataType = "String"),
             @ApiImplicitParam(name = "endTime",value = "子任务结束时间（格式：yyyy-mm-dd）",paramType = "query",dataType = "String")
     })
     @RequestMapping(value = "save",method = RequestMethod.POST)
-    public Msg save(SubTask subTask){
+    public Msg save(SubTask subTask, MultipartFile[] multipartFiles){
         try{
-            List<Task> tasks = taskService.findAll();
-            int i =0 ;
-            for (Task task:tasks){
-                if (task.getId() == subTask.getFatherTask().getId())
-                    i++;
-            }
-            if (i == 0){
-                return Msg.fail("任务不存在！请重新输入");
-            }
-            Date date = new Date();
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-            subTask.setTime(simpleDateFormat.format(date));//发布时间
+            String date= GetTimeUtil.getDate();
+            String time=GetTimeUtil.getTime();
+//            if (!multipartFiles[0].isEmpty()){
+//                Set<Files> filesSet=filesService.fileSave(multipartFiles,"体系任务",subTask.getBearer().getSystem().getId(),subTask.getBearer().getId(),date,time);
+//                subTask.setFiles(filesSet);
+//            }
+            subTask.setTime(time);
+            subTask.setDate(date);
             subTaskService.save(subTask);
             return Msg.success().add("subTask",subTask);
-//            if (subTask.getFatherTask().getSystem().getId() != subTask.getBearer().getSystem().getId()){
-//                return Msg.fail("所选非本体系的任务！请重新输入");
-//            }
         }catch (Exception e){
             return Msg.fail(e.getMessage());
         }
@@ -70,26 +70,21 @@ public class SubTaskController {
             @ApiImplicitParam(name = "id",value = "子任务id（已存在的）",paramType = "query",dataType = "Integer",required = true),
             @ApiImplicitParam(name = "title",value = "子任务标题",paramType = "query",dataType = "Integer"),
             @ApiImplicitParam(name = "bearer.id",value = "承担者ID",paramType = "query",dataType = "Integer",required = true),
-            @ApiImplicitParam(name = "fatherTask.id",value = "所属体系任务ID（已存在的承担人的本体系任务）",paramType = "query",dataType = "Integer",required = true),
+//            @ApiImplicitParam(name = "fatherTask.id",value = "所属体系任务ID（已存在的承担人的本体系任务）",paramType = "query",dataType = "Integer",required = true),
             @ApiImplicitParam(name = "startTime",value = "子任务开始时间（格式：yyyy-mm-dd）",paramType = "query",dataType = "String"),
             @ApiImplicitParam(name = "endTime",value = "子任务结束时间（格式：yyyy-mm-dd）",paramType = "query",dataType = "String")
     })
     @RequestMapping(value = "update",method = RequestMethod.PUT)
-    public Msg update(SubTask subTask){
+    public Msg update(SubTask subTask, MultipartFile[] multipartFiles){
         try{
-            //        int j =0;
-//        List<SubTask> subTasks = subTaskService.findAll();
-//        for (SubTask subTask1:subTasks){
-//            if (subTask.getId() == subTask1.getId()){
-//                j++;
+            String date= GetTimeUtil.getDate();
+            String time=GetTimeUtil.getTime();
+//            if (!multipartFiles[0].isEmpty()){
+//                Set<Files> filesSet=filesService.fileSave(multipartFiles,"体系任务",subTask.getBearer().getSystem().getId(),subTask.getBearer().getId(),date,time);
+//                subTask.setFiles(filesSet);
 //            }
-//        }
-//        if (j == 0){
-//            return Msg.fail("该子任务不存在！请重新输入");
-//        }
-            Date date = new Date();
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-            subTask.setTime(simpleDateFormat.format(date));//发布时间
+            subTask.setTime(time);
+            subTask.setDate(date);
             subTaskService.update(subTask);
             return Msg.success().add("subTask",subTask);
         }catch (Exception e){

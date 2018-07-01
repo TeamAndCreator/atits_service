@@ -1,11 +1,14 @@
 package com.atits.controller;
 
 
+import com.atits.entity.Files;
 import com.atits.entity.Msg;
 import com.atits.entity.SubTask;
 import com.atits.entity.TaskProgress;
+import com.atits.service.FilesService;
 import com.atits.service.SubTaskService;
 import com.atits.service.TaskProgressService;
+import com.atits.utils.GetTimeUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -15,11 +18,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @Api(description = "工作进展")
@@ -29,30 +34,29 @@ public class TaskProgressController {
     @Resource
     private TaskProgressService taskProgressService;
     @Resource
+    private FilesService filesService;
+    @Resource
     private SubTaskService subTaskService;
 
     @ResponseBody
     @ApiOperation(value = "添加一项工作进展")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "title",value = "工作进展标题",paramType = "query",dataType = "String",required = true),
-            @ApiImplicitParam(name = "subTask.id",value = "所属子任务Id",paramType = "query",dataType = "Integer",required = true),
+//            @ApiImplicitParam(name = "subTask.id",value = "所属子任务Id",paramType = "query",dataType = "Integer",required = true),
             @ApiImplicitParam(name = "state",value = "默认状态为0（1-通过 2-不通过 0-审核中）",paramType = "query",dataType = "Integer")
     })
     @RequestMapping(value = "save",method = RequestMethod.POST)
-    public Msg save(TaskProgress taskProgress){
+    public Msg save(TaskProgress taskProgress, MultipartFile[] multipartFiles){
         try{
-            List<SubTask> subTasks = subTaskService.findAll();
-            int i =0 ;
-            for (SubTask subTask:subTasks){
-                if (subTask.getId() == taskProgress.getSubTask().getId())
-                    i++;
-            }
-            if (i == 0){
-                return Msg.fail("子任务不存在！请重新输入");
-            }
-            Date date = new Date();
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-            taskProgress.setTime(simpleDateFormat.format(date));//发布时间
+            String date= GetTimeUtil.getDate();
+            String time=GetTimeUtil.getTime();
+//            if (!multipartFiles[0].isEmpty()){
+//                Set<Files> filesSet=filesService.fileSave(multipartFiles,"工作进展",taskProgress.getBearer().getSystem().getId(),taskProgress.getBearer().getId(),date,time);
+//                taskProgress.setFiles(filesSet);
+//            }
+//            taskProgress.setSubTask(subTaskService.findById(taskProgress.getSubTask().getId()));
+            taskProgress.setTime(time);
+            taskProgress.setDate(date);
             taskProgress.setState(0);//初始状态添加后为审核中
             taskProgressService.save(taskProgress);
             return Msg.success().add("taskProgress",taskProgress);
@@ -66,15 +70,20 @@ public class TaskProgressController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id",value = "工作进展id（已存在的）",paramType = "query",dataType = "Integer",required = true),
             @ApiImplicitParam(name = "title",value = "工作进展标题",paramType = "query",dataType = "String",required = true),
-            @ApiImplicitParam(name = "subTask.id",value = "所属子任务Id",paramType = "query",dataType = "Integer",required = true),
+//            @ApiImplicitParam(name = "subTask.id",value = "所属子任务Id",paramType = "query",dataType = "Integer",required = true),
             @ApiImplicitParam(name = "state",value = "默认状态为0（1-通过 2-不通过 0-审核中）",paramType = "query",dataType = "Integer")
     })
     @RequestMapping(value = "update",method = RequestMethod.PUT)
-    public Msg update(TaskProgress taskProgress){
+    public Msg update(TaskProgress taskProgress, MultipartFile[] multipartFiles){
         try{
-            Date date = new Date();
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-            taskProgress.setTime(simpleDateFormat.format(date));//发布时间
+            String date= GetTimeUtil.getDate();
+            String time=GetTimeUtil.getTime();
+//            if (!multipartFiles[0].isEmpty()){
+//                Set<Files> filesSet=filesService.fileSave(multipartFiles,"工作进展",taskProgress .getBearer().getSystem().getId(),taskProgress.getBearer().getId(),date,time);
+//                taskProgress .setFiles(filesSet);
+//            }
+            taskProgress .setTime(time);
+            taskProgress .setDate(date);
             taskProgress.setState(0);//重新提交后需要重新审核
             taskProgressService.update(taskProgress);
             return Msg.success().add("taskProgress",taskProgress);

@@ -1,5 +1,7 @@
 package com.atits.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -16,7 +18,7 @@ public class SubTask {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(nullable = false)
     private User bearer;//承担人
 
@@ -27,17 +29,16 @@ public class SubTask {
 
     private String title;//子任务名称
 
-    @ManyToOne
-    @JoinColumn(nullable = false)
-    private Task fatherTask;//所属任务
-
     private String time;//发布时间
 
-//    private String date;
+    private String date;
 
     private String startTime;
 
     private String endTime;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private Set<TaskProgress> taskProgresses =new HashSet<TaskProgress>();
 
     @OneToMany(cascade = CascadeType.ALL)
     private Set<Files> files=new HashSet<Files>();
@@ -58,6 +59,14 @@ public class SubTask {
         this.bearer = bearer;
     }
 
+    public Set<TaskProgress> getTaskProgresses() {
+        return taskProgresses;
+    }
+
+    public void setTaskProgresses(Set<TaskProgress> taskProgresses) {
+        this.taskProgresses = taskProgresses;
+    }
+
     public String getContent() {
         return content;
     }
@@ -74,13 +83,6 @@ public class SubTask {
         this.title = title;
     }
 
-    public Task getFatherTask() {
-        return fatherTask;
-    }
-
-    public void setFatherTask(Task fatherTask) {
-        this.fatherTask = fatherTask;
-    }
 
     public String getTime() {
         return time;
@@ -88,6 +90,14 @@ public class SubTask {
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public String getStartTime() {
@@ -121,10 +131,11 @@ public class SubTask {
                 ", bearer=" + bearer +
                 ", content='" + content + '\'' +
                 ", title='" + title + '\'' +
-                ", fatherTask=" + fatherTask +
                 ", time='" + time + '\'' +
+                ", date='" + date + '\'' +
                 ", startTime='" + startTime + '\'' +
                 ", endTime='" + endTime + '\'' +
+                ", taskProgresses=" + taskProgresses +
                 ", files=" + files +
                 '}';
     }

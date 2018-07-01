@@ -1,5 +1,8 @@
 package com.atits.entity;
 
+import com.fasterxml.jackson.annotation.JsonClassDescription;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -15,9 +18,13 @@ public class TaskProgress {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(nullable = false)
-    private SubTask subTask;
+    private User bearer;//承担人
+
+//    @ManyToOne
+//    @JoinColumn(nullable = false)
+//    private SubTask subTask;//所属子任务
 
     private String title;
 
@@ -26,7 +33,7 @@ public class TaskProgress {
 
     private String time;
 
-//    private String date;
+    private String date;
 
     @OneToMany(cascade = CascadeType.ALL)
     private Set<Files> files;
@@ -41,17 +48,25 @@ public class TaskProgress {
         this.id = id;
     }
 
-    public SubTask getSubTask() {
-        return subTask;
-    }
-
-    public void setSubTask(SubTask subTask) {
-        this.subTask = subTask;
-    }
-
     public String getTitle() {
         return title;
     }
+
+    public User getBearer() {
+        return bearer;
+    }
+
+    public void setBearer(User bearer) {
+        this.bearer = bearer;
+    }
+
+//    public SubTask getSubTask() {
+//        return subTask;
+//    }
+//
+//    public void setSubTask(SubTask subTask) {
+//        this.subTask = subTask;
+//    }
 
     public void setTitle(String title) {
         this.title = title;
@@ -89,14 +104,24 @@ public class TaskProgress {
         this.state = state;
     }
 
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
     @Override
     public String toString() {
-        return "taskProgress{" +
+        return "TaskProgress{" +
                 "id=" + id +
-                ", subTask=" + subTask +
+                ", bearer=" + bearer +
+//                ", subTask=" + subTask +
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
                 ", time='" + time + '\'' +
+                ", date='" + date + '\'' +
                 ", files=" + files +
                 ", state=" + state +
                 '}';

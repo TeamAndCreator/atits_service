@@ -3,6 +3,7 @@ package com.atits.controller;
 import com.atits.entity.Msg;
 import com.atits.entity.Task;
 import com.atits.service.TaskService;
+import com.atits.utils.GetTimeUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -67,18 +68,20 @@ public class TaskController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "title",value = "任务名称",paramType = "query",dataType = "String",required = true),
             @ApiImplicitParam(name = "system.id",value = "任务所属体系",paramType = "query",dataType = "Integer",required = true),
-            @ApiImplicitParam(name = "user.id",value = "所选体系首席（根据所选体系自动匹配为该体系首席）",dataType = "Integer",paramType = "query",required = true),
-//            @ApiImplicitParam(name = "startTime",value = "任务开始时间",dataType = "String",paramType = "query",required = true),
-//            @ApiImplicitParam(name = "endTime",value = "任务结束时间(晚于开始时间)",dataType = "String",paramType = "query",required = true),
-//            @ApiImplicitParam(name = "content",value = "文件内容",dataType = "String",paramType = "query"),
-//            @ApiImplicitParam(name = "file",value = "文件",dataType = "Files",paramType = "query")
+            @ApiImplicitParam(name = "user.id",value = "所选体系首席（根据所选体系自动匹配为该体系首席）",dataType = "Integer",paramType = "query",required = true)
     })
     @RequestMapping(value = "save",method = RequestMethod.POST)
     public Msg save(Task task){
         try{
-            Date date = new Date();
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-            task.setTime(simpleDateFormat.format(date));//发布时间
+            String date= GetTimeUtil.getDate();
+            String time=GetTimeUtil.getTime();
+//            if (!multipartFiles[0].isEmpty()){
+//                Set<Files> filesSet=filesService.fileSave(multipartFiles,"工作进展",taskProgress.getBearer().getSystem().getId(),taskProgress.getBearer().getId(),date,time);
+//                taskProgress.setFiles(filesSet);
+//            }
+//            taskProgress.setSubTask(subTaskService.findById(taskProgress.getSubTask().getId()));
+            task.setTime(time);
+            task.setDate(date);
             taskService.save(task);
             return Msg.success().add("task",task);
         }catch (Exception e){
@@ -92,18 +95,20 @@ public class TaskController {
             @ApiImplicitParam(name = "id",value = "任务id（已存在的）",paramType = "query",dataType = "Integer",required = true),
             @ApiImplicitParam(name = "title",value = "任务名称",paramType = "query",dataType = "String",required = true),
             @ApiImplicitParam(name = "system.id",value = "任务所属体系",paramType = "query",dataType = "Integer",required = true),
-            @ApiImplicitParam(name = "user.id",value = "所选体系首席（根据所选体系自动匹配为该体系首席）",dataType = "Integer",paramType = "query",required = true),
-//            @ApiImplicitParam(name = "startTime",value = "任务开始时间",dataType = "String",paramType = "query",required = true),
-//            @ApiImplicitParam(name = "endTime",value = "任务结束时间(晚于开始时间)",dataType = "String",paramType = "query",required = true),
-//            @ApiImplicitParam(name = "content",value = "文件内容",dataType = "String",paramType = "query"),
-//            @ApiImplicitParam(name = "file",value = "文件",dataType = "Files",paramType = "query")
+            @ApiImplicitParam(name = "user.id",value = "所选体系首席（根据所选体系自动匹配为该体系首席）",dataType = "Integer",paramType = "query",required = true)
     })
     @RequestMapping(value = "update",method = RequestMethod.PUT)
     public Msg update(Task task){
         try{
-            Date date = new Date();
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-            task.setTime(simpleDateFormat.format(date));//发布时间
+            String date= GetTimeUtil.getDate();
+            String time=GetTimeUtil.getTime();
+//            if (!multipartFiles[0].isEmpty()){
+//                Set<Files> filesSet=filesService.fileSave(multipartFiles,"工作进展",taskProgress.getBearer().getSystem().getId(),taskProgress.getBearer().getId(),date,time);
+//                taskProgress.setFiles(filesSet);
+//            }
+//            taskProgress.setSubTask(subTaskService.findById(taskProgress.getSubTask().getId()));
+            task.setTime(time);
+            task.setDate(date);
                 taskService.update(task);
                 return Msg.success().add("task",task);
         }catch (Exception e){

@@ -1,5 +1,7 @@
 package com.atits.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -28,7 +30,7 @@ public class Task {
 
     private String time;//发布时间
 
-//    private String date;
+    private String date;
 
     //任务起止时间
     private String stratTime;
@@ -41,7 +43,11 @@ public class Task {
 //    private int state;
 
     @OneToMany(cascade = CascadeType.ALL)
+    private Set<SubTask> subTasks = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.ALL)
     private Set<Files> files=new HashSet<Files>();
+
 
     public int getId() {
         return id;
@@ -53,6 +59,14 @@ public class Task {
 
     public User getUser() {
         return user;
+    }
+
+    public Set<SubTask> getSubTasks() {
+        return subTasks;
+    }
+
+    public void setSubTasks(Set<SubTask> subTasks) {
+        this.subTasks = subTasks;
     }
 
     public void setUser(User user) {
@@ -107,20 +121,20 @@ public class Task {
         this.content = content;
     }
 
-//    public int getState() {
-//        return state;
-//    }
-//
-//    public void setState(int state) {
-//        this.state = state;
-//    }
-
     public Set<Files> getFiles() {
         return files;
     }
 
     public void setFiles(Set<Files> files) {
         this.files = files;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
     @Override
@@ -134,7 +148,7 @@ public class Task {
                 ", stratTime='" + stratTime + '\'' +
                 ", endTime='" + endTime + '\'' +
                 ", content='" + content + '\'' +
-//                ", state=" + state +
+                ", subTasks=" + subTasks +
                 ", files=" + files +
                 '}';
     }
