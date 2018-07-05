@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.Resource;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -41,12 +42,12 @@ public class TaskProgressController {
     @ResponseBody
     @ApiOperation(value = "添加一项工作进展")
     @ApiImplicitParams({
+            @ApiImplicitParam(name = "bearer.id",value = "承担者ID",paramType = "query",dataType = "Integer",required = true),
             @ApiImplicitParam(name = "title",value = "工作进展标题",paramType = "query",dataType = "String",required = true),
-//            @ApiImplicitParam(name = "subTask.id",value = "所属子任务Id",paramType = "query",dataType = "Integer",required = true),
             @ApiImplicitParam(name = "state",value = "默认状态为0（1-通过 2-不通过 0-审核中）",paramType = "query",dataType = "Integer")
     })
     @RequestMapping(value = "save",method = RequestMethod.POST)
-    public Msg save(TaskProgress taskProgress, MultipartFile[] multipartFiles){
+    public Msg save(TaskProgress taskProgress,@RequestParam Integer fatherSubId, MultipartFile[] multipartFiles){
         try{
             String date= GetTimeUtil.getDate();
             String time=GetTimeUtil.getTime();
@@ -55,6 +56,22 @@ public class TaskProgressController {
 //                taskProgress.setFiles(filesSet);
 //            }
 //            taskProgress.setSubTask(subTaskService.findById(taskProgress.getSubTask().getId()));
+            List<SubTask> subTasks = subTaskService.findAll();
+            int i=0;
+            for (SubTask subTask:subTasks){
+                if (subTask.getId() == fatherSubId){
+                    Set<TaskProgress> taskProgresses = new HashSet<>();
+                    if (subTask.getTaskProgresses() != null){
+                        taskProgresses.addAll(subTask.getTaskProgresses());
+                    }
+                    taskProgresses.add(taskProgress);
+                    subTask.setTaskProgresses(taskProgresses);
+                    i++;
+                }
+            }
+            if (i == 0){
+                return Msg.fail("没有该子任务！无法添加其工作进展，请重新输入正确的fatherSubId");
+            }
             taskProgress.setTime(time);
             taskProgress.setDate(date);
             taskProgress.setState(0);//初始状态添加后为审核中
@@ -69,8 +86,8 @@ public class TaskProgressController {
     @ApiOperation(value = "更新一项工作进展")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id",value = "工作进展id（已存在的）",paramType = "query",dataType = "Integer",required = true),
+            @ApiImplicitParam(name = "bearer.id",value = "承担者ID",paramType = "query",dataType = "Integer",required = true),
             @ApiImplicitParam(name = "title",value = "工作进展标题",paramType = "query",dataType = "String",required = true),
-//            @ApiImplicitParam(name = "subTask.id",value = "所属子任务Id",paramType = "query",dataType = "Integer",required = true),
             @ApiImplicitParam(name = "state",value = "默认状态为0（1-通过 2-不通过 0-审核中）",paramType = "query",dataType = "Integer")
     })
     @RequestMapping(value = "update",method = RequestMethod.PUT)

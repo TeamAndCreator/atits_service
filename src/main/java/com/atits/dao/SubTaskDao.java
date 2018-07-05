@@ -1,6 +1,7 @@
 package com.atits.dao;
 
 import com.atits.entity.SubTask;
+import com.atits.entity.Task;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,7 @@ public class SubTaskDao {
         String hql = "from SubTask where id=:id";
         return (SubTask) getSession().createQuery(hql).setParameter("id",id).uniqueResult();
     }
+
     //三级用户子任务显示
     public List<SubTask> findByBearerId(Integer bearerId){
         String hql = "from SubTask where bearer.id=:bearerId";

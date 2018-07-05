@@ -1,17 +1,12 @@
 package com.atits.controller;
 
-import com.atits.entity.Files;
-import com.atits.entity.Msg;
-import com.atits.entity.SubTask;
-import com.atits.entity.Task;
+import com.atits.entity.*;
 import com.atits.service.FilesService;
 import com.atits.service.SubTaskService;
+import com.atits.service.TaskProgressService;
 import com.atits.service.TaskService;
 import com.atits.utils.GetTimeUtil;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,8 +15,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.persistence.ManyToOne;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -35,6 +32,8 @@ public class SubTaskController {
     @Resource
     private TaskService taskService;
     @Resource
+    private TaskProgressService taskProgressService;
+    @Resource
     private FilesService filesService;
 
     @ResponseBody
@@ -42,12 +41,11 @@ public class SubTaskController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "title",value = "子任务标题",paramType = "query",dataType = "Integer",required = true),
             @ApiImplicitParam(name = "bearer.id",value = "承担者ID",paramType = "query",dataType = "Integer",required = true),
-//            @ApiImplicitParam(name = "fatherTask.id",value = "所属体系任务ID（已存在的承担人的本体系任务）",paramType = "query",dataType = "Integer",required = true),
             @ApiImplicitParam(name = "startTime",value = "子任务开始时间（格式：yyyy-mm-dd）",paramType = "query",dataType = "String"),
             @ApiImplicitParam(name = "endTime",value = "子任务结束时间（格式：yyyy-mm-dd）",paramType = "query",dataType = "String")
     })
     @RequestMapping(value = "save",method = RequestMethod.POST)
-    public Msg save(SubTask subTask, MultipartFile[] multipartFiles){
+    public Msg save(SubTask subTask,@RequestParam Integer fatherTaskId, MultipartFile[] multipartFiles){
         try{
             String date= GetTimeUtil.getDate();
             String time=GetTimeUtil.getTime();
@@ -55,6 +53,22 @@ public class SubTaskController {
 //                Set<Files> filesSet=filesService.fileSave(multipartFiles,"体系任务",subTask.getBearer().getSystem().getId(),subTask.getBearer().getId(),date,time);
 //                subTask.setFiles(filesSet);
 //            }
+            List<Task> tasks = taskService.findAll();
+            int i = 0 ;
+            for (Task task:tasks){
+                if (task.getId() == fatherTaskId){
+                    Set<SubTask> subTasks = new HashSet<>();
+                    if (task.getSubTasks() != null){//已有至少一个子任务
+                        subTasks.addAll(task.getSubTasks());
+                    }
+                    subTasks.add(subTask);
+                    task.setSubTasks(subTasks);
+                    i++;
+                }
+            }
+            if (i == 0 ){
+                return Msg.fail("没有该工作任务！无法添加其子任务，请重新输入正确的fatherTaskId");
+            }
             subTask.setTime(time);
             subTask.setDate(date);
             subTaskService.save(subTask);
@@ -70,12 +84,11 @@ public class SubTaskController {
             @ApiImplicitParam(name = "id",value = "子任务id（已存在的）",paramType = "query",dataType = "Integer",required = true),
             @ApiImplicitParam(name = "title",value = "子任务标题",paramType = "query",dataType = "Integer"),
             @ApiImplicitParam(name = "bearer.id",value = "承担者ID",paramType = "query",dataType = "Integer",required = true),
-//            @ApiImplicitParam(name = "fatherTask.id",value = "所属体系任务ID（已存在的承担人的本体系任务）",paramType = "query",dataType = "Integer",required = true),
             @ApiImplicitParam(name = "startTime",value = "子任务开始时间（格式：yyyy-mm-dd）",paramType = "query",dataType = "String"),
             @ApiImplicitParam(name = "endTime",value = "子任务结束时间（格式：yyyy-mm-dd）",paramType = "query",dataType = "String")
     })
     @RequestMapping(value = "update",method = RequestMethod.PUT)
-    public Msg update(SubTask subTask, MultipartFile[] multipartFiles){
+    public Msg update(SubTask subTask, @ApiParam(value ="该子任务下的所有工作进展ID(输入中如果存在不是其工作进展，则直接忽略该工作进展id，其他正常添加)",required = true)@RequestParam List<Integer> taskproIds, MultipartFile[] multipartFiles){
         try{
             String date= GetTimeUtil.getDate();
             String time=GetTimeUtil.getTime();
@@ -83,6 +96,14 @@ public class SubTaskController {
 //                Set<Files> filesSet=filesService.fileSave(multipartFiles,"体系任务",subTask.getBearer().getSystem().getId(),subTask.getBearer().getId(),date,time);
 //                subTask.setFiles(filesSet);
 //            }
+            for (Integer taskproId:taskproIds){
+                TaskProgress taskProgress = taskProgressService.findById(taskproId);
+                Set<TaskProgress> taskProgresses = new HashSet<>();
+                if (subTask.getTaskProgresses() != null)
+                    taskProgresses.addAll(subTask.getTaskProgresses());
+                taskProgresses.add(taskProgress);
+                subTask.setTaskProgresses(taskProgresses);
+            }
             subTask.setTime(time);
             subTask.setDate(date);
             subTaskService.update(subTask);

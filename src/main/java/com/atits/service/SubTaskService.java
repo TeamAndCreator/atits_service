@@ -18,6 +18,7 @@ public class SubTaskService {
     public List<SubTask> findAll(){return subTaskDao.findAll();}
     public SubTask findById(Integer id){return subTaskDao.findById(id);}
     public List<SubTask> findByBearerId(Integer bearerId){return subTaskDao.findByBearerId(bearerId);}
+//    public List<SubTask> insert(){return subTaskDao.insert();}
 
     public void save(SubTask subTask){subTaskDao.save(subTask);}
     public void update(SubTask subTask){subTaskDao.update(subTask);}

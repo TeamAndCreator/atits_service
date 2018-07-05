@@ -42,7 +42,7 @@ public class Task {
 
 //    private int state;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private Set<SubTask> subTasks = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL)

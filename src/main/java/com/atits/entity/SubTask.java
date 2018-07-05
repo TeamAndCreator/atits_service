@@ -1,7 +1,5 @@
 package com.atits.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -37,7 +35,7 @@ public class SubTask {
 
     private String endTime;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private Set<TaskProgress> taskProgresses =new HashSet<TaskProgress>();
 
     @OneToMany(cascade = CascadeType.ALL)
