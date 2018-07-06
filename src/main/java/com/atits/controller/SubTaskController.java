@@ -118,6 +118,14 @@ public class SubTaskController {
     @RequestMapping(value = "deleteById",method = RequestMethod.DELETE)
     public Msg deleteById(@RequestParam Integer id){
         try{
+            SubTask subTask = subTaskService.findById(id);
+            List<Task> tasks = taskService.findAll();
+            for (Task task:tasks){
+                if (task.getSubTasks().contains(subTask)){
+                    task.getSubTasks().remove(subTask);
+                    break;
+                }
+            }
             subTaskService.deleteById(id);
             return Msg.success();
         }catch (Exception e){
@@ -130,6 +138,16 @@ public class SubTaskController {
     @RequestMapping(value = "deleteByIds",method = RequestMethod.DELETE)
     public Msg deleteByIds(@RequestParam List<Integer> idList){
         try{
+            List<Task> tasks = taskService.findAll();
+            for (Integer id : idList){
+                for (Task task:tasks){
+                    SubTask subTask = subTaskService.findById(id);
+                    if (task.getSubTasks().contains(subTask)){
+                        task.getSubTasks().remove(subTask);
+                        break;
+                    }
+                }
+            }
             subTaskService.deleteByIds(idList);
             return Msg.success();
         }catch (Exception e){

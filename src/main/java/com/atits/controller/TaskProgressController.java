@@ -13,6 +13,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.models.auth.In;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -114,6 +115,14 @@ public class TaskProgressController {
     @RequestMapping(value = "deleteById",method = RequestMethod.DELETE)
     public Msg deleteById(@RequestParam Integer id){
         try{
+            TaskProgress taskProgress = taskProgressService.findById(id);
+            List<SubTask> subTasks = subTaskService.findAll();
+            for (SubTask subTask:subTasks){
+                if (subTask.getTaskProgresses().contains(taskProgress)){
+                    subTask.getTaskProgresses().remove(taskProgress);
+                    break;
+                }
+            }
             taskProgressService.deleteById(id);
             return Msg.success();
         }catch (Exception e){
@@ -126,6 +135,16 @@ public class TaskProgressController {
     @RequestMapping(value = "deleteByIds",method = RequestMethod.DELETE)
     public Msg deleteByIds(@RequestParam List<Integer> idList){
         try{
+            List<SubTask> subTasks = subTaskService.findAll();
+            for (Integer id : idList){
+                for (SubTask subTask:subTasks){
+                    TaskProgress taskProgress = taskProgressService.findById(id);
+                    if (subTask.getTaskProgresses().contains(taskProgress)){
+                        subTask.getTaskProgresses().remove(taskProgress);
+                        break;
+                    }
+                }
+            }
             taskProgressService.deleteByIds(idList);
             return Msg.success();
         }catch (Exception e){
