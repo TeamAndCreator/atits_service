@@ -49,10 +49,10 @@ public class SubTaskController {
         try{
             String date= GetTimeUtil.getDate();
             String time=GetTimeUtil.getTime();
-//            if (!multipartFiles[0].isEmpty()){
-//                Set<Files> filesSet=filesService.fileSave(multipartFiles,"体系任务",subTask.getBearer().getSystem().getId(),subTask.getBearer().getId(),date,time);
-//                subTask.setFiles(filesSet);
-//            }
+            if (!multipartFiles[0].isEmpty()){
+                Set<Files> filesSet=filesService.fileSave(multipartFiles,"体系任务",subTask.getBearer().getSystem().getId(),subTask.getBearer().getId(),date,time);
+                subTask.setFiles(filesSet);
+            }
             List<Task> tasks = taskService.findAll();
             int i = 0 ;
             for (Task task:tasks){
@@ -92,10 +92,10 @@ public class SubTaskController {
         try{
             String date= GetTimeUtil.getDate();
             String time=GetTimeUtil.getTime();
-//            if (!multipartFiles[0].isEmpty()){
-//                Set<Files> filesSet=filesService.fileSave(multipartFiles,"体系任务",subTask.getBearer().getSystem().getId(),subTask.getBearer().getId(),date,time);
-//                subTask.setFiles(filesSet);
-//            }
+            if (!multipartFiles[0].isEmpty()){
+                Set<Files> filesSet=filesService.fileSave(multipartFiles,"体系任务",subTask.getBearer().getSystem().getId(),subTask.getBearer().getId(),date,time);
+                subTask.setFiles(filesSet);
+            }
             for (Integer taskproId:taskproIds){
                 TaskProgress taskProgress = taskProgressService.findById(taskproId);
                 Set<TaskProgress> taskProgresses = new HashSet<>();

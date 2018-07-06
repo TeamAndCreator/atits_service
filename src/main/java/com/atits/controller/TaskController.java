@@ -1,8 +1,10 @@
 package com.atits.controller;
 
+import com.atits.entity.Files;
 import com.atits.entity.Msg;
 import com.atits.entity.SubTask;
 import com.atits.entity.Task;
+import com.atits.service.FilesService;
 import com.atits.service.SubTaskService;
 import com.atits.service.TaskService;
 import com.atits.utils.GetTimeUtil;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.text.SimpleDateFormat;
@@ -29,6 +32,8 @@ public class TaskController {
     private TaskService taskService;
     @Resource
     private SubTaskService subTaskService;
+    @Resource
+    private FilesService filesService;
 
     @ResponseBody
     @ApiOperation(value = "查找所有的工作任务")
@@ -74,14 +79,14 @@ public class TaskController {
             @ApiImplicitParam(name = "user.id",value = "所选体系首席（根据所选体系自动匹配为该体系首席）",dataType = "Integer",paramType = "query",required = true)
     })
     @RequestMapping(value = "save",method = RequestMethod.POST)
-    public Msg save(Task task){
+    public Msg save(Task task,MultipartFile[] multipartFiles){
         try{
             String date= GetTimeUtil.getDate();
             String time=GetTimeUtil.getTime();
-//            if (!multipartFiles[0].isEmpty()){
-//                Set<Files> filesSet=filesService.fileSave(multipartFiles,"工作进展",taskProgress.getBearer().getSystem().getId(),taskProgress.getBearer().getId(),date,time);
-//                taskProgress.setFiles(filesSet);
-//            }
+            if (!multipartFiles[0].isEmpty()){
+                Set<Files> filesSet=filesService.fileSave(multipartFiles,"工作任务",task.getSystem().getId(),task.getUser().getId(),date,time);
+                task.setFiles(filesSet);
+            }
             task.setTime(time);
             task.setDate(date);
             taskService.save(task);
@@ -100,14 +105,15 @@ public class TaskController {
             @ApiImplicitParam(name = "user.id",value = "所选体系首席（根据所选体系自动匹配为该体系首席）",dataType = "Integer",paramType = "query",required = true)
     })
     @RequestMapping(value = "update", method = RequestMethod.PUT)
-    public Msg update(Task task, @ApiParam(value ="该任务下的所有子任务ID(输入中如果存在不是其子任务，则直接忽略该子任务id，其他正常添加)",required = true) @RequestParam List<Integer> subIds){
+    public Msg update(Task task, @ApiParam(value ="该任务下的所有子任务ID(输入中如果存在不是其子任务，则直接忽略该子任务id，其他正常添加)",required = true) @RequestParam List<Integer> subIds
+    , MultipartFile[] multipartFiles){
         try{
             String date= GetTimeUtil.getDate();
             String time=GetTimeUtil.getTime();
-//            if (!multipartFiles[0].isEmpty()){
-//                Set<Files> filesSet=filesService.fileSave(multipartFiles,"工作进展",taskProgress.getBearer().getSystem().getId(),taskProgress.getBearer().getId(),date,time);
-//                taskProgress.setFiles(filesSet);
-//            }
+            if (!multipartFiles[0].isEmpty()){
+                Set<Files> filesSet=filesService.fileSave(multipartFiles,"工作任务",task.getSystem().getId(),task.getUser().getId(),date,time);
+                task.setFiles(filesSet);
+            }
             //输入原本该主任务的所有子任务
                 for (Integer subId : subIds){
                     SubTask subTask = subTaskService.findById(subId);

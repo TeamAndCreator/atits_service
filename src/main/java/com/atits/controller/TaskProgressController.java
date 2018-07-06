@@ -52,11 +52,10 @@ public class TaskProgressController {
         try{
             String date= GetTimeUtil.getDate();
             String time=GetTimeUtil.getTime();
-//            if (!multipartFiles[0].isEmpty()){
-//                Set<Files> filesSet=filesService.fileSave(multipartFiles,"工作进展",taskProgress.getBearer().getSystem().getId(),taskProgress.getBearer().getId(),date,time);
-//                taskProgress.setFiles(filesSet);
-//            }
-//            taskProgress.setSubTask(subTaskService.findById(taskProgress.getSubTask().getId()));
+            if (!multipartFiles[0].isEmpty()){
+                Set<Files> filesSet=filesService.fileSave(multipartFiles,"工作进展",taskProgress.getBearer().getSystem().getId(),taskProgress.getBearer().getId(),date,time);
+                taskProgress.setFiles(filesSet);
+            }
             List<SubTask> subTasks = subTaskService.findAll();
             int i=0;
             for (SubTask subTask:subTasks){
@@ -96,10 +95,10 @@ public class TaskProgressController {
         try{
             String date= GetTimeUtil.getDate();
             String time=GetTimeUtil.getTime();
-//            if (!multipartFiles[0].isEmpty()){
-//                Set<Files> filesSet=filesService.fileSave(multipartFiles,"工作进展",taskProgress .getBearer().getSystem().getId(),taskProgress.getBearer().getId(),date,time);
-//                taskProgress .setFiles(filesSet);
-//            }
+            if (!multipartFiles[0].isEmpty()){
+                Set<Files> filesSet=filesService.fileSave(multipartFiles,"工作进展",taskProgress .getBearer().getSystem().getId(),taskProgress.getBearer().getId(),date,time);
+                taskProgress .setFiles(filesSet);
+            }
             taskProgress .setTime(time);
             taskProgress .setDate(date);
             taskProgress.setState(0);//重新提交后需要重新审核
