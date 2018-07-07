@@ -21,7 +21,7 @@ public class User {
     @JoinColumn(nullable = false,unique = true)
     private String userName;
 
-    private String password;
+    private String password;//密码限制？？？
 
     @OneToOne(cascade = CascadeType.ALL)
     private Profile profile;
@@ -35,7 +35,7 @@ public class User {
     private System system;
     private String createTime;
     private int state; //1--已激活   2---未激活
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     private Set<Role> roles =new HashSet<>();
 
     public User() {
@@ -57,6 +57,38 @@ public class User {
     public User(int id,String userName) {
         this.id=id;
         this.userName = userName;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Profile getProfile() {
+        return profile;
+    }
+
+    public void setProfile(Profile profile) {
+        this.profile = profile;
     }
 
     public Laboratory getLaboratory() {
@@ -97,38 +129,6 @@ public class User {
 
     public void setState(int state) {
         this.state = state;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public Profile getProfile() {
-        return profile;
-    }
-
-    public void setProfile(Profile profile) {
-        this.profile = profile;
     }
 
     public Set<Role> getRoles() {

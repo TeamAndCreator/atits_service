@@ -2,12 +2,14 @@ package com.atits.controller;
 
 
 import com.atits.entity.Msg;
+import com.atits.entity.Role;
 import com.atits.service.RoleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
@@ -34,4 +36,18 @@ public class RoleController {
             return Msg.fail(e.getMessage());
         }
     }
+
+    @ApiOperation(value = "根据角色id查找角色")
+    @RequestMapping(value = "findById",method = RequestMethod.GET)
+    @ResponseBody
+    public Msg findById(@RequestParam Integer roleId){
+        try{
+            Role role = roleService.findById(roleId);
+            return Msg.success().add("role",role);
+        }catch (Exception e){
+            return Msg.fail(e.getMessage());
+        }
+    }
+
+
 }

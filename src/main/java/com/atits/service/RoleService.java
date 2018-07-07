@@ -2,6 +2,7 @@ package com.atits.service;
 
 
 import com.atits.dao.RoleDao;
+import com.atits.entity.Role;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,4 +23,6 @@ public class RoleService {
     public List findAll(){
         return roleDao.findAll();
     }
+
+    public Role findById(Integer roleId){return roleDao.findById(roleId);}
 }
