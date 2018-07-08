@@ -19,9 +19,14 @@ public class RoleDao {
         return sessionFactory.getCurrentSession();
     }
 
-    public List findAll(){
+    public List<Role> findAll(){
         String hql="from Role";
         return getSession().createQuery(hql).list();
+    }
+
+    public Role findById(Integer roleId){
+        String hql = "from Role where id=:roleId";
+        return (Role) getSession().createQuery(hql).setParameter("roleId",roleId).uniqueResult();
     }
 
 }

@@ -24,22 +24,19 @@ public class UserService {
         return userDao.findAll();
     }
 
-    public List<User> findTestPer(int sysId,int roleId){
-        return userDao.findTestPer(sysId,roleId);
-    }
-
-//    public List<User> findBySysId(int sysId){
-//        return userDao.findBySysId(sysId);
-//    }
-//
-//    public List<User> findByRoleId(int roleId){
-//        return userDao.findByRoleId(roleId);
-//    }
+    public User findById(Integer userId){return userDao.findById(userId);}
 
     public User findByUserName(String username){
         return userDao.findByUserName(username);
     }
 
+    public List<User> findTestPer(int sysId,int roleId){
+        return userDao.findTestPer(sysId,roleId);
+    }
+
+    public List findRoleById(String userName){
+        return userDao.findRoleById(userName);
+    }
     /**
      *添加一个user
      */
@@ -47,9 +44,12 @@ public class UserService {
         userDao.save(user);
     }
 
-    public List findRoleById(String userName){
-        return userDao.findRoleById(userName);
-    }
+    public void update(User user){userDao.update(user);}
+
+    public void deleteById(Integer userId){userDao.deleteById(userId);}
+
+    public void deleteByIds(List<Integer> idList){userDao.deleteByIds(idList);}
+
 
 
 }
