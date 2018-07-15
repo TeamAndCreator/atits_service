@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.Set;
 
 @Controller
-@Api(description = "子任务")
+@Api(description = "体系任务")
 @RequestMapping(value = "subTask")
 public class SubTaskController {
 

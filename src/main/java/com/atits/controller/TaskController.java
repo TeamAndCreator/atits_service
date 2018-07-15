@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Set;
 
 @Controller
-@Api(description = "体系任务")
+@Api(description = "工作任务")
 @RequestMapping(value = "task")
 public class TaskController {
 
