@@ -35,7 +35,7 @@ public class User {
     private System system;
     private String createTime;
     private int state; //1--已激活   2---未激活
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     private Set<Role> roles =new HashSet<>();
 
     public User() {
