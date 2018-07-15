@@ -67,6 +67,53 @@ public class UserController {
         }
     }
 
+    @ApiOperation(value = "保存一个用户")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "userName",value = "用户名",paramType = "query",dataType = "String",required = true),
+            @ApiImplicitParam(name = "password",value = "用户密码",paramType = "query",dataType = "String",required = true),
+            @ApiImplicitParam(name = "system.id",value = "用户所属体系id",paramType = "query",dataType = "Integer"),
+            @ApiImplicitParam(name = "laboratory.id",value = "所属功能研究室id",paramType = "query",dataType = "Integer"),
+            @ApiImplicitParam(name = "station.id",value = "所属综合试验站id",paramType = "query",dataType = "Integer")
+    })
+    @RequestMapping(value = "save",method = RequestMethod.POST)
+    @ResponseBody
+    public Msg save(User user,
+                      @ApiParam(value = "给用户分配的角色Id",required = true) @RequestParam List<Integer> roleIdList){
+        try{
+            User findByUserName = this.userService.findByUserName(user.getUserName());
+            if (findByUserName != null) {
+                return Msg.fail("用户名已存在！请重建用户名");
+            }
+            Object password = new SimpleHash("MD5", user.getPassword(), null, 1);
+            user.setPassword(String.valueOf(password));
+            Date time = new Date();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+            user.setCreateTime(dateFormat.format(time));
+            user.setState(2);//重置为未激活状态
+            List<Role> roles = roleService.findAll();
+            int i =0 ;
+            for (Role role:roles){
+                for (Integer roleId:roleIdList){
+                    if (role.getId() == roleId){
+                        i++;
+                        break;
+                    }
+                }
+            }
+            if (i == 0)
+                return Msg.fail("不存在该角色！请重新输入正确的角色idList（至少要有一个是正确的才能成功添加）");
+            Set<Role> roles1 = new HashSet<>();
+            for (Integer roleId:roleIdList){
+                roles1.add(roleService.findById(roleId));//若其中有不存在的角色，则忽略添加该角色，其他正确角色正常添加
+            }
+            user.setRoles(roles1);
+            userService.save(user);
+            return Msg.success().add("user",user);
+        }catch (Exception e){
+            return Msg.fail(e.getMessage());
+        }
+    }
+
     @ApiOperation(value = "更新一个用户")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id",value = "需要修改的用户的id",paramType = "query",dataType = "Integer",required = true),

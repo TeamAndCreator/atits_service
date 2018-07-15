@@ -46,7 +46,7 @@ public class RegisterController {
             @ApiImplicitParam(name = "laboratory.id",value = "所属功能研究室id",paramType = "query",dataType = "Integer"),
             @ApiImplicitParam(name = "station.id",value = "所属综合试验站id",paramType = "query",dataType = "Integer")
     })
-    @RequestMapping(value = "save", method = RequestMethod.POST)
+    @RequestMapping(value = "register", method = RequestMethod.POST)
     @ResponseBody
     public Msg register(User user, @ApiParam(value = "给用户分配的角色Id",required = true) @RequestParam List<Integer> roleIdList) {
         try {
