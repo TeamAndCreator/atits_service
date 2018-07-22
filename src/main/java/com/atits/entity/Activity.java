@@ -116,6 +116,16 @@ public class Activity {
         this.title=title;
         this.date=date;
     }
+
+    public Activity(int id,String title,String userName,String date,int state){
+        this.id=id;
+        this.title=title;
+        this.user=new User();
+        this.user.setUserName(userName);
+        this.date=date;
+        this.state=state;
+    }
+
     public Activity(){}
 
     @Override
