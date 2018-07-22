@@ -96,6 +96,15 @@ public class ActivityDao {
     }
 
     /**
+     * 获取所有的id，标题，发布者，发布时间，状态
+     */
+    public List findAll2(){
+        String hql="select new Activity (id,title,user.userName,date,state) from Activity order by id";
+        return getSession().createQuery(hql).list();
+    }
+
+
+    /**
      * 获取个数
      */
     public int getCount(){

@@ -93,6 +93,13 @@ public class ActivityService {
     }
 
     /**
+     * 获取所有的id，标题，发布者，发布时间，状态
+     */
+    public List findAll2(){
+        return activityDao.findAll2();
+    }
+
+    /**
      * 获取个数
      */
     public int getCount(){
