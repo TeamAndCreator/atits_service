@@ -25,6 +25,8 @@ import javax.annotation.Resource;
 @RequestMapping(value = "login")
 public class LoginController {
 
+    @Resource
+    private UserService userService;
 
     @ApiOperation(value = "根据用户名和密码进行登录")
     @ApiResponses({
@@ -42,10 +44,12 @@ public class LoginController {
     })
     public Msg login(User user) {
         Subject currentUser = SecurityUtils.getSubject();
+        User user1=null;
         if (!currentUser.isAuthenticated()) {
             UsernamePasswordToken token = new UsernamePasswordToken(user.getUserName(), user.getPassword());
             token.setRememberMe(true);
             try {
+                user1=userService.findByUserName(user.getUserName());
                 currentUser.login(token);
             } catch (UnknownAccountException ua) {
                 System.out.println("未知账户！（提示：若已成功注册，请联系管理员查看用户是否已激活。）：" + ua.getMessage());
@@ -65,7 +69,7 @@ public class LoginController {
                 return Msg.fail("验证未通过!");
             }
         }
-        return Msg.success();
+        return Msg.success().add("user",user1);
     }
 
     @ApiOperation(value = "用户退出登录")

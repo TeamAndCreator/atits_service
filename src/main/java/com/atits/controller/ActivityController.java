@@ -8,6 +8,7 @@ import com.atits.service.FilesService;
 import com.atits.utils.GetTimeUtil;
 import io.swagger.annotations.*;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -193,6 +194,7 @@ public class ActivityController {
     @ResponseBody
     @ApiOperation(value = "获取所有的id，标题，发布者，发布时间，状态")
     @RequestMapping(value = "findAll2",method = RequestMethod.GET)
+    @RequiresRoles({"nongWei"})
     public Msg findAll2(){
         try {
             List activitys=activityService.findAll2();
