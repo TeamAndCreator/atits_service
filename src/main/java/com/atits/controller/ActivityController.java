@@ -194,7 +194,6 @@ public class ActivityController {
     @ResponseBody
     @ApiOperation(value = "获取所有的id，标题，发布者，发布时间，状态")
     @RequestMapping(value = "findAll2",method = RequestMethod.GET)
-    @RequiresRoles({"nongWei"})
     public Msg findAll2(){
         try {
             List activitys=activityService.findAll2();
