@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.lang.System;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -58,14 +59,21 @@ public class TestStartController {
 })
     @RequestMapping(value = "save",method = RequestMethod.POST)
     @ResponseBody
-    public Msg save(TestStart testStart){
+    public Msg save(TestStart testStart,Integer[] ids){
         //当选中要添加的考评人员后，实现以下的自动插入
         try{
-                Date date = new Date();
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-                testStart.setDate(simpleDateFormat.format(date));
-                testStartService.save(testStart);
-                return Msg.success().add("testStart",testStart);
+            Set<User> users=new HashSet<>();
+            for (int i:ids){
+                User user=new User();
+                user.setId(i);
+                users.add(user);
+            }
+            testStart.setUsers(users);
+            Date date = new Date();
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+            testStart.setDate(simpleDateFormat.format(date));
+            testStartService.save(testStart);
+            return Msg.success().add("testStart",testStart);
         }catch (Exception e){
             return Msg.fail(e.getMessage());
         }
