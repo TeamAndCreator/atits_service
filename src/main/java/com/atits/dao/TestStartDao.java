@@ -56,4 +56,11 @@ public class TestStartDao {
 
     public void update(TestStart testStart){getSession().update(testStart);}
 
+    /**
+     * 更新状态
+     */
+    public void updateState(int id,int state){
+        String hql="update TestStart as ts set ts.state=:state where ts.id=:id";
+        getSession().createQuery(hql).setParameter("state",state).setParameter("id",id).executeUpdate();
+    }
 }

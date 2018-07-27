@@ -54,9 +54,10 @@ public class User {
         this.system.setSystemName(sysName);
         this.roles=roles;
     }
-    public User(int id,String userName) {
+    public User(int id,String name) {
         this.id=id;
-        this.userName = userName;
+        this.profile=new Profile();
+        profile.setName(name);
     }
 
     public int getId() {

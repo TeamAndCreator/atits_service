@@ -45,7 +45,7 @@ public class UserDao {
 
     //根据体系id和角色id来获取该体系与该角色的所有用户--启动表中使用
     public List<User> findTestPer(int sysId, int roleId){
-        String hql = "select distinct new User(u.id,u.userName) from User as u inner join u.roles as r where r.id =:roleId or u.system.id =:sysId";
+        String hql = "select distinct new User(u.id,u.profile.name) from User as u inner join u.roles as r where r.id =:roleId and u.system.id =:sysId";
         return getSession().createQuery(hql).setParameter("sysId",sysId).setParameter("roleId",roleId).list();
     }
 

@@ -69,9 +69,6 @@ public class TestStartController {
                 users.add(user);
             }
             testStart.setUsers(users);
-            Date date = new Date();
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-            testStart.setDate(simpleDateFormat.format(date));
             testStartService.save(testStart);
             return Msg.success().add("testStart",testStart);
         }catch (Exception e){
@@ -127,12 +124,21 @@ public class TestStartController {
         }
     }
 
-    @ApiOperation(value = "获取启动表的所有记录")
+    @ApiOperation(value = "获取启动表的所有记录,users中只包括id和名字")
     @RequestMapping(value = "findAll",method = RequestMethod.GET)
     @ResponseBody
     public Msg findAll(){
         try{
-            List<TestStart> testStarts = testStartService.findAll();
+            List<TestStart> tempTestStarts = testStartService.findAll();
+            List<TestStart> testStarts=new ArrayList<>();
+            for (TestStart testStart:tempTestStarts){
+                Set<User> users=new HashSet();
+                for (User user:testStart.getUsers()){
+                    users.add(new User(user.getId(),user.getProfile().getName()));
+                }
+                testStart.setUsers(users);
+                testStarts.add(testStart);
+            }
             return Msg.success().add("testStarts",testStarts);
         }catch (Exception e){
             return Msg.fail(e.getMessage());
@@ -146,6 +152,18 @@ public class TestStartController {
         try{
             TestStart testStart = testStartService.findById(id);
             return Msg.success().add("testStart",testStart);
+        }catch (Exception e){
+            return Msg.fail(e.getMessage());
+        }
+    }
+
+    @ResponseBody
+    @ApiOperation(value = "更新状态")
+    @RequestMapping(value = "updateState",method = RequestMethod.PUT)
+    public Msg updateState(int id,int state){
+        try {
+            testStartService.updateState(id,state);
+            return Msg.success();
         }catch (Exception e){
             return Msg.fail(e.getMessage());
         }
