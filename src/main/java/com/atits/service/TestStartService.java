@@ -28,4 +28,8 @@ public class TestStartService {
     public TestStart findById(Integer id){return testStartDao.findById(id);}
 
     public void update(TestStart testStart){testStartDao.update(testStart);}
+
+    public void updateState(int id,int state){
+        testStartDao.updateState(id,state);
+    }
 }
