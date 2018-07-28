@@ -32,6 +32,7 @@ public class UserDao {
         String hql = "from User ";
         return getSession().createQuery(hql).list();
     }
+
     public User findByUserName(String username) {
         String hql = "from User where userName=:username";
         return (User) getSession().createQuery(hql).setParameter("username", username).uniqueResult();
@@ -44,16 +45,26 @@ public class UserDao {
 
 
     //根据体系id和角色id来获取该体系与该角色的所有用户--启动表中使用
-    public List<User> findTestPer(int sysId, int roleId){
-        String hql = "select distinct new User(u.id,u.profile.name) from User as u inner join u.roles as r where r.id =:roleId and u.system.id =:sysId";
-        return getSession().createQuery(hql).setParameter("sysId",sysId).setParameter("roleId",roleId).list();
+    public List findTestPer(int sysId) {
+        String hql = "select new User(u.id,u.profile.name) from User as u where u.system.id =:sysId";
+        return getSession().createQuery(hql).setParameter("sysId", sysId).list();
+    }
+
+    /**
+     * 获取外聘人员
+     * @return
+     */
+    public List findExternal() {
+        String hql = "select new User(u.id,u.profile.name)from User as u where u.system.id=null ";
+        return getSession().createQuery(hql).list();
     }
 
     //shiro认证中使用--MyRealm.java
-    public List<Role> findRoleById(String userName){
-        String hql="select u.roles from User as u where u.userName=:userName";
-        return getSession().createQuery(hql).setParameter("userName",userName).list();
+    public List findRoleById(String userName) {
+        String hql = "select u.roles from User as u where u.userName=:userName";
+        return getSession().createQuery(hql).setParameter("userName", userName).list();
     }
+
     /**
      * 添加一个user
      */
@@ -61,20 +72,21 @@ public class UserDao {
         getSession().save(user);
     }
 
-    public void update(User user){getSession().update(user);}
+    public void update(User user) {
+        getSession().update(user);
+    }
 
-    public void deleteById(Integer userid){
+    public void deleteById(Integer userid) {
         User user = findById(userid);
         getSession().delete(user);
     }
 
-    public void deleteByIds(List<Integer> userIds){
-        for (int i=0; i<userIds.size(); i++){
+    public void deleteByIds(List<Integer> userIds) {
+        for (int i = 0; i < userIds.size(); i++) {
             User user = findById(userIds.get(i));
             getSession().delete(user);
         }
     }
-
 
 
 }
