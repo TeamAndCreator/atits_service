@@ -59,6 +59,14 @@ public class User {
         this.profile=new Profile();
         profile.setName(name);
     }
+    public User(int id,String name,int systemId) {
+        this.id=id;
+        this.profile=new Profile();
+        profile.setName(name);
+        this.system=new System();
+        this.system.setId(systemId);
+    }
+
 
     public int getId() {
         return id;

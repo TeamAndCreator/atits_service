@@ -30,8 +30,12 @@ public class UserService {
         return userDao.findByUserName(username);
     }
 
-    public List<User> findTestPer(int sysId,int roleId){
-        return userDao.findTestPer(sysId,roleId);
+    public List<User> findTestPer(int sysId){
+        return userDao.findTestPer(sysId);
+    }
+
+    public List findExternal(){
+        return userDao.findExternal();
     }
 
     public List findRoleById(String userName){
