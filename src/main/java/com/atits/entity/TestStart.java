@@ -18,6 +18,20 @@ public class TestStart {
     @ManyToMany
     private Set<User> users=new HashSet<>();//考评人员
 
+    //权重设置
+    //-----------------考评人员to被考评人员
+    //--首席
+    private double a;//体系办to首席
+    private double b;//副首席、研究室主任、实验站站长to首席
+    private double c;//外聘专家to首席
+    //副首席
+    private double d;//体系办、外聘专家to副首席
+    private double e;//首席to副首席
+    private double f;//研究室主任、实验站站长to副首席
+    //研究室主任、实验站站长
+    private double g;//首席、副首席to研究室主任、实验站站长
+    private double h;//研究室主任、实验站站长to研究室主任、实验站站长
+
     public TestStart() {
         users.add(new User());
     }
@@ -77,6 +91,70 @@ public class TestStart {
         this.state = state;
     }
 
+    public double getA() {
+        return a;
+    }
+
+    public void setA(double a) {
+        this.a = a;
+    }
+
+    public double getB() {
+        return b;
+    }
+
+    public void setB(double b) {
+        this.b = b;
+    }
+
+    public double getC() {
+        return c;
+    }
+
+    public void setC(double c) {
+        this.c = c;
+    }
+
+    public double getD() {
+        return d;
+    }
+
+    public void setD(double d) {
+        this.d = d;
+    }
+
+    public double getE() {
+        return e;
+    }
+
+    public void setE(double e) {
+        this.e = e;
+    }
+
+    public double getF() {
+        return f;
+    }
+
+    public void setF(double f) {
+        this.f = f;
+    }
+
+    public double getG() {
+        return g;
+    }
+
+    public void setG(double g) {
+        this.g = g;
+    }
+
+    public double getH() {
+        return h;
+    }
+
+    public void setH(double h) {
+        this.h = h;
+    }
+
     @Override
     public String toString() {
         return "TestStart{" +
@@ -85,6 +163,14 @@ public class TestStart {
                 ", date='" + date + '\'' +
                 ", address='" + address + '\'' +
                 ", users=" + users +
+                ", a=" + a +
+                ", b=" + b +
+                ", c=" + c +
+                ", d=" + d +
+                ", e=" + e +
+                ", f=" + f +
+                ", g=" + g +
+                ", h=" + h +
                 ", state=" + state +
                 '}';
     }
