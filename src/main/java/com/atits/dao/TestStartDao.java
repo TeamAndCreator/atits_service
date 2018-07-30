@@ -37,16 +37,9 @@ public class TestStartDao {
     /* 删除方法：deletes---批量删除，避免页面删除不了 */
 
     public void deleteByIds(List<Integer> idList) {// idList：id列表参数
-        String hql = "";// 初始化为空
-        for (int i = 0; i < idList.size(); i++) {
-            if (i == 0) {
-                hql = "id=" + idList.get(i);
-            } else {
-                hql = hql + " or id=" + idList.get(i);
-            }
+        for (Integer id:idList){
+            deleteById(id);
         }
-        // 执行为删除方法
-        getSession().createQuery("delete from  TestStart where " + hql).executeUpdate();
     }
 
     public void deleteById(Integer id){
