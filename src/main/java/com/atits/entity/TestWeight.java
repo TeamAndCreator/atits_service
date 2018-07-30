@@ -11,23 +11,19 @@ public class TestWeight {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private String year;
-
-    private String time;
-
-    @OneToOne
-    @JoinColumn
-    private Role role;
-    /*
-    考评比例设置
-     */
-    private double nongWei; //农委
-    private double expert; //外聘专家
-    private double subChief_sta_lib; //副首席-岗位专家-综合试验站站长
-    private double sta_lib; //岗位专家-综合试验站站长
-    private double chief;//首席
-    private double nongwei_expert;//农委-外聘专家
-    private double chief_subChief;//首席-副首席
+    //权重设置
+    //-----------------考评人员to被考评人员
+    //--首席
+    private double a;//体系办to首席 40
+    private double b;//副首席、研究室主任、实验站站长to首席 30
+    private double c;//外聘专家to首席 30
+    //副首席
+    private double d;//体系办、外聘专家to副首席 40
+    private double e;//首席to副首席 30
+    private double f;//研究室主任、实验站站长to副首席 30
+    //研究室主任、实验站站长
+    private double g;//首席、副首席to研究室主任、实验站站长 60
+    private double h;//研究室主任、实验站站长to研究室主任、实验站站长 40
 
     public int getId() {
         return id;
@@ -37,102 +33,82 @@ public class TestWeight {
         this.id = id;
     }
 
-    public double getNongWei() {
-        return nongWei;
+    public double getA() {
+        return a;
     }
 
-    public void setNongWei(double nongWei) {
-        this.nongWei = nongWei;
+    public void setA(double a) {
+        this.a = a;
     }
 
-    public double getExpert() {
-        return expert;
+    public double getB() {
+        return b;
     }
 
-    public void setExpert(double expert) {
-        this.expert = expert;
+    public void setB(double b) {
+        this.b = b;
     }
 
-    public double getSubChief_sta_lib() {
-        return subChief_sta_lib;
+    public double getC() {
+        return c;
     }
 
-    public void setSubChief_sta_lib(double subChief_sta_lib) {
-        this.subChief_sta_lib = subChief_sta_lib;
+    public void setC(double c) {
+        this.c = c;
     }
 
-    public double getSta_lib() {
-        return sta_lib;
+    public double getD() {
+        return d;
     }
 
-    public void setSta_lib(double sta_lib) {
-        this.sta_lib = sta_lib;
+    public void setD(double d) {
+        this.d = d;
     }
 
-    public double getChief() {
-        return chief;
+    public double getE() {
+        return e;
     }
 
-    public void setChief(double chief) {
-        this.chief = chief;
+    public void setE(double e) {
+        this.e = e;
     }
 
-    public double getNongwei_expert() {
-        return nongwei_expert;
+    public double getF() {
+        return f;
     }
 
-    public void setNongwei_expert(double nongwei_expert) {
-        this.nongwei_expert = nongwei_expert;
+    public void setF(double f) {
+        this.f = f;
     }
 
-    public double getChief_subChief() {
-        return chief_subChief;
+    public double getG() {
+        return g;
     }
 
-    public void setChief_subChief(double chief_subChief) {
-        this.chief_subChief = chief_subChief;
+    public void setG(double g) {
+        this.g = g;
     }
 
-    public String getYear() {
-        return year;
+    public double getH() {
+        return h;
     }
 
-    public void setYear(String year) {
-        this.year = year;
-    }
-
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
-    }
-
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
+    public void setH(double h) {
+        this.h = h;
     }
 
     @Override
     public String toString() {
         return "TestWeight{" +
                 "id=" + id +
-                ", year='" + year + '\'' +
-                ", time='" + time + '\'' +
-                ", role=" + role +
-                ", nongWei=" + nongWei +
-                ", expert=" + expert +
-                ", subChief_sta_lib=" + subChief_sta_lib +
-                ", sta_lib=" + sta_lib +
-                ", chief=" + chief +
-                ", nongwei_expert=" + nongwei_expert +
-                ", chief_subChief=" + chief_subChief +
+                ", a=" + a +
+                ", b=" + b +
+                ", c=" + c +
+                ", d=" + d +
+                ", e=" + e +
+                ", f=" + f +
+                ", g=" + g +
+                ", h=" + h +
                 '}';
     }
-
-
 }

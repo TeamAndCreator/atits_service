@@ -44,10 +44,16 @@ public class UserDao {
     }
 
 
-    //根据体系id和角色id来获取该体系与该角色的所有用户--启动表中使用
+    //根据体系id和角色id来获取该体系与该角色的所有用户--启动表中使用  用于首席
     public List findTestPer(int sysId) {
         String hql = "select new User(u.id,u.profile.name) from User as u where u.system.id =:sysId";
         return getSession().createQuery(hql).setParameter("sysId", sysId).list();
+    }
+
+    //根据体系id和角色id来获取该体系与该角色的所有用户--启动表中使用  用于体系办
+    public List findTestPer2() {
+        String hql = "select new User(u.id,u.profile.name) from User as u  join u.roles as r where r.id=3 or r.id=4";
+        return getSession().createQuery(hql).list();
     }
 
     /**

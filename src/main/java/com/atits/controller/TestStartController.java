@@ -134,6 +134,7 @@ public class TestStartController {
             List<TestStart> tempTestStarts = testStartService.findAll();
             List<TestStart> testStarts = new ArrayList<>();
             for (TestStart testStart : tempTestStarts) {
+                testStart.setSystem(new com.atits.entity.System(testStart.getSystem().getId(),testStart.getSystem().getSystemName()));
                 Set<User> users = new HashSet();
                 for (User user : testStart.getUsers()) {
                     if (user.getSystem()!=null) {

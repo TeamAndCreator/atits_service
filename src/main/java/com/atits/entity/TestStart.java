@@ -10,7 +10,8 @@ public class TestStart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
+    @ManyToOne
+    private System system;
     private String year;// 考评年度
     private String date;//考评日期
     private String address;//考评地点
@@ -18,30 +19,19 @@ public class TestStart {
     @ManyToMany
     private Set<User> users=new HashSet<>();//考评人员
 
-    //权重设置
-    //-----------------考评人员to被考评人员
-    //--首席
-    private double a;//体系办to首席
-    private double b;//副首席、研究室主任、实验站站长to首席
-    private double c;//外聘专家to首席
-    //副首席
-    private double d;//体系办、外聘专家to副首席
-    private double e;//首席to副首席
-    private double f;//研究室主任、实验站站长to副首席
-    //研究室主任、实验站站长
-    private double g;//首席、副首席to研究室主任、实验站站长
-    private double h;//研究室主任、实验站站长to研究室主任、实验站站长
+    private int state;//考评状态 ：1、启动考评，2、考评开始，3、考评结束
+
+    @OneToOne(cascade = CascadeType.ALL)
+    private TestWeight testWeight;
 
     public TestStart() {
         users.add(new User());
+        this.testWeight=new TestWeight();
     }
 
     public TestStart(Set<User> users) {
         this.users = users;
     }
-
-    private int state;//考评状态 ：1、启动考评，2、考评开始，3、考评结束
-
 
     public int getId() {
         return id;
@@ -91,87 +81,33 @@ public class TestStart {
         this.state = state;
     }
 
-    public double getA() {
-        return a;
+    public System getSystem() {
+        return system;
     }
 
-    public void setA(double a) {
-        this.a = a;
+    public void setSystem(System system) {
+        this.system = system;
     }
 
-    public double getB() {
-        return b;
+    public TestWeight getTestWeight() {
+        return testWeight;
     }
 
-    public void setB(double b) {
-        this.b = b;
-    }
-
-    public double getC() {
-        return c;
-    }
-
-    public void setC(double c) {
-        this.c = c;
-    }
-
-    public double getD() {
-        return d;
-    }
-
-    public void setD(double d) {
-        this.d = d;
-    }
-
-    public double getE() {
-        return e;
-    }
-
-    public void setE(double e) {
-        this.e = e;
-    }
-
-    public double getF() {
-        return f;
-    }
-
-    public void setF(double f) {
-        this.f = f;
-    }
-
-    public double getG() {
-        return g;
-    }
-
-    public void setG(double g) {
-        this.g = g;
-    }
-
-    public double getH() {
-        return h;
-    }
-
-    public void setH(double h) {
-        this.h = h;
+    public void setTestWeight(TestWeight testWeight) {
+        this.testWeight = testWeight;
     }
 
     @Override
     public String toString() {
         return "TestStart{" +
                 "id=" + id +
+                ", system=" + system +
                 ", year='" + year + '\'' +
                 ", date='" + date + '\'' +
                 ", address='" + address + '\'' +
                 ", users=" + users +
-                ", a=" + a +
-                ", b=" + b +
-                ", c=" + c +
-                ", d=" + d +
-                ", e=" + e +
-                ", f=" + f +
-                ", g=" + g +
-                ", h=" + h +
                 ", state=" + state +
+                ", testWeight=" + testWeight +
                 '}';
     }
 }
