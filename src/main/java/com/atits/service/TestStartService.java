@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import javax.transaction.Transactional;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Transactional
 @Service
@@ -25,7 +27,13 @@ public class TestStartService {
 
     public void deleteById(Integer id){testStartDao.deleteById(id);}
 
-    public TestStart findById(Integer id){return testStartDao.findById(id);}
+    //只查出id和所属体系id和考评人员
+    public TestStart findById(Integer id){
+        TestStart testStart=testStartDao.findById(id);
+        List users=testStartDao.findUsers(id);
+        testStart.setUsers(new HashSet<>(users));
+        return testStart;
+    }
 
     public void update(TestStart testStart){testStartDao.update(testStart);}
 

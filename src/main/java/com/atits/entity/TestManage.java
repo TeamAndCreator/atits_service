@@ -12,29 +12,20 @@ public class TestManage {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private String year;//考评年度
-    private String date;//考评日期
+    @ManyToOne
+    private TestStart testStart;
 
-    @OneToOne
-    @JoinColumn
-    private User examiner;//评分人
+    @ManyToOne
+    private User scoreUser;
 
-    @OneToOne
-    @JoinColumn
-    private User examedner; //被评分人
+    private double sum;//个人得分
 
-    private int state;//考评状态：0是未考评，1是已考评
+    public TestManage(){}
 
-    public TestManage() {
-    }
-
-    public TestManage(User examiner, User examedner) {
-        this.examiner = examiner;
-        this.examedner = examedner;
-    }
-
-    public TestManage(User examedner) {
-        this.examedner = examedner;
+    public TestManage(TestStart testStart,User user,double sum){
+        this.testStart=testStart;
+        this.scoreUser=user;
+        this.sum=sum;
     }
 
     public int getId() {
@@ -45,57 +36,37 @@ public class TestManage {
         this.id = id;
     }
 
-
-    public String getYear() {
-        return year;
+    public TestStart getTestStart() {
+        return testStart;
     }
 
-    public void setYear(String year) {
-        this.year = year;
+    public void setTestStart(TestStart testStart) {
+        this.testStart = testStart;
     }
 
-    public User getExaminer() {
-        return examiner;
+    public User getScoreUser() {
+        return scoreUser;
     }
 
-    public void setExaminer(User examiner) {
-        this.examiner = examiner;
+    public void setScoreUser(User scoreUser) {
+        this.scoreUser = scoreUser;
     }
 
-    public User getExamedner() {
-        return examedner;
+    public double getSum() {
+        return sum;
     }
 
-    public void setExamedner(User examedner) {
-        this.examedner = examedner;
-    }
-
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public int getState() {
-        return state;
-    }
-
-    public void setState(int state) {
-        this.state = state;
+    public void setSum(double sum) {
+        this.sum = sum;
     }
 
     @Override
     public String toString() {
         return "TestManage{" +
                 "id=" + id +
-                ", year='" + year + '\'' +
-                ", examiner=" + examiner +
-                ", examedner=" + examedner +
-                ", date='" + date + '\'' +
-                ", state=" + state +
+                ", testStart=" + testStart +
+                ", scoreUser=" + scoreUser +
+                ", sum=" + sum +
                 '}';
     }
 }

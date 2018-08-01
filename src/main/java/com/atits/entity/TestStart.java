@@ -29,6 +29,21 @@ public class TestStart {
         this.testWeight=new TestWeight();
     }
 
+    public TestStart(int id,int systemId){
+        this.id=id;
+        this.system=new System();
+        this.system.setId(systemId);
+    }
+
+    public TestStart(int id,int systemId,String systemName,String address,int state){
+        this.id=id;
+        this.system=new System();
+        this.system.setId(systemId);
+        this.system.setSystemName(systemName);
+        this.address=address;
+        this.state=state;
+    }
+
     public TestStart(Set<User> users) {
         this.users = users;
     }

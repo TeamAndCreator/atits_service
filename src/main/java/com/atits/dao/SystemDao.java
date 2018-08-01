@@ -97,6 +97,14 @@ public class SystemDao {
         return getSession().createQuery(hql).setParameter("systemId",systemId).setParameter("roleId",roleId).list();
     }
 
+    /**
+     * 获取某个体系里具有某个权限的所有人
+     */
+    public List findUserInRole2(int systemId,int roleId){
+        String hql="select new User (u.id,p.name) from User u join u.roles r,Profile p where u.system.id=:systemId and r.id=:roleId and u.profile=p";
+        return getSession().createQuery(hql).setParameter("systemId",systemId).setParameter("roleId",roleId).list();
+    }
+
 
     /**
      * 获取个数

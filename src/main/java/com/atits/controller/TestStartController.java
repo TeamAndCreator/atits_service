@@ -1,7 +1,10 @@
 package com.atits.controller;
 
 
+import com.atits.dao.TestManageDao;
 import com.atits.entity.*;
+import com.atits.service.TestManageService;
+import com.atits.service.TestScoreService;
 import com.atits.service.TestStartService;
 import com.atits.service.UserService;
 import io.swagger.annotations.*;
@@ -25,6 +28,10 @@ public class TestStartController {
     private UserService userService;
     @Resource
     private TestStartService testStartService;
+    @Resource
+    private TestScoreService testScoreService;
+    @Resource
+    private TestManageService testManageService;
     /*
     显示所有可能参加考评的人员（前端从中挑选出此次参评人员）
     从User表中导入体系内部人员、农委以及外聘人员
@@ -96,6 +103,10 @@ public class TestStartController {
     public Msg deleteByIds(
             @ApiParam(name = "idList", value = "需删除启动记录的id数组,依次以英文逗号间隔输入") @RequestParam List<Integer> idList) {
         try {
+            for (int id : idList) {
+                testScoreService.deleteScore(id);
+                testManageService.deleteByTestStart(id);
+            }
             testStartService.deleteByIds(idList);
             return Msg.success();
         } catch (Exception e) {
@@ -134,13 +145,13 @@ public class TestStartController {
             List<TestStart> tempTestStarts = testStartService.findAll();
             List<TestStart> testStarts = new ArrayList<>();
             for (TestStart testStart : tempTestStarts) {
-                testStart.setSystem(new com.atits.entity.System(testStart.getSystem().getId(),testStart.getSystem().getSystemName()));
+                testStart.setSystem(new com.atits.entity.System(testStart.getSystem().getId(), testStart.getSystem().getSystemName()));
                 Set<User> users = new HashSet();
                 for (User user : testStart.getUsers()) {
-                    if (user.getSystem()!=null) {
+                    if (user.getSystem() != null) {
                         users.add(new User(user.getId(), user.getProfile().getName(), user.getSystem().getId()));
-                    }else {
-                        users.add(new User(user.getId(),user.getProfile().getName()));
+                    } else {
+                        users.add(new User(user.getId(), user.getProfile().getName()));
                     }
                 }
                 testStart.setUsers(users);
@@ -169,9 +180,27 @@ public class TestStartController {
     @RequestMapping(value = "updateState", method = RequestMethod.PUT)
     public Msg updateState(int id, int state) {
         try {
-            testStartService.updateState(id, state);
+            TestStart testStart = testStartService.findById(id);
+            if (testStart.getSystem().getId() == 1) {//判断为体系办
+                if (state == 1) {//启动考评
+                    testScoreService.addTestScore1(testStart);
+                    testStartService.updateState(id, state);
+                } else {//结束考评
+                    testManageService.addManage(testStart);
+                    testStartService.updateState(id, state);
+                }
+            } else {//判断为首席
+                if (state == 1) {//启动考评
+                    testScoreService.addTestScore(testStart);
+                    testStartService.updateState(id, state);
+                } else {//结束考评
+                    testManageService.addManage(testStart);
+                    testStartService.updateState(id, state);
+                }
+            }
             return Msg.success();
         } catch (Exception e) {
+            e.printStackTrace();
             return Msg.fail(e.getMessage());
         }
     }

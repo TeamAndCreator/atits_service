@@ -56,6 +56,11 @@ public class UserDao {
         return getSession().createQuery(hql).list();
     }
 
+    public List findTestPer3(Integer systemId) {
+        String hql = "select new User(u.id,u.profile.name) from User as u  join u.roles as r where (r.id=3 or r.id=4) and u.system.id=:systemId";
+        return getSession().createQuery(hql).setParameter("systemId",systemId).list();
+    }
+
     /**
      * 获取外聘人员
      * @return
@@ -69,6 +74,11 @@ public class UserDao {
     public List findRoleById(String userName) {
         String hql = "select u.roles from User as u where u.userName=:userName";
         return getSession().createQuery(hql).setParameter("userName", userName).list();
+    }
+
+    public List findRoleById2(int userId) {
+        String hql = "select u.roles from User as u where u.id=:userId";
+        return getSession().createQuery(hql).setParameter("userId", userId).list();
     }
 
     /**
