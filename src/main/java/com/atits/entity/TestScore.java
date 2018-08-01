@@ -10,11 +10,10 @@ public class TestScore {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private String time; //打分时间
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn
-    private TestManage testManage;
+    private TestStart testStart;
 
     private int A1;
     private int A2;
@@ -23,7 +22,27 @@ public class TestScore {
     private int A5;
     private int A6;
     private int sum;
+    private String time; //打分时间
 
+    @ManyToOne
+    private User evaluationed;
+
+    private int role;//被打分人身份，1、首席，2、副首席，3、研究室主任4、实验站站长
+
+    @ManyToOne
+    private User evaluation;
+
+    private String testType;
+
+    public TestScore(){}
+
+    public TestScore(TestStart testStart,User evaluationed,int role,User evaluation,String testType){
+        this.testStart=testStart;
+        this.evaluationed=evaluationed;
+        this.role=role;
+        this.evaluation=evaluation;
+        this.testType=testType;
+    }
 
     public int getId() {
         return id;
@@ -33,12 +52,12 @@ public class TestScore {
         this.id = id;
     }
 
-    public TestManage getTestManage() {
-        return testManage;
+    public TestStart getTestStart() {
+        return testStart;
     }
 
-    public void setTestManage(TestManage testManage) {
-        this.testManage = testManage;
+    public void setTestStart(TestStart testStart) {
+        this.testStart = testStart;
     }
 
     public int getA1() {
@@ -105,12 +124,43 @@ public class TestScore {
         this.time = time;
     }
 
+    public User getEvaluationed() {
+        return evaluationed;
+    }
+
+    public void setEvaluationed(User evaluationed) {
+        this.evaluationed = evaluationed;
+    }
+
+    public User getEvaluation() {
+        return evaluation;
+    }
+
+    public void setEvaluation(User evaluation) {
+        this.evaluation = evaluation;
+    }
+
+    public String getTestType() {
+        return testType;
+    }
+
+    public void setTestType(String testType) {
+        this.testType = testType;
+    }
+
+    public int getRole() {
+        return role;
+    }
+
+    public void setRole(int role) {
+        this.role = role;
+    }
+
     @Override
     public String toString() {
         return "TestScore{" +
                 "id=" + id +
-                ", time='" + time + '\'' +
-                ", testManage=" + testManage +
+                ", testStart=" + testStart +
                 ", A1=" + A1 +
                 ", A2=" + A2 +
                 ", A3=" + A3 +
@@ -118,6 +168,11 @@ public class TestScore {
                 ", A5=" + A5 +
                 ", A6=" + A6 +
                 ", sum=" + sum +
+                ", time='" + time + '\'' +
+                ", evaluationed=" + evaluationed +
+                ", role=" + role +
+                ", evaluation=" + evaluation +
+                ", testType='" + testType + '\'' +
                 '}';
     }
 }

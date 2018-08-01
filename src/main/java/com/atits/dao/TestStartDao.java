@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Set;
 
 @Repository
 public class TestStartDao {
@@ -21,8 +22,13 @@ public class TestStartDao {
     }
 
     public TestStart findById(Integer id){
-        String hql = "from TestStart Where id=:id";
+        String hql = "select new TestStart (id,system.id) from TestStart Where id=:id";
         return (TestStart)getSession().createQuery(hql).setParameter("id",id).uniqueResult();
+    }
+
+    public List findUsers(Integer id){
+        String hql="select t.users from TestStart as t where t.id=:id";
+        return getSession().createQuery(hql).setParameter("id",id).list();
     }
 
     public void save(TestStart testStart){

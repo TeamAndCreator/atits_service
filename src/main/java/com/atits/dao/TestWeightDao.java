@@ -39,6 +39,15 @@ public class TestWeightDao {
         }
     }
 
+    /**
+     * 通过TestStartId查找TestWeight
+     * @return
+     */
+    public TestWeight findByTestStartId(int testStartId){
+        String hql="select tw from TestStart as ts , TestWeight as tw where ts.id=:testStartId and ts.testWeight=tw";
+        return (TestWeight) getSession().createQuery(hql).setParameter("testStartId",testStartId).uniqueResult();
+    }
+
     public TestWeight findById(Integer id) {
         String hql = "from TestWeight where id =:id";
         return (TestWeight) getSession().createQuery(hql).setParameter("id", id).uniqueResult();
