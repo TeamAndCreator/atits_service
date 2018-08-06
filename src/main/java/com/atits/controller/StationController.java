@@ -64,6 +64,7 @@ public class StationController {
             stationService.deleteByIds(idList);
             return Msg.success();
         }catch (Exception e){
+            e.printStackTrace();
             return Msg.fail(e.getMessage());
         }
     }
@@ -120,6 +121,18 @@ public class StationController {
     }
 
     @ResponseBody
+    @ApiOperation(value = "根据体系，返回相应的sta集合")
+    @RequestMapping(value = "findAll1")
+    public Msg findAll1(int systemId){
+        try {
+            List stations=stationService.findAll1(systemId);
+            return Msg.success().add("stations",stations);
+        }catch (Exception e){
+            return Msg.fail(e.getMessage());
+        }
+    }
+
+    @ResponseBody
     @ApiOperation(value = "分页查找若干个实验站",notes = "分页查找若干个实验站")
     @RequestMapping(value = "findPage",method = RequestMethod.GET)
     public Msg findPage(Integer page/*第几页*/){
@@ -152,6 +165,18 @@ public class StationController {
         try {
             List stations=stationService.findAllInSystem(systemId);
             return Msg.success().add("stations",stations);
+        }catch (Exception e){
+            return Msg.fail(e.getMessage());
+        }
+    }
+
+    @ResponseBody
+    @ApiOperation(value = "更新状态（激活）")
+    @RequestMapping(value = "updateState",method = RequestMethod.PUT)
+    public Msg updateState(int staId){
+        try {
+            stationService.updateState(staId);
+            return Msg.success();
         }catch (Exception e){
             return Msg.fail(e.getMessage());
         }

@@ -43,6 +43,18 @@ public class UserController {
         }
     }
 
+    @ResponseBody
+    @ApiOperation(value = "获取某个体系的所有人员")
+    @RequestMapping(value = "findUsersBySystemId",method = RequestMethod.GET)
+    public Msg findUsersBySystemId(int systemId){
+        try {
+            List<User> users=userService.findUsersBySystemId(systemId);
+            return Msg.success().add("users",users);
+        }catch (Exception e){
+            return Msg.fail(e.getMessage());
+        }
+    }
+
     @ApiOperation(value = "根据用户userId获取用户信息")
     @RequestMapping(value = "findById",method = RequestMethod.GET)
     @ResponseBody
@@ -180,6 +192,18 @@ public class UserController {
                             @RequestParam List<Integer> userIds){
         try {
             userService.deleteByIds(userIds);
+            return Msg.success();
+        }catch (Exception e){
+            return Msg.fail(e.getMessage());
+        }
+    }
+
+    @ResponseBody
+    @ApiOperation(value = "更新激活状态")
+    @RequestMapping(value = "updateState",method = RequestMethod.PUT)
+    public Msg updateState(int userId){
+        try {
+            userService.updateState(userId);
             return Msg.success();
         }catch (Exception e){
             return Msg.fail(e.getMessage());

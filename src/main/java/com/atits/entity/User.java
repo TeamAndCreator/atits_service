@@ -46,6 +46,14 @@ public class User {
         this.roles=roles;
     }
 
+    public User(int id,String userName,String systemName,int state){
+        this.id=id;
+        this.profile=new Profile();
+        this.profile.setName(userName);
+        this.system=new System();
+        this.system.setSystemName(systemName);
+        this.state=state;
+    }
 
     public User(int id,String userName,String sysName,Set<Role> roles) {
         this.system=new System();
@@ -66,6 +74,14 @@ public class User {
         this.system=new System();
         this.system.setId(systemId);
     }
+    public User(int id,int profileId,String name,int state) {
+        this.id=id;
+        this.profile=new Profile();
+        this.profile.setName(name);
+        this.profile.setId(profileId);
+        this.state=state;
+    }
+
 
 
     public int getId() {

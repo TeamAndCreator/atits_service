@@ -89,6 +89,22 @@ public class StationDao {
     }
 
     /**
+     * 获取某个体系中的所有sta(id,staName,company,system.systemName,time,date,state)
+     */
+    public List findAllInSystem2(int systemId){
+        String hql="select new Station (id,staName,company,system.systemName,time,date,state) from Station where system.id=:systemId";
+        return getSession().createQuery(hql).setParameter("systemId",systemId).list();
+    }
+
+    /**
+     * 获取所有sta(id,staName,company,system.systemName,time,date,state)
+     */
+    public List findAll2(){
+        String hql="select new Station (id,staName,company,system.systemName,time,date,state) from Station ";
+        return getSession().createQuery(hql).list();
+    }
+
+    /**
      * 获取某个实验站具有某个权限的所有user
      */
     public List findUserInRole(int stationId,int roleId){
@@ -104,5 +120,29 @@ public class StationDao {
         Long temp=(long)getSession().createQuery(hql).uniqueResult();
         int count=temp.intValue();
         return count;
+    }
+
+    /**
+     * 删除某个体系中的所有实验站
+     */
+    public void deleteBySystemId(int systemId){
+        String hql="delete from Station where system.id=:systemId";
+        getSession().createQuery(hql).setParameter("systemId",systemId).executeUpdate();
+    }
+
+    /**
+     * 改变状态（激活）
+     */
+    public void updateState(int staId){
+        String hql="update Station set state=1 where id=:staId";
+        getSession().createQuery(hql).setParameter("staId",staId).executeUpdate();
+    }
+
+    /**
+     * 将某个研究室内所有人员的sta.id设为0（用于删除sta）
+     */
+    public void deleteStaId(int staId){
+        String hql="update User set station =null where station.id=:staId";
+        getSession().createQuery(hql).setParameter("staId",staId).executeUpdate();
     }
 }

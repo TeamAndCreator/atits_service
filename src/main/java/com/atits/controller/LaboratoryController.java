@@ -123,6 +123,19 @@ public class LaboratoryController {
     }
 
     @ResponseBody
+    @ApiOperation(value = "根据体系，返回相应的lab集合")
+    @RequestMapping(value = "findAll1")
+    public Msg findAll1(int systemId){
+        try {
+            List laboratories=laboratoryService.findAll1(systemId);
+            return Msg.success().add("laboratories",laboratories);
+        }catch (Exception e){
+            return Msg.fail(e.getMessage());
+        }
+    }
+
+
+    @ResponseBody
     @ApiOperation(value = "分页查找若干个研究室",notes = "分页查找若干个研究室")
     @RequestMapping(value = "findPage",method = RequestMethod.GET)
     public Msg findPage(Integer page/*第几页*/){
@@ -155,6 +168,18 @@ public class LaboratoryController {
         try {
             List laboratorys=laboratoryService.findAllInSystem(systemId);
             return Msg.success().add("laboratorys",laboratorys);
+        }catch (Exception e){
+            return Msg.fail(e.getMessage());
+        }
+    }
+
+    @ResponseBody
+    @ApiOperation(value = "更新状态（激活）")
+    @RequestMapping(value = "updateState",method = RequestMethod.PUT)
+    public Msg updateState(int labId){
+        try {
+            laboratoryService.updateState(labId);
+            return Msg.success();
         }catch (Exception e){
             return Msg.fail(e.getMessage());
         }

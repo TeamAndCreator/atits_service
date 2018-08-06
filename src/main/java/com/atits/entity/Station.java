@@ -122,6 +122,16 @@ public class Station {
         this.date=date;
         this.state = state;
     }
+    public Station(int id,String staName, String company,String systemName, String time,String date, int state) {
+        this.id=id;
+        this.staName = staName;
+        this.company = company;
+        this.system=new System();
+        this.system.setSystemName(systemName);
+        this.time = time;
+        this.date=date;
+        this.state = state;
+    }
 
     @Override
     public String toString() {
