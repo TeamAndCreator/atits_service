@@ -66,7 +66,7 @@ public class UserDao {
      * @return
      */
     public List findExternal() {
-        String hql = "select new User(u.id,u.profile.name)from User as u where u.system.id=null ";
+        String hql = "select new User(u.id,u.profile.id,u.profile.name,state)from User as u where u.system.id=null ";
         return getSession().createQuery(hql).list();
     }
 
@@ -79,6 +79,25 @@ public class UserDao {
     public List findRoleById2(int userId) {
         String hql = "select u.roles from User as u where u.id=:userId";
         return getSession().createQuery(hql).setParameter("userId", userId).list();
+    }
+
+    public List findUsersBySystemId(int systemId){
+        String hql="select new User (id,profile.name,system.systemName,state)from User where system.id=:systemId";
+        return getSession().createQuery(hql).setParameter("systemId",systemId).list();
+    }
+
+    /**
+     *查找首席和副首席的 (id,profile.name,system.systemName,state)
+     * @return
+     */
+    public List findUsersBySystemId2() {
+        String hql = "select new User (u.id,u.profile.name,u.system.systemName,u.state) from User as u  join u.roles as r where r.id=3 or r.id=4";
+        return getSession().createQuery(hql).list();
+    }
+
+    public void updateState(int userId){
+        String hql="update User as u set u.state=1 where u.id=:userId";
+        getSession().createQuery(hql).setParameter("userId",userId).executeUpdate();
     }
 
     /**
@@ -102,6 +121,14 @@ public class UserDao {
             User user = findById(userIds.get(i));
             getSession().delete(user);
         }
+    }
+
+    /**
+     * 删除某个体系中的所有人，用于体系删除
+     */
+    public void deleteBySystemId(int systemId){
+        String hql="delete from User where system.id=:systemId";
+        getSession().createQuery(hql).setParameter("systemId",systemId).executeUpdate();
     }
 
 

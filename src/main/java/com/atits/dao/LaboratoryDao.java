@@ -73,6 +73,23 @@ public class LaboratoryDao {
     }
 
     /**
+     * 获取某个体系中的所有lab(id,labName,company,system.systemName,time,date,state)
+     */
+    public List findAllInSystem2(int systemId){
+        String hql="select new Laboratory(id,labName,company,system.systemName,time,date,state) from Laboratory where system.id=:systemId";
+        return getSession().createQuery(hql).setParameter("systemId",systemId).list();
+    }
+
+    /**
+     * 获取所有lab(id,labName,company,system.systemName,time,date,state)
+     */
+    public List findAll2(){
+        String hql="select new Laboratory(id,labName,company,system.systemName,time,date,state) from Laboratory";
+        return getSession().createQuery(hql).list();
+    }
+
+
+    /**
      * 分页
      */
     public List findPage(int startRow,int pageSize){
@@ -106,4 +123,29 @@ public class LaboratoryDao {
         int count=temp.intValue();
         return count;
     }
+
+    /**
+     * 删除某个体系中所有的研究室
+     */
+    public void deleteBySystemId(int systemId){
+        String hql="delete from Laboratory where system.id=:systemId";
+        getSession().createQuery(hql).setParameter("systemId",systemId).executeUpdate();
+    }
+
+    /**
+     * 改变状态（激活）
+     */
+    public void updateState(int labId){
+        String hql="update Laboratory set state=1 where id=:labId";
+        getSession().createQuery(hql).setParameter("labId",labId).executeUpdate();
+    }
+
+    /**
+     * 将某个研究室内所有人员的lab.id设为0（用于删除lab）
+     */
+    public void deleteLabId(int labId){
+        String hql="update User set laboratory=null where laboratory.id=:labId";
+        getSession().createQuery(hql).setParameter("labId",labId).executeUpdate();
+    }
+
 }

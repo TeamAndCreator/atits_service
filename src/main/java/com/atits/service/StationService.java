@@ -6,7 +6,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Transactional
 @Service
@@ -37,6 +40,9 @@ public class StationService {
      * @param idList
      */
     public void deleteByIds(List<Integer> idList){
+        for (int id:idList){
+            stationDao.deleteStaId(id);
+        }
         stationDao.deleteByIds(idList);
     }
 
@@ -65,6 +71,27 @@ public class StationService {
     }
 
     /**
+     * 查找所有的lab(id,labName,company,system.systemName,time,date,state)及主任
+     */
+    public List findAll1(int systemId) {
+        List<Map> stations = new ArrayList<>();
+        List<Station> stationList;
+        if (systemId == 1) {
+            stationList = stationDao.findAll2();
+        } else {
+            stationList = stationDao.findAllInSystem2(systemId);
+        }
+        for (Station station : stationList) {
+            List<String> zr = stationDao.findUserInRole(station.getId(), 7);
+            Map temp = new HashMap();
+            temp.put("station", station);
+            temp.put("zr", zr);
+            stations.add(temp);
+        }
+        return stations;
+    }
+
+    /**
      * 分页
      */
     public List findPage(int startRow,int pageSize){
@@ -90,5 +117,12 @@ public class StationService {
      */
     public int getCount(){
         return stationDao.getCount();
+    }
+
+    /**
+     * 更新状态（激活）
+     */
+    public void updateState(int staId){
+        stationDao.updateState(staId);
     }
 }

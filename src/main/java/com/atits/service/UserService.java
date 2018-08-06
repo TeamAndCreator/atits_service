@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -23,6 +24,22 @@ public class UserService {
      */
     public List<User> findAll() {
         return userDao.findAll();
+    }
+
+    public List findUsersBySystemId(int systemId){
+        List<User> users;
+        if (systemId==1){
+            users=userDao.findUsersBySystemId2();
+            List<User> externals=userDao.findExternal();
+            users.addAll(externals);
+        }else {
+            users=userDao.findUsersBySystemId(systemId);
+        }
+        for (User user:users){
+            Set<Role> roles=new HashSet<>(userDao.findRoleById2(user.getId()));
+            user.setRoles(roles);
+        }
+        return users;
     }
 
     public User findById(Integer userId){return userDao.findById(userId);}
@@ -73,6 +90,8 @@ public class UserService {
 
     public void deleteByIds(List<Integer> idList){userDao.deleteByIds(idList);}
 
-
+    public void updateState(int userId){
+        userDao.updateState(userId);
+    }
 
 }
