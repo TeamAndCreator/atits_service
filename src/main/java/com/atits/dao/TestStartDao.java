@@ -1,11 +1,13 @@
 package com.atits.dao;
 
 import com.atits.entity.TestStart;
+import com.atits.entity.TestWeight;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.Set;
 
@@ -23,6 +25,11 @@ public class TestStartDao {
 
     public TestStart findById(Integer id){
         String hql = "select new TestStart (id,system.id) from TestStart Where id=:id";
+        return (TestStart)getSession().createQuery(hql).setParameter("id",id).uniqueResult();
+    }
+
+    public TestStart findById2(Integer id){
+        String hql = "from TestStart Where id=:id";
         return (TestStart)getSession().createQuery(hql).setParameter("id",id).uniqueResult();
     }
 
@@ -49,8 +56,14 @@ public class TestStartDao {
     }
 
     public void deleteById(Integer id){
-        TestStart testStart = findById(id);
+        TestStart testStart = findById2(id);
         getSession().delete(testStart);
+        deleteTestWeight(testStart.getTestWeight().getId());
+    }
+
+    public void deleteTestWeight(Integer id){
+        String hql="delete from TestWeight where id=:id";
+        getSession().createQuery(hql).setParameter("id",id).executeUpdate();
     }
 
     public void update(TestStart testStart){getSession().update(testStart);}

@@ -4,6 +4,7 @@ import com.atits.dao.SystemDao;
 import com.atits.dao.TestScoreDao;
 import com.atits.dao.UserDao;
 import com.atits.entity.Role;
+import com.atits.entity.System;
 import com.atits.entity.TestScore;
 import com.atits.entity.TestStart;
 import com.atits.entity.User;
@@ -189,7 +190,38 @@ public class TestScoreService {
      * @return
      */
     public List findByEvaluation(Integer evaluationId){
-        return testScoreDao.findByEvaluation(evaluationId);
+        List<TestScore> testScores=testScoreDao.findByEvaluation(evaluationId);
+        List<TestScore> testScores1=new ArrayList<>();
+        for (TestScore testScore:testScores){
+            TestScore temp=new TestScore();
+            System system=new System(testScore.getTestStart().getSystem().getId(),testScore.getTestStart().getSystem().getSystemName());
+            TestStart testStart=new TestStart();
+            testStart.setSystem(system);
+            testStart.setAddress(testScore.getTestStart().getAddress());
+            testStart.setYear(testScore.getTestStart().getYear());
+            testStart.setDate(testScore.getTestStart().getDate());
+            testStart.setState(testScore.getTestStart().getState());
+            User user=new User(testScore.getEvaluation().getId(),testScore.getEvaluation().getProfile().getName());
+            User user1=new User(testScore.getEvaluationed().getId(),testScore.getEvaluationed().getProfile().getName());
+            temp.setId(testScore.getId());
+            temp.setA1(testScore.getA1());
+            temp.setA2(testScore.getA2());
+            temp.setA3(testScore.getA3());
+            temp.setA4(testScore.getA4());
+            temp.setA5(testScore.getA5());
+            temp.setA6(testScore.getA6());
+            temp.setRole(testScore.getRole());
+            temp.setTestType(testScore.getTestType());
+            temp.setTime(testScore.getTime());
+            temp.setTestStart(testStart);
+            temp.setEvaluation(user);
+            temp.setEvaluationed(user1);
+            testScores1.add(temp);
+        }
+
+
+
+        return testScores1;
     }
 
     /**

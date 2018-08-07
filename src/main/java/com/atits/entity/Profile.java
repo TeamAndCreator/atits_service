@@ -67,6 +67,12 @@ public class Profile {
     @Column(length = 100000)
     private String achievement; // 主要业绩
 
+    public Profile(){}
+
+    public Profile(String name){
+        this.name=name;
+    }
+
     public int getId() {
         return id;
     }
