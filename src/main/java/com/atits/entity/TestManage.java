@@ -28,6 +28,19 @@ public class TestManage {
         this.sum=sum;
     }
 
+    public TestManage(int id,String testStartYear,int testStartSystemId,String testStartSystemName
+            ,String testStartDate,String testStartAddress,String scoreUserName,double sum){
+        this.id=id;
+        this.testStart=new TestStart();
+        this.testStart.setYear(testStartYear);
+        this.testStart.setSystem(new System(testStartSystemId,testStartSystemName));
+        this.testStart.setDate(testStartDate);
+        this.testStart.setAddress(testStartAddress);
+        this.scoreUser=new User();
+        this.scoreUser.setProfile(new Profile(scoreUserName));
+        this.sum=sum;
+    }
+
     public int getId() {
         return id;
     }

@@ -1,4 +1,6 @@
 package com.atits.entity;
+import org.hibernate.sql.Delete;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;

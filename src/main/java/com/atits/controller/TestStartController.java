@@ -110,6 +110,7 @@ public class TestStartController {
             testStartService.deleteByIds(idList);
             return Msg.success();
         } catch (Exception e) {
+            e.printStackTrace();
             return Msg.fail(e.getMessage());
         }
     }
