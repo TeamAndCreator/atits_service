@@ -3,6 +3,7 @@ package com.atits.service;
 import com.atits.dao.UserDao;
 import com.atits.entity.Role;
 import com.atits.entity.User;
+import org.apache.shiro.crypto.hash.SimpleHash;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -86,6 +87,17 @@ public class UserService {
 
     public void changePassword(int userId,String password){
         userDao.changePassword(userId,password);
+    }
+
+    public int verifyPassword(int userId,String password){
+        Object md5Password = new SimpleHash("MD5", password, null, 1);
+        password=String.valueOf(md5Password);
+        String password1=userDao.findPassword(userId);
+        if (password.equals(password1)){
+            return 1;
+        }else{
+            return 0;
+        }
     }
 
     public void update(User user){userDao.update(user);}
