@@ -107,6 +107,16 @@ public class UserDao {
         getSession().save(user);
     }
 
+    /**
+     * 修改密码
+     * @param userId
+     * @param password
+     */
+    public void changePassword(int userId,String password){
+        String hql="update User set password=:password where id=:userId";
+        getSession().createQuery(hql).setParameter("password",password).setParameter("userId",userId).executeUpdate();
+    }
+
     public void update(User user) {
         getSession().update(user);
     }

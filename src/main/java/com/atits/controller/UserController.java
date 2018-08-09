@@ -126,6 +126,19 @@ public class UserController {
         }
     }
 
+    @ResponseBody
+    @ApiOperation(value = "修改密码")
+    @RequestMapping(value = "changePassword",method =RequestMethod.PUT)
+    public Msg changePassword(int userId,String password){
+        try {
+            Object md5Password = new SimpleHash("MD5", password, null, 1);
+            userService.changePassword(userId,String.valueOf(md5Password));
+            return Msg.success();
+        }catch (Exception e){
+            return Msg.fail(e.getMessage());
+        }
+    }
+
     @ApiOperation(value = "更新一个用户")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id",value = "需要修改的用户的id",paramType = "query",dataType = "Integer",required = true),
