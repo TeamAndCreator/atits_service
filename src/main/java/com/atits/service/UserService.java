@@ -84,6 +84,10 @@ public class UserService {
         userDao.save(user);
     }
 
+    public void changePassword(int userId,String password){
+        userDao.changePassword(userId,password);
+    }
+
     public void update(User user){userDao.update(user);}
 
     public void deleteById(Integer userId){userDao.deleteById(userId);}
