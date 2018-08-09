@@ -117,6 +117,11 @@ public class UserDao {
         getSession().createQuery(hql).setParameter("password",password).setParameter("userId",userId).executeUpdate();
     }
 
+    public String findPassword(int userId){
+        String hql="select password from User where id=:userId";
+        return (String)getSession().createQuery(hql).setParameter("userId",userId).uniqueResult();
+    }
+
     public void update(User user) {
         getSession().update(user);
     }

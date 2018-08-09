@@ -103,6 +103,13 @@ public class ActivityDao {
         return getSession().createQuery(hql).list();
     }
 
+    /**
+     * 获取所有的id，体系名称，标题，发布者，发布时间，状态
+     */
+    public List findAll3(){
+        String hql="select new Activity (id,system.systemName,title,user.userName,date,state) from Activity order by id";
+        return getSession().createQuery(hql).list();
+    }
 
     /**
      * 获取个数

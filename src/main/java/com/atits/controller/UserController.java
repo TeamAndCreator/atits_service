@@ -139,6 +139,22 @@ public class UserController {
         }
     }
 
+    @ResponseBody
+    @ApiOperation(value = "验证密码")
+    @RequestMapping(value = "verifyPassword",method = RequestMethod.POST)
+    public Msg verifyPassword(int userId,String password){
+        try {
+            int result=userService.verifyPassword(userId,password);
+            if (result==1){
+                return Msg.success();
+            }else {
+                return Msg.fail();
+            }
+        }catch (Exception e){
+            return Msg.fail(e.getMessage());
+        }
+    }
+
     @ApiOperation(value = "更新一个用户")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id",value = "需要修改的用户的id",paramType = "query",dataType = "Integer",required = true),
