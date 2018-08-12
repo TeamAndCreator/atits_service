@@ -198,4 +198,8 @@ public class FilesService {
 //        // TODO Auto-generated method stub
 //        return filesDao.findAllBySysId(sysId);
 //    }
+
+    public List findAll(){
+        return filesDao.findAll();
+    }
 }

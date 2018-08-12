@@ -40,14 +40,25 @@ public class Task {
     @Column(length = 100000)
     private String content;
 
-//    private int state;
-
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    private Set<SubTask> subTasks = new HashSet<>();
-
     @OneToMany(cascade = CascadeType.ALL)
     private Set<Files> files=new HashSet<Files>();
 
+    public Task(){}
+
+    public Task(int id,String title){
+        this.id=id;
+        this.title=title;
+    }
+
+    public Task(int id,int userId,String userName,int systemId,String systemName,String tile,String date,String stratTime,String endTime){
+        this.id=id;
+        this.user=new User(userId,userName);
+        this.system=new System(systemId,systemName);
+        this.title=tile;
+        this.date=date;
+        this.stratTime=stratTime;
+        this.endTime=endTime;
+    }
 
     public int getId() {
         return id;
@@ -59,14 +70,6 @@ public class Task {
 
     public User getUser() {
         return user;
-    }
-
-    public Set<SubTask> getSubTasks() {
-        return subTasks;
-    }
-
-    public void setSubTasks(Set<SubTask> subTasks) {
-        this.subTasks = subTasks;
     }
 
     public void setUser(User user) {
@@ -148,7 +151,6 @@ public class Task {
                 ", stratTime='" + stratTime + '\'' +
                 ", endTime='" + endTime + '\'' +
                 ", content='" + content + '\'' +
-                ", subTasks=" + subTasks +
                 ", files=" + files +
                 '}';
     }

@@ -34,7 +34,7 @@ public class Dynamic {
     @ManyToOne
     private System system;
 
-    private int state;
+    private int state;//0、未审核，1、未通过，2、已通过，3、展示
 
     private String date;
 
@@ -117,6 +117,19 @@ public class Dynamic {
         this.id=id;
         this.title=title;
         this.date=date;
+    }
+
+    public Dynamic(int id, int systemId,String systemName,String title,int userId,String name,String date,int state){
+        this.id=id;
+        this.system=new System();
+        this.system.setId(systemId);
+        this.system.setSystemName(systemName);
+        this.title=title;
+        this.user=new User();
+        this.user.setId(userId);
+        this.user.setProfile(new Profile(name));
+        this.date=date;
+        this.state=state;
     }
 
     @Override

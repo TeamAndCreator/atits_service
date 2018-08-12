@@ -100,9 +100,45 @@ public class ActivityService {
     }
 
     /**
+     * 获取所有的id，体系名称，标题，发布者，发布时间，状态(用于省体系办)
+     * @return
+     */
+    public List findForTXB(){
+        return activityDao.findAll3();
+    }
+
+    /**
+     * 获取所有通过的、本体系未通过或未审核的activity（用于首席）
+     * @param systemId
+     * @return
+     */
+    public List findForSX(int systemId){
+        List<Activity> activities1=activityDao.findAll4();//获取所有通过的activity
+        List<Activity> activities2=activityDao.findAll5(systemId);//获取本体系未通过或未审核的activity
+        activities2.addAll(activities1);//合并
+        return activities2;
+    }
+
+    /**
+     * 获取本体系和体系办所有通过的activity（用于除体系办和首席外的人）
+     * @return
+     */
+    public List findFor(int systemId){
+        List<Activity> activities=activityDao.findAll6(systemId);
+        return activities;
+    }
+
+    /**
      * 获取个数
      */
     public int getCount(){
         return activityDao.getCount();
+    }
+
+    /**
+     * 修改状态从0（待审核）到1（通过）或2（未通过）
+     */
+    public void updateState(int id,int state){
+        activityDao.updateState(id,state);
     }
 }

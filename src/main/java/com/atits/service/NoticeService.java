@@ -75,6 +75,35 @@ public class NoticeService {
     public Set<Files> getFiles(Integer id){return noticeDao.getFiles(id);}
 
     /**
+     * 获取所有的id，体系名称，标题，发布者，发布时间，状态(用于省体系办)
+     * @return
+     */
+    public List findForTXB(){
+        return noticeDao.findAll3();
+    }
+
+    /**
+     * 获取所有通过的、本体系未通过或未审核的harvest（用于首席）
+     * @param systemId
+     * @return
+     */
+    public List findForSX(int systemId){
+        List<Notice> notices=noticeDao.findAll4();//获取所有通过的harvest
+        List<Notice> notices1=noticeDao.findAll5(systemId);//获取本体系未通过或未审核的harvest
+        notices1.addAll(notices);//合并
+        return notices1;
+    }
+
+    /**
+     * 获取本体系和体系办所有通过的notices（用于除体系办和首席外的人）
+     * @return
+     */
+    public List findFor(int systemId){
+        List<Notice> notices=noticeDao.findAll6(systemId);
+        return notices;
+    }
+
+    /**
      * 分页
      */
     public List findPage(int startRow,int pageSize){
@@ -94,5 +123,12 @@ public class NoticeService {
      */
     public int getCount(){
         return noticeDao.getCount();
+    }
+
+    /**
+     * 修改状态从0（待审核）到1（通过）或2（未通过）
+     */
+    public void updateState(int id,int state){
+        noticeDao.updateState(id,state);
     }
 }

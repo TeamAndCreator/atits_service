@@ -110,4 +110,7 @@ public class UserService {
         userDao.updateState(userId);
     }
 
+    public List findUserInSystem(int systemId){
+        return userDao.findUserInSystem(systemId);
+    }
 }

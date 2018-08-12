@@ -126,13 +126,14 @@ public class Activity {
         this.state=state;
     }
 
-    public Activity(int id,String systemName,String title,String userName,String date,int state){
+    public Activity(int id, int systemId,String systemName,String title,String name,String date,int state){
         this.id=id;
         this.system=new System();
+        this.system.setId(systemId);
         this.system.setSystemName(systemName);
         this.title=title;
         this.user=new User();
-        this.user.setUserName(userName);
+        this.user.setProfile(new Profile(name));
         this.date=date;
         this.state=state;
     }

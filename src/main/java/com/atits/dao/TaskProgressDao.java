@@ -44,6 +44,10 @@ public class TaskProgressDao {
         getSession().delete(taskProgress);
     }
 
+    public void delete(TaskProgress taskProgress){
+        getSession().delete(taskProgress);
+    }
+
     public void deleteByIds(List<Integer> idList){
         for (int i=0; i<idList.size(); i++){
             TaskProgress taskProgress = findById(idList.get(i));
@@ -51,6 +55,37 @@ public class TaskProgressDao {
         }
     }
 
+    /**
+     * 获取自己的工作进展
+     */
+    public List findAll1(int userId){
+        String hql="select new TaskProgress (id,subTask.id,subTask.title,subTask.bearer.id,subTask.bearer.profile.name,title,content,date,state)from TaskProgress where subTask.bearer.id=:id";
+        return getSession().createQuery(hql).setParameter("id",userId).list();
+    }
+
+    /**
+     * 获取本体系的工作进展
+     */
+    public List findAll2(int systemId){
+        String hql="select new TaskProgress (id,subTask.id,subTask.title,subTask.bearer.id,subTask.bearer.profile.name,title,content,date,state)from TaskProgress where subTask.bearer.system.id=:id";
+        return getSession().createQuery(hql).setParameter("id",systemId).list();
+    }
+
+    /**
+     * 修改状态从0（待审核）到1（通过）或2（未通过）
+     */
+    public void updateState(int id,int state){
+        String hql="update TaskProgress set state=:state where id=:id";
+        getSession().createQuery(hql).setParameter("state",state).setParameter("id",id).executeUpdate();
+    }
+
+    /**
+     * 根据subTaskId查询任务进展
+     */
+    public List findBySubTaskId(int subTaskId){
+        String hql="from TaskProgress where subTask.id=:id";
+        return getSession().createQuery(hql).setParameter("id",subTaskId).list();
+    }
 
 
 }

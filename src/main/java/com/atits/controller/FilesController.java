@@ -3,6 +3,8 @@ package com.atits.controller;
 import com.atits.entity.Files;
 import com.atits.entity.Msg;
 import com.atits.service.FilesService;
+import com.atits.service.SystemService;
+import com.atits.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -15,9 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.*;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 @Controller
 @Api(description = "文件")
@@ -26,6 +26,13 @@ public class FilesController {
 
     @Resource
     private FilesService filesService;
+
+    @Resource
+    private SystemService systemService;
+
+    @Resource
+    private UserService userService;
+
 
     /**
      * 文件下载
@@ -42,6 +49,30 @@ public class FilesController {
         Files files=filesService.findById(id);
         String filePath=files.getPath()+files.getName();
         return "redirect:"+FilesService.getVR_PATH()+filePath;
+    }
+
+    @ResponseBody
+    @ApiOperation(value = "获取所有文件")
+    @RequestMapping(value = "findAll",method = RequestMethod.GET)
+    public Msg findAll(){
+        try {
+            List<Files> files=filesService.findAll();
+            List<Map> maps=new ArrayList<>();
+            for (Files files1:files){
+                String path=files1.getPath();
+                String str[]=path.split("/");
+                String systemName=systemService.findById(Integer.parseInt(str[0])).getSystemName();
+                String userName=userService.findById(Integer.parseInt(str[2])).getProfile().getName();
+                Map temp=new HashMap();
+                temp.put("files",files1);
+                temp.put("systemName",systemName);
+                temp.put("userName",userName);
+                maps.add(temp);
+            }
+            return Msg.success().add("files",maps);
+        }catch (Exception e){
+            return Msg.fail(e.getMessage());
+        }
     }
 //    @Resource
 //    FilesService filesService;

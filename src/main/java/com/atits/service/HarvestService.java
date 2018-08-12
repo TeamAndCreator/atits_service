@@ -74,6 +74,37 @@ public class HarvestService {
      */
     public Set<Files> getFiles(Integer id){return harvestDao.getFiles(id);}
 
+
+    /**
+     * 获取所有的id，体系名称，标题，发布者，发布时间，状态(用于省体系办)
+     * @return
+     */
+    public List findForTXB(){
+        return harvestDao.findAll3();
+    }
+
+    /**
+     * 获取所有通过的、本体系未通过或未审核的harvest（用于首席）
+     * @param systemId
+     * @return
+     */
+    public List findForSX(int systemId){
+        List<Harvest> harvests=harvestDao.findAll4();//获取所有通过的harvest
+        List<Harvest> harvests1=harvestDao.findAll5(systemId);//获取本体系未通过或未审核的harvest
+        harvests1.addAll(harvests);//合并
+        return harvests1;
+    }
+
+    /**
+     * 获取本体系和体系办所有通过的harvest（用于除体系办和首席外的人）
+     * @return
+     */
+    public List findFor(int systemId){
+        List<Harvest> harvests=harvestDao.findAll6(systemId);
+        return harvests;
+    }
+
+
     /**
      * 分页
      */
@@ -94,5 +125,12 @@ public class HarvestService {
      */
     public int getCount(){
         return harvestDao.getCount();
+    }
+
+    /**
+     * 修改状态从0（待审核）到1（通过）或2（未通过）
+     */
+    public void updateState(int id,int state){
+        harvestDao.updateState(id,state);
     }
 }

@@ -75,6 +75,45 @@ public class DynamicDao {
         Set<Files> filesSet=new HashSet(list);
         return filesSet;
     }
+    /**
+     * 获取所有通过的和展示的（用于体系办）
+     */
+    public List findAll2(){
+        String hql="select new Dynamic (id,system.id,system.systemName,title,user.id,user.profile.name,date,state)from Dynamic where state>1";
+        return getSession().createQuery(hql).list();
+    }
+
+    /**
+     * 获取本体系未审核，未通过，通过的（用于首席）
+     */
+    public List findAll3(int systemId){
+        String hql="select new Dynamic (id,system.id,system.systemName,title,user.id,user.profile.name,date,state) from Dynamic where system.id=:systemId and state<3";
+        return getSession().createQuery(hql).setParameter("systemId",systemId).list();
+    }
+
+    /**
+     * 获取所有展示的（用于除体系办所有人）
+     */
+    public List findAll4(){
+        String hql="select new Dynamic (id,system.id,system.systemName,title,user.id,user.profile.name,date,state) from Dynamic where state=3";
+        return getSession().createQuery(hql).list();
+    }
+
+    /**
+     * 获取本体系通过的
+     */
+    public List findAll5(int systemId){
+        String hql="select new Dynamic (id,system.id,system.systemName,title,user.id,user.profile.name,date,state) from Dynamic where system.id=:systemId and state=2";
+        return getSession().createQuery(hql).setParameter("systemId",systemId).list();
+    }
+
+    /**
+     * 获取本人未审核或未通过的
+     */
+    public List findAll6(int userId){
+        String hql="select new Dynamic (id,system.id,system.systemName,title,user.id,user.profile.name,date,state) from Dynamic where user.id=:userId and (state=0 or state=1)";
+        return getSession().createQuery(hql).setParameter("userId",userId).list();
+    }
 
     /**
      * 分页
@@ -100,5 +139,13 @@ public class DynamicDao {
         Long temp=(long)getSession().createQuery(hql).uniqueResult();
         int count=temp.intValue();
         return count;
+    }
+
+    /**
+     * 修改状态
+     */
+    public void updateState(int id,int state){
+        String hql="update Dynamic set state=:state where id=:id";
+        getSession().createQuery(hql).setParameter("state",state).setParameter("id",id).executeUpdate();
     }
 }

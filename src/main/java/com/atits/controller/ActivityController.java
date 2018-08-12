@@ -44,9 +44,11 @@ public class ActivityController {
         try {
             String date = GetTimeUtil.getDate();
             String time = GetTimeUtil.getTime();
-            if (!multipartFiles[0].isEmpty()) {
-                Set<Files> filesSet = filesService.fileSave(multipartFiles, "重大活动", activity.getSystem().getId(), activity.getUser().getId(), date, time);
-                activity.setFiles(filesSet);
+            if (multipartFiles.length != 0) {//ajax发过来没有文件时可以不用执行
+                if (!multipartFiles[0].isEmpty()) {//form发过来没有文件时可以不用执行
+                    Set<Files> filesSet = filesService.fileSave(multipartFiles, "重大活动", activity.getSystem().getId(), activity.getUser().getId(), date, time);
+                    activity.setFiles(filesSet);
+                }
             }
             activity.setDate(date);
             activity.setTime(time);
@@ -127,16 +129,11 @@ public class ActivityController {
     @ApiImplicitParam(name = "id", value = "要查找的重大活动的id", paramType = "query", dataType = "long")
     @RequestMapping(value = "findById", method = RequestMethod.GET)
     public Msg findById(Integer id) {
-        Subject currentUser = SecurityUtils.getSubject();
-        if(currentUser.hasRole("chief")){
-
-            try {
-                return Msg.success().add("activity", activityService.findById(id));
-            } catch (Exception e) {
-                return Msg.fail(e.getMessage());
-            }
+        try {
+            return Msg.success().add("activity", activityService.findById(id));
+        } catch (Exception e) {
+            return Msg.fail(e.getMessage());
         }
-        return Msg.fail("没有权限");
     }
 
     @RequestMapping(value = "findAll", method = RequestMethod.GET)
@@ -172,7 +169,7 @@ public class ActivityController {
             List activitys = activityService.findPage((page - 1) * pageSize, pageSize);
             //返回该页所需显示的名称和id，及总页数
             return Msg.success().add("activitys", activitys).add("pageTime", pageTime);
-        }catch (Exception e){
+        } catch (Exception e) {
             return Msg.fail(e.getMessage());
         }
 
@@ -180,12 +177,12 @@ public class ActivityController {
 
     @ResponseBody
     @ApiOperation(value = "获取所有id，title，date")
-    @RequestMapping(value = "findAll1",method = RequestMethod.GET)
-    public Msg findAll1(){
+    @RequestMapping(value = "findAll1", method = RequestMethod.GET)
+    public Msg findAll1() {
         try {
-            List activitys=activityService.findAll1();
-            return Msg.success().add("activitys",activitys);
-        }catch (Exception e){
+            List activitys = activityService.findAll1();
+            return Msg.success().add("activitys", activitys);
+        } catch (Exception e) {
             return Msg.fail(e.getMessage());
         }
 
@@ -193,12 +190,60 @@ public class ActivityController {
 
     @ResponseBody
     @ApiOperation(value = "获取所有的id，标题，发布者，发布时间，状态")
-    @RequestMapping(value = "findAll2",method = RequestMethod.GET)
-    public Msg findAll2(){
+    @RequestMapping(value = "findAll2", method = RequestMethod.GET)
+    public Msg findAll2() {
         try {
-            List activitys=activityService.findAll2();
-            return Msg.success().add("activitys",activitys);
-        }catch (Exception e){
+            List activitys = activityService.findAll2();
+            return Msg.success().add("activitys", activitys);
+        } catch (Exception e) {
+            return Msg.fail(e.getMessage());
+        }
+    }
+
+    @ResponseBody
+    @ApiOperation(value = "获取所有的id，体系名称，标题，发布者，发布时间，状态(用于省体系办)")
+    @RequestMapping(value = "findForTXB", method = RequestMethod.GET)
+    public Msg findForTXB() {
+        try {
+            List<Activity> activities = activityService.findForTXB();
+            return Msg.success().add("activities", activities);
+        } catch (Exception e) {
+            return Msg.fail(e.getMessage());
+        }
+    }
+
+    @ResponseBody
+    @ApiOperation(value = "获取所有通过的、本体系未通过或未审核的activity（用于首席）")
+    @RequestMapping(value = "findForSX", method = RequestMethod.GET)
+    public Msg findForSX(int systemId) {
+        try {
+            List<Activity> activities = activityService.findForSX(systemId);
+            return Msg.success().add("activities", activities);
+        } catch (Exception e) {
+            return Msg.fail(e.getMessage());
+        }
+    }
+
+    @ResponseBody
+    @ApiOperation(value = "获取本体系和体系办所有通过的activity（用于除体系办和首席外的人）")
+    @RequestMapping(value = "findFor", method = RequestMethod.GET)
+    public Msg findFor(int systemId) {
+        try {
+            List<Activity> activities = activityService.findFor(systemId);
+            return Msg.success().add("activities", activities);
+        } catch (Exception e) {
+            return Msg.fail(e.getMessage());
+        }
+    }
+
+    @ResponseBody
+    @ApiOperation(value = "修改状态从0（待审核）到1（通过）或2（未通过）")
+    @RequestMapping(value = "updateState", method = RequestMethod.PUT)
+    public Msg updateState(int id, int state) {
+        try {
+            activityService.updateState(id, state);
+            return Msg.success();
+        } catch (Exception e) {
             return Msg.fail(e.getMessage());
         }
     }

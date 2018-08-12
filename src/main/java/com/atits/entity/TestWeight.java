@@ -15,15 +15,15 @@ public class TestWeight {
     //-----------------考评人员to被考评人员
     //--首席
     private double a;//体系办to首席 40
-    private double b;//副首席、研究室主任、实验站站长to首席 30
+    private double b;//副首席、岗位专家、实验站站长to首席 30
     private double c;//外聘专家to首席 30
     //副首席
     private double d;//体系办、外聘专家to副首席 40
     private double e;//首席to副首席 30
-    private double f;//研究室主任、实验站站长to副首席 30
+    private double f;//岗位专家、实验站站长to副首席 30
     //研究室主任、实验站站长
-    private double g;//首席、副首席to研究室主任、实验站站长 60
-    private double h;//研究室主任、实验站站长to研究室主任、实验站站长 40
+    private double g;//首席、副首席to岗位专家、实验站站长 60
+    private double h;//岗位专家、实验站站长to岗位专家、实验站站长 40
 
     public int getId() {
         return id;
