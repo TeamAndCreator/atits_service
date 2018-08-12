@@ -75,6 +75,42 @@ public class RegulationService {
     public Set<Files> getFiles(Integer id){return regulationDao.getFiles(id);}
 
     /**
+     * 获取体系办所有规章制度
+     */
+    public List findAll3(){
+        return regulationDao.findAll3();
+    }
+
+    /**
+     * 获取除体系办外，所有规章制度
+     */
+    public List findAll4(){
+        return regulationDao.findAll4();
+    }
+
+    /**
+     * 获取本体系的所有规章制度
+     */
+    public List findAll5(int systemId){
+        return regulationDao.findAll5(systemId);
+    }
+
+    /**
+     * 获取除本体系和体系办外，所有通过的规章制度
+     */
+    public List findAll6(int systemId){
+        return regulationDao.findAll6(systemId);
+    }
+
+    /**
+     * 获取本体系所有 通过的规章制度
+     */
+    public List findAll7(int systemId){
+        return regulationDao.findAll7(systemId);
+    }
+
+
+    /**
      * 分页
      */
     public List findPage(int startRow,int pageSize){
@@ -94,6 +130,10 @@ public class RegulationService {
      */
     public int getCount(){
         return regulationDao.getCount();
+    }
+
+    public void updateState(int id,int state){
+        regulationDao.updateState(id, state);
     }
 
 }

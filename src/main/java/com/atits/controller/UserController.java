@@ -44,11 +44,23 @@ public class UserController {
     }
 
     @ResponseBody
-    @ApiOperation(value = "获取某个体系的所有人员")
+    @ApiOperation(value = "获取某个体系的所有人员(除正负首席)")
     @RequestMapping(value = "findUsersBySystemId",method = RequestMethod.GET)
     public Msg findUsersBySystemId(int systemId){
         try {
             List<User> users=userService.findUsersBySystemId(systemId);
+            return Msg.success().add("users",users);
+        }catch (Exception e){
+            return Msg.fail(e.getMessage());
+        }
+    }
+
+    @ResponseBody
+    @ApiOperation(value = "获取某个体系的所有人员")
+    @RequestMapping(value = "findUserInSystem",method = RequestMethod.GET)
+    public Msg findUserInSystem(int systemId){
+        try {
+            List<User> users=userService.findUserInSystem(systemId);
             return Msg.success().add("users",users);
         }catch (Exception e){
             return Msg.fail(e.getMessage());

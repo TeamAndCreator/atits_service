@@ -27,7 +27,7 @@ public class TestScore {
     @ManyToOne
     private User evaluationed;
 
-    private int role;//被打分人身份，1、首席，2、副首席，3、研究室主任4、实验站站长
+    private int role;//被打分人身份，1、首席，2、副首席，3、岗位专家4、实验站站长
 
     @ManyToOne
     private User evaluation;

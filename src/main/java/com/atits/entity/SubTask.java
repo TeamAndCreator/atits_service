@@ -1,5 +1,7 @@
 package com.atits.entity;
 
+import org.hibernate.sql.Delete;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -35,11 +37,38 @@ public class SubTask {
 
     private String endTime;
 
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    private Set<TaskProgress> taskProgresses =new HashSet<TaskProgress>();
+    @ManyToOne
+    @JoinColumn(nullable = false)
+    private Task fatherTask;
 
     @OneToMany(cascade = CascadeType.ALL)
     private Set<Files> files=new HashSet<Files>();
+
+    public SubTask(){}
+
+    public SubTask(int id,String title){
+        this.id=id;
+        this.title=title;
+    }
+
+    public SubTask(int id,int bearerId,String bearerName,String title,String date,String startTime,String endTime,int fatherTaskId,String fatherTaskName){
+        this.id=id;
+        this.bearer=new User(bearerId,bearerName);
+        this.title=title;
+        this.date=date;
+        this.startTime=startTime;
+        this.endTime=endTime;
+        this.fatherTask=new Task(fatherTaskId,fatherTaskName);
+    }
+
+
+    public Task getFatherTask() {
+        return fatherTask;
+    }
+
+    public void setFatherTask(Task fatherTask) {
+        this.fatherTask = fatherTask;
+    }
 
     public int getId() {
         return id;
@@ -57,14 +86,6 @@ public class SubTask {
         this.bearer = bearer;
     }
 
-    public Set<TaskProgress> getTaskProgresses() {
-        return taskProgresses;
-    }
-
-    public void setTaskProgresses(Set<TaskProgress> taskProgresses) {
-        this.taskProgresses = taskProgresses;
-    }
-
     public String getContent() {
         return content;
     }
@@ -80,7 +101,6 @@ public class SubTask {
     public void setTitle(String title) {
         this.title = title;
     }
-
 
     public String getTime() {
         return time;
@@ -133,7 +153,7 @@ public class SubTask {
                 ", date='" + date + '\'' +
                 ", startTime='" + startTime + '\'' +
                 ", endTime='" + endTime + '\'' +
-                ", taskProgresses=" + taskProgresses +
+                ", fatherTask=" + fatherTask +
                 ", files=" + files +
                 '}';
     }

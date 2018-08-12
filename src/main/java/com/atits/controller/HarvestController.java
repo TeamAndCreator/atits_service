@@ -32,61 +32,63 @@ public class HarvestController {
     @ResponseBody
     @ApiOperation(value = "增加一个重大成果")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "id",value = "id",paramType = "query"),
-            @ApiImplicitParam(name = "title",value = "标题",paramType = "query"),
-            @ApiImplicitParam(name = "content",value = "描述",paramType = "query"),
-            @ApiImplicitParam(name = "time",value = "时间",paramType = "query"),
-            @ApiImplicitParam(name = "system.id",value = "所属体系id",paramType = "query"),
-            @ApiImplicitParam(name = "user.id",value = "编辑人id",paramType = "query"),
-            @ApiImplicitParam(name = "state",value = "状态",paramType = "query")
+            @ApiImplicitParam(name = "id", value = "id", paramType = "query"),
+            @ApiImplicitParam(name = "title", value = "标题", paramType = "query"),
+            @ApiImplicitParam(name = "content", value = "描述", paramType = "query"),
+            @ApiImplicitParam(name = "time", value = "时间", paramType = "query"),
+            @ApiImplicitParam(name = "system.id", value = "所属体系id", paramType = "query"),
+            @ApiImplicitParam(name = "user.id", value = "编辑人id", paramType = "query"),
+            @ApiImplicitParam(name = "state", value = "状态", paramType = "query")
     })
-    @RequestMapping(value = "save",method = RequestMethod.POST)
-    public Msg save(Harvest harvest, MultipartFile[] multipartFiles){
+    @RequestMapping(value = "save", method = RequestMethod.POST)
+    public Msg save(Harvest harvest, MultipartFile[] multipartFiles) {
         try {
-            String date= GetTimeUtil.getDate();
-            String time=GetTimeUtil.getTime();
-            if (!multipartFiles[0].isEmpty()){
-                Set<Files> filesSet=filesService.fileSave(multipartFiles,"重大成果",harvest.getSystem().getId(),harvest.getUser().getId(),date,time);
-                harvest.setFiles(filesSet);
+            String date = GetTimeUtil.getDate();
+            String time = GetTimeUtil.getTime();
+            if (multipartFiles.length != 0) {//ajax发过来没有文件时可以不用执行
+                if (!multipartFiles[0].isEmpty()) {//form发过来没有文件时可以不用执行
+                    Set<Files> filesSet = filesService.fileSave(multipartFiles, "重大成果", harvest.getSystem().getId(), harvest.getUser().getId(), date, time);
+                    harvest.setFiles(filesSet);
+                }
             }
             harvest.setDate(date);
             harvest.setTime(time);
             harvestService.save(harvest);
             return Msg.success();
-        }catch (Exception e){
+        } catch (Exception e) {
             return Msg.fail(e.getMessage());
         }
     }
 
     @ResponseBody
     @ApiOperation(value = "根据id删除一个重大成果")
-    @ApiImplicitParam(name = "id",value = "需要删除的重大成果id",paramType = "query")
-    @RequestMapping(value = "delete",method = RequestMethod.DELETE)
-    public Msg delete(Integer id){
+    @ApiImplicitParam(name = "id", value = "需要删除的重大成果id", paramType = "query")
+    @RequestMapping(value = "delete", method = RequestMethod.DELETE)
+    public Msg delete(Integer id) {
         try {
-            Harvest harvest=harvestService.findById(id);
-            Set<Files> filesSet=harvest.getFiles();
+            Harvest harvest = harvestService.findById(id);
+            Set<Files> filesSet = harvest.getFiles();
             filesService.deleteFiles(filesSet);
             harvestService.deleteById(id);
             return Msg.success();
-        }catch (Exception e){
+        } catch (Exception e) {
             return Msg.fail(e.getMessage());
         }
     }
 
     @ResponseBody
     @ApiOperation(value = "根据id数组批量删除Harvest")
-    @RequestMapping(value = "deleteByIds",method = RequestMethod.DELETE)
-    public Msg deleteByIds(@ApiParam(name = "idList",value = "需删除重大成果的id数组")@RequestParam List<Integer> idList){
+    @RequestMapping(value = "deleteByIds", method = RequestMethod.DELETE)
+    public Msg deleteByIds(@ApiParam(name = "idList", value = "需删除重大成果的id数组") @RequestParam List<Integer> idList) {
         try {
-            for (Integer id:idList){
-                Harvest harvest=harvestService.findById(id);
-                Set<Files> filesSet=harvest.getFiles();
+            for (Integer id : idList) {
+                Harvest harvest = harvestService.findById(id);
+                Set<Files> filesSet = harvest.getFiles();
                 filesService.deleteFiles(filesSet);
             }
             harvestService.deleteByIds(idList);
             return Msg.success();
-        }catch (Exception e){
+        } catch (Exception e) {
             return Msg.fail(e.getMessage());
         }
     }
@@ -94,63 +96,63 @@ public class HarvestController {
     @ResponseBody
     @ApiOperation(value = "更新一个Harvest")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "id",value = "id",paramType = "query"),
-            @ApiImplicitParam(name = "title",value = "标题",paramType = "query"),
-            @ApiImplicitParam(name = "content",value = "描述",paramType = "query"),
-            @ApiImplicitParam(name = "time",value = "时间",paramType = "query"),
-            @ApiImplicitParam(name = "system.id",value = "所属体系id",paramType = "query"),
-            @ApiImplicitParam(name = "user.id",value = "编辑人id",paramType = "query"),
-            @ApiImplicitParam(name = "state",value = "状态",paramType = "query")
+            @ApiImplicitParam(name = "id", value = "id", paramType = "query"),
+            @ApiImplicitParam(name = "title", value = "标题", paramType = "query"),
+            @ApiImplicitParam(name = "content", value = "描述", paramType = "query"),
+            @ApiImplicitParam(name = "time", value = "时间", paramType = "query"),
+            @ApiImplicitParam(name = "system.id", value = "所属体系id", paramType = "query"),
+            @ApiImplicitParam(name = "user.id", value = "编辑人id", paramType = "query"),
+            @ApiImplicitParam(name = "state", value = "状态", paramType = "query")
     })
-    @RequestMapping(value = "update",method = RequestMethod.PUT)
-    public Msg update(Harvest harvest,MultipartFile[] multipartFiles){
+    @RequestMapping(value = "update", method = RequestMethod.PUT)
+    public Msg update(Harvest harvest, MultipartFile[] multipartFiles) {
         try {
-            String date=GetTimeUtil.getDate();
-            String time=GetTimeUtil.getTime();
+            String date = GetTimeUtil.getDate();
+            String time = GetTimeUtil.getTime();
             //查出原文件并删除
-            Set<Files> oldFilesSet=harvestService.getFiles(harvest.getId());
+            Set<Files> oldFilesSet = harvestService.getFiles(harvest.getId());
             filesService.deleteDoubleFiles(oldFilesSet);
-            if (!multipartFiles[0].isEmpty()){
-                Set<Files> newFilesSet=filesService.fileSave(multipartFiles,"重大成果",harvest.getSystem().getId(),harvest.getUser().getId(),date,time);
+            if (!multipartFiles[0].isEmpty()) {
+                Set<Files> newFilesSet = filesService.fileSave(multipartFiles, "重大成果", harvest.getSystem().getId(), harvest.getUser().getId(), date, time);
                 harvest.setFiles(newFilesSet);
             }
             harvest.setDate(date);
             harvest.setTime(time);
             harvestService.update(harvest);
             return Msg.success();
-        }catch (Exception e){
+        } catch (Exception e) {
             return Msg.fail(e.getMessage());
         }
     }
 
     @ResponseBody
     @ApiOperation(value = "根据id查找一个Harvest")
-    @ApiImplicitParam(name = "id",value = "要查找的重大成果的id",paramType = "query",dataType = "long")
-    @RequestMapping(value = "findById",method = RequestMethod.GET)
-    public Msg findById(Integer id){
+    @ApiImplicitParam(name = "id", value = "要查找的重大成果的id", paramType = "query", dataType = "long")
+    @RequestMapping(value = "findById", method = RequestMethod.GET)
+    public Msg findById(Integer id) {
         try {
-            return Msg.success().add("harvest",harvestService.findById(id));
-        }catch (Exception e){
+            return Msg.success().add("harvest", harvestService.findById(id));
+        } catch (Exception e) {
             return Msg.fail(e.getMessage());
         }
     }
 
-    @RequestMapping(value = "findAll",method = RequestMethod.GET)
-    @ApiOperation(value = "查找所有的重大成果",notes = "查找所有的重大成果")
+    @RequestMapping(value = "findAll", method = RequestMethod.GET)
+    @ApiOperation(value = "查找所有的重大成果", notes = "查找所有的重大成果")
     @ResponseBody
-    public Msg findAll(){
+    public Msg findAll() {
         try {
-            List<Harvest> harvests=harvestService.findAll();
-            return Msg.success().add("harvests",harvests);
-        }catch (Exception e){
+            List<Harvest> harvests = harvestService.findAll();
+            return Msg.success().add("harvests", harvests);
+        } catch (Exception e) {
             return Msg.fail(e.getMessage());
         }
     }
 
     @ResponseBody
-    @ApiOperation(value = "分页查找若干个重大成果",notes = "分页查找若干个重大成果")
-    @RequestMapping(value = "findPage",method = RequestMethod.GET)
-    public Msg findPage(Integer page/*第几页*/){
+    @ApiOperation(value = "分页查找若干个重大成果", notes = "分页查找若干个重大成果")
+    @RequestMapping(value = "findPage", method = RequestMethod.GET)
+    public Msg findPage(Integer page/*第几页*/) {
         try {
             //声明每页显示的个数
             final int pageSize = 10;
@@ -168,21 +170,70 @@ public class HarvestController {
             List harvests = harvestService.findPage((page - 1) * pageSize, pageSize);
             //返回该页所需显示的名称和id，及总页数
             return Msg.success().add("harvests", harvests).add("pageTime", pageTime);
-        }catch (Exception e){
+        } catch (Exception e) {
             return Msg.fail(e.getMessage());
         }
     }
 
     @ResponseBody
     @ApiOperation(value = "获取所有id，title，date")
-    @RequestMapping(value = "findAll1",method = RequestMethod.GET)
-    public Msg findAll1(){
+    @RequestMapping(value = "findAll1", method = RequestMethod.GET)
+    public Msg findAll1() {
         try {
-            List harvests=harvestService.findAll1();
-            return Msg.success().add("harvests",harvests);
-        }catch (Exception e){
+            List harvests = harvestService.findAll1();
+            return Msg.success().add("harvests", harvests);
+        } catch (Exception e) {
             return Msg.fail(e.getMessage());
         }
 
+    }
+
+
+    @ResponseBody
+    @ApiOperation(value = "获取所有的id，体系名称，标题，发布者，发布时间，状态(用于省体系办)")
+    @RequestMapping(value = "findForTXB", method = RequestMethod.GET)
+    public Msg findForTXB() {
+        try {
+            List<Harvest> harvests = harvestService.findForTXB();
+            return Msg.success().add("harvests", harvests);
+        } catch (Exception e) {
+            return Msg.fail(e.getMessage());
+        }
+    }
+
+    @ResponseBody
+    @ApiOperation(value = "获取所有通过的、本体系未通过或未审核的harvest（用于首席）")
+    @RequestMapping(value = "findForSX", method = RequestMethod.GET)
+    public Msg findForSX(int systemId) {
+        try {
+            List<Harvest> harvests = harvestService.findForSX(systemId);
+            return Msg.success().add("harvests", harvests);
+        } catch (Exception e) {
+            return Msg.fail(e.getMessage());
+        }
+    }
+
+    @ResponseBody
+    @ApiOperation(value = "获取本体系和体系办所有通过的harvest（用于除体系办和首席外的人）")
+    @RequestMapping(value = "findFor", method = RequestMethod.GET)
+    public Msg findFor(int systemId) {
+        try {
+            List<Harvest> harvests = harvestService.findFor(systemId);
+            return Msg.success().add("harvests", harvests);
+        } catch (Exception e) {
+            return Msg.fail(e.getMessage());
+        }
+    }
+
+    @ResponseBody
+    @ApiOperation(value = "修改状态从0（待审核）到1（通过）或2（未通过）")
+    @RequestMapping(value = "updateState", method = RequestMethod.PUT)
+    public Msg updateState(int id, int state) {
+        try {
+            harvestService.updateState(id, state);
+            return Msg.success();
+        } catch (Exception e) {
+            return Msg.fail(e.getMessage());
+        }
     }
 }

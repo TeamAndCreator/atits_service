@@ -21,15 +21,28 @@ public class SubTaskDao {
         String hql = "from SubTask";
         return getSession().createQuery(hql).list();
     }
+
+    /**
+     * 获取所有本体系(用过父任务的systemId筛选)的子任务(用于首席)
+     * @return
+     */
+    public List findBySystemId(int systemId){
+        String hql="select new SubTask (id,bearer.id,bearer.profile.name,title,date,startTime,endTime,fatherTask.id,fatherTask.title)from SubTask where fatherTask.system.id=:systemId";
+        return getSession().createQuery(hql).setParameter("systemId",systemId).list();
+    }
+
+    /**
+     * 获取此人所有的子任务
+     * @return
+     */
+    public List findByBearerId(int bearerId){
+        String hql="select new SubTask (id,bearer.id,bearer.profile.name,title,date,startTime,endTime,fatherTask.id,fatherTask.title)from SubTask where bearer.id=:bearerId";
+        return getSession().createQuery(hql).setParameter("bearerId",bearerId).list();
+    }
+
     public SubTask findById(Integer id){
         String hql = "from SubTask where id=:id";
         return (SubTask) getSession().createQuery(hql).setParameter("id",id).uniqueResult();
-    }
-
-    //三级用户子任务显示
-    public List<SubTask> findByBearerId(Integer bearerId){
-        String hql = "from SubTask where bearer.id=:bearerId";
-        return getSession().createQuery(hql).setParameter("bearerId",bearerId).list();
     }
 
     public void save(SubTask subTask){getSession().save(subTask);}
@@ -45,4 +58,13 @@ public class SubTaskDao {
             getSession().delete(subTask);
         }
     }
+
+    /**
+     * 根据task.id获取subtask的idlist
+     */
+    public List findIdList(int taskId){
+        String hql="select id from SubTask where fatherTask.id=:taskId";
+        return getSession().createQuery(hql).setParameter("taskId",taskId).list();
+    }
+
 }

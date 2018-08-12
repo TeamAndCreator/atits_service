@@ -58,7 +58,7 @@ public class TestScoreService {
             if (sx == true) {//给首席打分
                 List<User> users0 = systemDao.findUserInRole2(1, 1);//体系办
                 List<User> users1 = systemDao.findUserInRole2(systemId, 4);//副首席
-                List<User> users2 = systemDao.findUserInRole2(systemId, 6);//研究室主任
+                List<User> users2 = systemDao.findUserInRole2(systemId, 6);//岗位专家
                 List<User> users3 = systemDao.findUserInRole2(systemId, 7);//实验站站长
                 List<Integer> ids = new ArrayList<>();//存放打分人的id，为了解决多角色重复打分
                 for (User user1 : users0) {//体系办to首席
@@ -79,7 +79,7 @@ public class TestScoreService {
                         testScoreDao.addScore(new TestScore(testStart, user,1, user1, "b"));
                     }
                 }
-                for (User user1 : users2) {//研究室主任to首席
+                for (User user1 : users2) {//岗位专家to首席
                     if (user1.getId() != user.getId()) {//去除自己打分
                         if (!ids.contains(user1.getId())) {
                             ids.add(user1.getId());
@@ -100,7 +100,7 @@ public class TestScoreService {
             } else {//给副首席打分
                 List<User> users0 = systemDao.findUserInRole2(1, 1);//体系办
                 List<User> users1 = systemDao.findUserInRole2(systemId, 3);//首席
-                List<User> users2 = systemDao.findUserInRole2(systemId, 6);//研究室主任
+                List<User> users2 = systemDao.findUserInRole2(systemId, 6);//岗位专家
                 List<User> users3 = systemDao.findUserInRole2(systemId, 7);//实验站站长
                 List<Integer> ids = new ArrayList<>();//存放打分人的id，为了解决多角色重复打分
                 for (User user1 : users0) {//体系办to副首席
@@ -121,7 +121,7 @@ public class TestScoreService {
                         testScoreDao.addScore(new TestScore(testStart, user, 2,user1, "e"));
                     }
                 }
-                for (User user1 : users2) {//研究室主任to副首席
+                for (User user1 : users2) {//岗位专家to副首席
                     if (user1.getId() != user.getId()) {//去除自己打分
                         if (!ids.contains(user1.getId())) {
                             ids.add(user1.getId());
@@ -151,7 +151,7 @@ public class TestScoreService {
         for (User user : users) {
             Set<Role> roles=user.getRoles();
             int role1=0;
-            for (Role role : user.getRoles()) {//判断用户为研究室主任还是实验站站长
+            for (Role role : user.getRoles()) {//判断用户为岗位专家还是实验站站长
                 if (role.getId() == 6) {
                     role1 = 3;
                     break;
@@ -162,14 +162,14 @@ public class TestScoreService {
                 }
             }
             List<Integer> ids = new ArrayList<>();//存放打分人的id，为了解决多角色重复打分
-            for (User sx : sxs) {//首席、副首席to研究室主任、实验站站长
+            for (User sx : sxs) {//首席、副首席to岗位专家、实验站站长
                 if (!ids.contains(sx.getId())) {
                     ids.add(sx.getId());
                     TestScore testScore = new TestScore(testStart, user,role1, sx, "g");
                     testScoreDao.addScore(testScore);
                 }
             }
-            for (User user1 : users) {//研究室主任、实验站站长to研究室主任、实验站站长
+            for (User user1 : users) {//岗位专家、实验站站长to岗位专家、实验站站长
                 if (!user1.equals(user)) {
                     if (!ids.contains(user1.getId())) {
                         ids.add(user1.getId());

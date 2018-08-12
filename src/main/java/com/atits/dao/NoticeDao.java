@@ -78,6 +78,39 @@ public class NoticeDao {
     }
 
     /**
+     * 获取所有的id，体系名称，标题，发布者，发布时间，状态(用于省体系办)
+     */
+    public List findAll3(){
+        String hql="select new Notice (id,system.id,system.systemName,title,user.profile.name,date,state) from Notice order by id";
+        return getSession().createQuery(hql).list();
+    }
+
+    /**
+     * 获取状态为1（通过）的id，体系名称，标题，发布者，发布时间，状态(用于除体系办外所有人)
+     */
+    public List findAll4(){
+        String hql="select new Notice (id,system.id,system.systemName,title,user.profile.name,date,state) from Notice where state=1 order by id";
+        return getSession().createQuery(hql).list();
+    }
+
+    /**
+     * 获取某体系的未通过,或待审核的重大活动（state等于0或2）(用于首席)
+     */
+    public List findAll5(int systemId){
+        String hql="select new Notice (id,system.id,system.systemName,title,user.profile.name,date,state) from Notice where (state=0 or state=2)and system.id=:systemId order by id";
+        return getSession().createQuery(hql).setParameter("systemId",systemId).list();
+    }
+
+    /**
+     * 获取某体系通过的，和体系办通过的
+     */
+    public List findAll6(int systemId){
+        String hql="select new Notice (id,system.id,system.systemName,title,user.profile.name,date,state) from Notice where (system.id=:systemId or system.id=1) and state=1 order by id ";
+        return getSession().createQuery(hql).setParameter("systemId",systemId).list();
+    }
+
+
+    /**
      * 分页
      */
     public List findPage(int startRow,int pageSize){
@@ -101,5 +134,13 @@ public class NoticeDao {
         Long temp=(long)getSession().createQuery(hql).uniqueResult();
         int count=temp.intValue();
         return count;
+    }
+
+    /**
+     * 修改状态从0（待审核）到1（通过）或2（未通过）
+     */
+    public void updateState(int id,int state){
+        String hql="update Notice set state=:state where id=:id";
+        getSession().createQuery(hql).setParameter("state",state).setParameter("id",id).executeUpdate();
     }
 }

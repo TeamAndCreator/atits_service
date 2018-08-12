@@ -185,4 +185,71 @@ public class RegulationController {
         }
 
     }
+
+    @ResponseBody
+    @ApiOperation(value = "获取体系办需要的规章制度")
+    @RequestMapping(value = "findForTXB",method = RequestMethod.GET)
+    public Msg findForTXB(){
+        try {
+            List<Regulation> txb=regulationService.findAll3();//获取体系办的规章制度
+            List<Regulation> others=regulationService.findAll4();//获取除体系办之外的所有规章制度
+            return Msg.success().add("txb",txb).add("others",others);
+        }catch (Exception e){
+            return Msg.fail(e.getMessage());
+        }
+    }
+
+    @ResponseBody
+    @ApiOperation(value = "获取首席需要的规章制度")
+    @RequestMapping(value = "findForSX",method = RequestMethod.GET)
+    public Msg findForSX(int systemId){
+        try {
+            List<Regulation> txb=regulationService.findAll3();//获取体系办的规章制度
+            List<Regulation> others=regulationService.findAll5(systemId);//获取本体的规章制度
+            List<Regulation> others1=regulationService.findAll6(systemId);//获取除本体系、体系办之外的，所有通过的规章制度
+            others.addAll(others1);
+            return Msg.success().add("txb",txb).add("others",others);
+        }catch (Exception e){
+            return Msg.fail(e.getMessage());
+        }
+    }
+
+
+    @ResponseBody
+    @ApiOperation(value = "获取体系办、首席之外的人需要的规章制度")
+    @RequestMapping(value = "findFor",method = RequestMethod.GET)
+    public Msg findFor(int systemId){
+        try {
+            List<Regulation> txb=regulationService.findAll3();//获取体系办的规章制度
+            List<Regulation> others=regulationService.findAll7(systemId);//获取本体系所有通过的规章制度
+            return Msg.success().add("txb",txb).add("others",others);
+        }catch (Exception e){
+            return Msg.fail(e.getMessage());
+        }
+    }
+
+    @ResponseBody
+    @ApiOperation(value = "更新状态")
+    @RequestMapping(value = "updateState",method = RequestMethod.PUT)
+    public Msg updateState(int id,int state){
+        try {
+            regulationService.updateState(id, state);
+            return Msg.success();
+        }catch (Exception e){
+            return Msg.fail(e.getMessage());
+        }
+    }
+
+
+
+
+
 }
+
+
+
+
+
+
+
+

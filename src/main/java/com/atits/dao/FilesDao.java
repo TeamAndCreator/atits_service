@@ -36,4 +36,9 @@ public class FilesDao {
         getSession().delete(files);
     }
 
+    public List findAll(){
+        String hql="from Files ";
+        return getSession().createQuery(hql).list();
+    }
+
 }

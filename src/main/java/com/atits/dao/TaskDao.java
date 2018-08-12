@@ -18,7 +18,7 @@ public class TaskDao {
     }
 
     public List<Task> findAll(){
-        String hql = "from Task ";
+        String hql = "select new Task (id,user.id,user.profile.name,system.id,system.systemName,title,date,stratTime,endTime)from Task ";
         return getSession().createQuery(hql).list();
     }
 
@@ -28,7 +28,7 @@ public class TaskDao {
     }
 
     public List<Task> findBySysId(Integer sysId){
-        String hql = "from Task where system.id =:sysId";
+        String hql = "select new Task (id,user.id,user.profile.name,system.id,system.systemName,title,date,stratTime,endTime)from Task where system.id =:sysId";
         return getSession().createQuery(hql).setParameter("sysId",sysId).list();
     }
 

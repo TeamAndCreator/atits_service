@@ -20,11 +20,7 @@ public class TaskProgress {
 
     @ManyToOne
     @JoinColumn(nullable = false)
-    private User bearer;//承担人
-
-//    @ManyToOne
-//    @JoinColumn(nullable = false)
-//    private SubTask subTask;//所属子任务
+    private SubTask subTask;//所属子任务
 
     private String title;
 
@@ -40,6 +36,18 @@ public class TaskProgress {
 
     private int state;//1-通过  2-不通过  0-审核中
 
+    public TaskProgress(){}
+
+    public TaskProgress(int id,int subTaskId,String subTaskName,int bearerId,String bearerName,String title,String content,String date,int state){
+        this.id=id;
+        this.subTask=new SubTask(subTaskId,subTaskName);
+        this.subTask.setBearer(new User(bearerId,bearerName));
+        this.title=title;
+        this.content=content;
+        this.date=date;
+        this.state=state;
+    }
+
     public int getId() {
         return id;
     }
@@ -52,21 +60,13 @@ public class TaskProgress {
         return title;
     }
 
-    public User getBearer() {
-        return bearer;
+    public SubTask getSubTask() {
+        return subTask;
     }
 
-    public void setBearer(User bearer) {
-        this.bearer = bearer;
+    public void setSubTask(SubTask subTask) {
+        this.subTask = subTask;
     }
-
-//    public SubTask getSubTask() {
-//        return subTask;
-//    }
-//
-//    public void setSubTask(SubTask subTask) {
-//        this.subTask = subTask;
-//    }
 
     public void setTitle(String title) {
         this.title = title;
@@ -116,8 +116,7 @@ public class TaskProgress {
     public String toString() {
         return "TaskProgress{" +
                 "id=" + id +
-                ", bearer=" + bearer +
-//                ", subTask=" + subTask +
+                ", subTask=" + subTask +
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
                 ", time='" + time + '\'' +

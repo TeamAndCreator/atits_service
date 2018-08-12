@@ -117,6 +117,18 @@ public class Harvest {
         this.date=date;
     }
 
+    public Harvest(int id,int systemId,String systemName,String title,String name,String date,int state){
+        this.id=id;
+        this.system=new System();
+        this.system.setId(systemId);
+        this.system.setSystemName(systemName);
+        this.title=title;
+        this.user=new User();
+        this.user.setProfile(new Profile(name));
+        this.date=date;
+        this.state=state;
+    }
+
 
     @Override
     public String toString() {

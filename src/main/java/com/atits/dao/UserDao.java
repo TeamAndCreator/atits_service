@@ -146,5 +146,10 @@ public class UserDao {
         getSession().createQuery(hql).setParameter("systemId",systemId).executeUpdate();
     }
 
+    public List findUserInSystem(int systemId){
+        String hql="select new User (id,profile.name)from User where system.id=:systemId";
+        return getSession().createQuery(hql).setParameter("systemId",systemId).list();
+    }
+
 
 }
