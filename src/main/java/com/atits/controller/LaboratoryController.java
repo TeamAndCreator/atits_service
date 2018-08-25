@@ -101,8 +101,8 @@ public class LaboratoryController {
     public Msg findById(Integer id){
         try {
             Laboratory laboratory=laboratoryService.findById(id);
-            List research_director=laboratoryService.findUserInRole(id,5);
-            List job_expert=laboratoryService.findUserInRole(id,6);
+            List research_director=laboratoryService.findUserInRole(id,6);
+            List job_expert=laboratoryService.findUserInRole(id,5);
             return Msg.success().add("laboratory",laboratory).add("research_director",research_director).add("job_expert",job_expert);
         }catch (Exception e){
             return Msg.fail(e.getMessage());

@@ -87,7 +87,7 @@ public class LaboratoryService {
             laboratoryList = laboratoryDao.findAllInSystem2(systemId);
         }
         for (Laboratory laboratory:laboratoryList){
-            List<String> zr=laboratoryDao.findUserInRole(laboratory.getId(),6);
+            List<String> zr=laboratoryDao.findUserInRole(laboratory.getId(),5);
             Map temp=new HashMap();
             temp.put("laboratory",laboratory);
             temp.put("zr",zr);
