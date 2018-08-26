@@ -122,7 +122,7 @@ public class StationController {
 
     @ResponseBody
     @ApiOperation(value = "根据体系，返回相应的sta集合")
-    @RequestMapping(value = "findAll1")
+    @RequestMapping(value = "findAll1",method = RequestMethod.GET)
     public Msg findAll1(int systemId){
         try {
             List stations=stationService.findAll1(systemId);
