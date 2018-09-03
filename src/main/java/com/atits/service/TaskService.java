@@ -1,12 +1,14 @@
 package com.atits.service;
 
 import com.atits.dao.TaskDao;
+import com.atits.entity.Files;
 import com.atits.entity.Task;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Set;
 
 @Transactional
 @Service
@@ -29,5 +31,11 @@ public class TaskService {
 
     public void deleteByIds(List<Integer> idList){taskDao.deleteByIds(idList);}
 
+    /**
+     * 查找Task中的文件
+     * @param id
+     * @return
+     */
+    public Set<Files> getFiles(Integer id){return taskDao.getFiles(id);}
 
 }

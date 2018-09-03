@@ -66,6 +66,31 @@ public class SubTaskController {
     }
 
     @ResponseBody
+    @ApiOperation(value = "更新一个子任务")
+    @RequestMapping(value = "update",method = RequestMethod.PUT)
+    public Msg update(SubTask subTask,MultipartFile[] multipartFiles){
+        try {
+            String date = GetTimeUtil.getDate();
+            String time = GetTimeUtil.getTime();
+            //查出原文件并删除
+            Set<Files> oldFilesSet = subTaskService.getFiles(subTask.getId());
+            filesService.deleteDoubleFiles(oldFilesSet);
+            if (multipartFiles.length != 0) {//ajax发过来没有文件时可以不用执行
+                if (!multipartFiles[0].isEmpty()) {//form发过来没有文件时可以不用执行
+                    Set<Files> newFilesSet = filesService.fileSave(multipartFiles, "体系任务", subTask.getBearer().getSystem().getId(), subTask.getBearer().getId(), date, time);
+                    subTask.setFiles(newFilesSet);
+                }
+            }
+            subTask.setDate(date);
+            subTask.setTime(time);
+            subTaskService.update(subTask);
+            return Msg.success();
+        }catch (Exception e){
+            return Msg.fail(e.getMessage());
+        }
+    }
+
+    @ResponseBody
     @ApiOperation(value = "查询所有的子任务")
     @RequestMapping(value = "findAll", method = RequestMethod.GET)
     public Msg findAll() {

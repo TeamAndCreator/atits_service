@@ -1,12 +1,14 @@
 package com.atits.service;
 
 import com.atits.dao.TaskProgressDao;
+import com.atits.entity.Files;
 import com.atits.entity.TaskProgress;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Set;
 
 @Transactional
 @Service
@@ -53,4 +55,11 @@ public class TaskProgressService {
     public List findBySubTaskId(int subTaskId){
         return taskProgressDao.findBySubTaskId(subTaskId);
     }
+
+    /**
+     * 查找TaskProgress中的文件
+     * @param id
+     * @return
+     */
+    public Set<Files> getFiles(Integer id){return taskProgressDao.getFiles(id);}
 }

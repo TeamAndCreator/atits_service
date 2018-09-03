@@ -113,9 +113,11 @@ public class NoticeController {
             //查出原文件并删除
             Set<Files> oldFilesSet = noticeService.getFiles(notice.getId());
             filesService.deleteDoubleFiles(oldFilesSet);
-            if (!multipartFiles[0].isEmpty()) {
-                Set<Files> newFilesSet = filesService.fileSave(multipartFiles, "通知公告", notice.getSystem().getId(), notice.getUser().getId(), date, time);
-                notice.setFiles(newFilesSet);
+            if (multipartFiles.length != 0) {//ajax发过来没有文件时可以不用执行
+                if (!multipartFiles[0].isEmpty()) {//form发过来没有文件时可以不用执行
+                    Set<Files> newFilesSet = filesService.fileSave(multipartFiles, "通知公告", notice.getSystem().getId(), notice.getUser().getId(), date, time);
+                    notice.setFiles(newFilesSet);
+                }
             }
             notice.setDate(date);
             notice.setTime(time);

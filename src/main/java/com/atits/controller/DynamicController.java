@@ -111,9 +111,11 @@ public class DynamicController {
             //查出原文件并删除
             Set<Files> oldFilesSet = dynamicService.getFiles(dynamic.getId());
             filesService.deleteDoubleFiles(oldFilesSet);
-            if (!multipartFiles[0].isEmpty()) {
-                Set<Files> newFilesSet = filesService.fileSave(multipartFiles, "体系动态", dynamic.getSystem().getId(), dynamic.getUser().getId(), date, time);
-                dynamic.setFiles(newFilesSet);
+            if (multipartFiles.length != 0) {//ajax发过来没有文件时可以不用执行
+                if (!multipartFiles[0].isEmpty()) {//form发过来没有文件时可以不用执行
+                    Set<Files> newFilesSet = filesService.fileSave(multipartFiles, "体系动态", dynamic.getSystem().getId(), dynamic.getUser().getId(), date, time);
+                    dynamic.setFiles(newFilesSet);
+                }
             }
             dynamic.setDate(date);
             dynamic.setTime(time);

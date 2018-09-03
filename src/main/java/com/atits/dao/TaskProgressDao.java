@@ -1,11 +1,15 @@
 package com.atits.dao;
 
+import com.atits.entity.Files;
 import com.atits.entity.TaskProgress;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Repository
 public class TaskProgressDao {
@@ -85,6 +89,17 @@ public class TaskProgressDao {
     public List findBySubTaskId(int subTaskId){
         String hql="from TaskProgress where subTask.id=:id";
         return getSession().createQuery(hql).setParameter("id",subTaskId).list();
+    }
+
+    /**
+     * 根据TaskProgress的id查找其files
+     * 用于更新文件
+     */
+    public Set<Files> getFiles(Integer id){
+        String hql="select tg.files from TaskProgress as tg where tg.id=:id";
+        List list= getSession().createQuery(hql).setParameter("id",id).list();
+        Set<Files> filesSet=new HashSet(list);
+        return filesSet;
     }
 
 

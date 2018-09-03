@@ -99,6 +99,31 @@ public class TaskController {
     }
 
     @ResponseBody
+    @ApiOperation(value = "更新一个工作任务")
+    @RequestMapping(value = "update",method = RequestMethod.PUT)
+    public Msg update(Task task, MultipartFile[] multipartFiles) {
+        try {
+            String date = GetTimeUtil.getDate();
+            String time = GetTimeUtil.getTime();
+            //查出原文件并删除
+            Set<Files> oldFilesSet = taskService.getFiles(task.getId());
+            filesService.deleteDoubleFiles(oldFilesSet);
+            if (multipartFiles.length != 0) {//ajax发过来没有文件时可以不用执行
+                if (!multipartFiles[0].isEmpty()) {//form发过来没有文件时可以不用执行
+                    Set<Files> newFilesSet = filesService.fileSave(multipartFiles, "工作任务", task.getSystem().getId(), task.getUser().getId(), date, time);
+                    task.setFiles(newFilesSet);
+                }
+            }
+            task.setDate(date);
+            task.setTime(time);
+            taskService.update(task);
+            return Msg.success();
+        } catch (Exception e) {
+            return Msg.fail(e.getMessage());
+        }
+    }
+
+    @ResponseBody
     @ApiOperation(value = "根据任务Id删除一个工作任务")
     @RequestMapping(value = "deleteById", method = RequestMethod.DELETE)
     public Msg deleteById(@RequestParam Integer id) {
