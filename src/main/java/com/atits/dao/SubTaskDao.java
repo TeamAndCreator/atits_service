@@ -1,5 +1,6 @@
 package com.atits.dao;
 
+import com.atits.entity.Files;
 import com.atits.entity.SubTask;
 import com.atits.entity.Task;
 import org.hibernate.Session;
@@ -7,7 +8,9 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Repository
 public class SubTaskDao {
@@ -66,5 +69,16 @@ public class SubTaskDao {
         String hql="select id from SubTask where fatherTask.id=:taskId";
         return getSession().createQuery(hql).setParameter("taskId",taskId).list();
     }
+
+    /**
+     * 获取文件list，用于更新
+     */
+    public Set<Files> getFiles(int id){
+        String hql="select st.files from SubTask as st where st.id=:id";
+        List list= getSession().createQuery(hql).setParameter("id",id).list();
+        Set<Files> filesSet=new HashSet(list);
+        return filesSet;
+    }
+
 
 }

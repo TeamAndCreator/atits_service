@@ -112,9 +112,11 @@ public class ReportController {
             //查出原文件并删除
             Set<Files> oldFilesSet = reportService.getFiles(report.getId());
             filesService.deleteDoubleFiles(oldFilesSet);
-            if (!multipartFiles[0].isEmpty()) {
-                Set<Files> newFilesSet = filesService.fileSave(multipartFiles, "重大文件", report.getSystem().getId(), report.getUser().getId(), date, time);
-                report.setFiles(newFilesSet);
+            if (multipartFiles.length != 0) {//ajax发过来没有文件时可以不用执行
+                if (!multipartFiles[0].isEmpty()) {//form发过来没有文件时可以不用执行
+                    Set<Files> newFilesSet = filesService.fileSave(multipartFiles, "重大文件", report.getSystem().getId(), report.getUser().getId(), date, time);
+                    report.setFiles(newFilesSet);
+                }
             }
             report.setDate(date);
             report.setTime(time);

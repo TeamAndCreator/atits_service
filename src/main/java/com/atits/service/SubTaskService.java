@@ -1,12 +1,14 @@
 package com.atits.service;
 
 import com.atits.dao.SubTaskDao;
+import com.atits.entity.Files;
 import com.atits.entity.SubTask;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Set;
 
 @Transactional
 @Service
@@ -45,5 +47,12 @@ public class SubTaskService {
      */
     public List findIdList(int taskId){
         return subTaskDao.findIdList(taskId);
+    }
+
+    /**
+     * 查找出文件
+     */
+    public Set<Files> getFiles(int id){
+        return subTaskDao.getFiles(id);
     }
 }

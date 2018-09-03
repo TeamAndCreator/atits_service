@@ -68,6 +68,31 @@ public class TaskProgressController {
         }
     }
 
+    @ResponseBody
+    @ApiOperation(value = "更新一项工作进展")
+    @RequestMapping(value = "update",method = RequestMethod.PUT)
+    public Msg update(TaskProgress taskProgress, MultipartFile[] multipartFiles) {
+        try {
+            String date = GetTimeUtil.getDate();
+            String time = GetTimeUtil.getTime();
+            //查出原文件并删除
+            Set<Files> oldFilesSet = taskProgressService.getFiles(taskProgress.getId());
+            filesService.deleteDoubleFiles(oldFilesSet);
+            if (multipartFiles.length != 0) {//ajax发过来没有文件时可以不用执行
+                if (!multipartFiles[0].isEmpty()) {//form发过来没有文件时可以不用执行
+                    Set<Files> newFilesSet = filesService.fileSave(multipartFiles, "工作进展", taskProgress.getSubTask().getBearer().getSystem().getId(), taskProgress.getSubTask().getBearer().getId(), date, time);
+                    taskProgress.setFiles(newFilesSet);
+                }
+            }
+            taskProgress.setDate(date);
+            taskProgress.setTime(time);
+            taskProgressService.update(taskProgress);
+            return Msg.success();
+        } catch (Exception e) {
+            return Msg.fail(e.getMessage());
+        }
+    }
+
 
     @ResponseBody
     @ApiOperation(value = "根据多个Id批量删除工作进展，需依次输入id时以英文逗号隔开")

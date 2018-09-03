@@ -112,9 +112,11 @@ public class HarvestController {
             //查出原文件并删除
             Set<Files> oldFilesSet = harvestService.getFiles(harvest.getId());
             filesService.deleteDoubleFiles(oldFilesSet);
-            if (!multipartFiles[0].isEmpty()) {
-                Set<Files> newFilesSet = filesService.fileSave(multipartFiles, "重大成果", harvest.getSystem().getId(), harvest.getUser().getId(), date, time);
-                harvest.setFiles(newFilesSet);
+            if (multipartFiles.length != 0) {//ajax发过来没有文件时可以不用执行
+                if (!multipartFiles[0].isEmpty()) {//form发过来没有文件时可以不用执行
+                    Set<Files> newFilesSet = filesService.fileSave(multipartFiles, "重大成果", harvest.getSystem().getId(), harvest.getUser().getId(), date, time);
+                    harvest.setFiles(newFilesSet);
+                }
             }
             harvest.setDate(date);
             harvest.setTime(time);
