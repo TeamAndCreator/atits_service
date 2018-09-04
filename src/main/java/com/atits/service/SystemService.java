@@ -112,4 +112,18 @@ public class SystemService {
     public int getCount() {
         return systemDao.getCount();
     }
+
+    /**
+     * 修改content
+     */
+    public void content_change(int systemId,String content){
+        systemDao.content_change(systemId,content);
+    }
+
+    /**
+     * 修改overView
+     */
+    public void overView_change(int systemId,String overView){
+        systemDao.overView_change(systemId,overView);
+    }
 }

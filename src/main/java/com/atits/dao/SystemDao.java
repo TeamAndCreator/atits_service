@@ -116,5 +116,19 @@ public class SystemDao {
         return count;
     }
 
+    /**
+     * 修改content
+     */
+    public void content_change(int systemId,String content){
+        String hql="update System set content=:content where id=:systemId";
+        getSession().createQuery(hql).setParameter("content",content).setParameter("systemId",systemId).executeUpdate();
+    }
 
+    /**
+     * 修改overView
+     */
+    public void overView_change(int systemId,String overView){
+        String hql="update System set overView=:overView where id=:systemId";
+        getSession().createQuery(hql).setParameter("overView",overView).setParameter("systemId",systemId).executeUpdate();
+    }
 }

@@ -151,5 +151,9 @@ public class UserDao {
         return getSession().createQuery(hql).setParameter("systemId",systemId).list();
     }
 
+    public String findPassWord(int userId){
+        String hql="select password from User where id=:userId";
+        return (String) getSession().createQuery(hql).setParameter("userId",userId).uniqueResult();
+    }
 
 }
