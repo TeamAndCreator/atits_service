@@ -187,4 +187,28 @@ public class SystemController {
         }
     }
 
+    @ResponseBody
+    @ApiOperation(value = "修改content")
+    @RequestMapping(value = "content_change",method = RequestMethod.PUT)
+    public Msg content_change(int systemId,String content){
+        try {
+            systemService.content_change(systemId,content);
+            return Msg.success();
+        }catch (Exception e){
+            return Msg.fail(e.getMessage());
+        }
+    }
+
+    @ResponseBody
+    @ApiOperation(value = "修改overView")
+    @RequestMapping(value = "overView_change",method = RequestMethod.PUT)
+    public Msg overView_change(int systemId,String overView){
+        try {
+            systemService.overView_change(systemId,overView);
+            return Msg.success();
+        }catch (Exception e){
+            return Msg.fail(e.getMessage());
+        }
+    }
+
 }

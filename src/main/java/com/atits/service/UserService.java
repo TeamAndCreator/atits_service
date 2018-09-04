@@ -113,4 +113,8 @@ public class UserService {
     public List findUserInSystem(int systemId){
         return userDao.findUserInSystem(systemId);
     }
+
+    public String findPassWord(int userId){
+        return userDao.findPassword(userId);
+    }
 }

@@ -250,4 +250,19 @@ public class UserController {
             return Msg.fail(e.getMessage());
         }
     }
+
+    @ResponseBody
+    @ApiOperation(value = "更新个人简历")
+    @RequestMapping(value = "update1",method = RequestMethod.PUT)
+    public Msg update1(User user){
+        try {
+            user.setPassword(userService.findPassWord(user.getId()));
+            user.setState(1);
+            userService.update(user);
+            return Msg.success();
+        }catch (Exception e){
+            e.printStackTrace();
+            return Msg.fail(e.getMessage());
+        }
+    }
 }
