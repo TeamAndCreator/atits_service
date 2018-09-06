@@ -95,6 +95,14 @@ public class UserDao {
         return getSession().createQuery(hql).list();
     }
 
+    /**
+     * 查找所有人的(id,profile.name,system.systemName,state)
+     */
+    public List findUserAll(){
+        String hql = "select new User (u.id,u.profile.name,u.system.systemName,u.state) from User as u  join u.roles as r where r.id=3 or r.id=4 or r.id=5 or r.id=6 or r.id=7";
+        return getSession().createQuery(hql).list();
+    }
+
     public void updateState(int userId){
         String hql="update User as u set u.state=1 where u.id=:userId";
         getSession().createQuery(hql).setParameter("userId",userId).executeUpdate();
