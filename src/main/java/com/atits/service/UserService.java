@@ -30,7 +30,7 @@ public class UserService {
     public List findUsersBySystemId(int systemId){
         List<User> users;
         if (systemId==1){
-            users=userDao.findUsersBySystemId2();
+            users=userDao.findUserAll();
             List<User> externals=userDao.findExternal();
             users.addAll(externals);
         }else {
