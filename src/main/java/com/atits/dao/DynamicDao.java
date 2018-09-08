@@ -148,4 +148,12 @@ public class DynamicDao {
         String hql="update Dynamic set state=:state where id=:id";
         getSession().createQuery(hql).setParameter("state",state).setParameter("id",id).executeUpdate();
     }
+
+    /**
+     * 修改
+     */
+    public void update1(int id,String title,String content){
+        String hql="update Dynamic set title=:title,content=:content,state=0 where id=:id";
+        getSession().createQuery(hql).setParameter("title",title).setParameter("content",content).setParameter("id",id).executeUpdate();
+    }
 }

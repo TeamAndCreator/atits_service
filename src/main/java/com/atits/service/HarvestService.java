@@ -133,4 +133,8 @@ public class HarvestService {
     public void updateState(int id,int state){
         harvestDao.updateState(id,state);
     }
+
+    public void update1(int id,String title,String content){
+        harvestDao.update1(id, title, content);
+    }
 }
