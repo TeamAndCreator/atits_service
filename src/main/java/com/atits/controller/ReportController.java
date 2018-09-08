@@ -237,4 +237,17 @@ public class ReportController {
             return Msg.fail(e.getMessage());
         }
     }
+
+    @ResponseBody
+    @ApiOperation(value = "修改title,content")
+    @RequestMapping(value = "update1",method = RequestMethod.PUT)
+    public Msg update1(int id,String title,String content){
+        try {
+            reportService.update1(id, title, content);
+            return Msg.success();
+        }catch (Exception e){
+            e.printStackTrace();
+            return Msg.fail(e.getMessage());
+        }
+    }
 }

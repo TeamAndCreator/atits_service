@@ -132,4 +132,8 @@ public class ReportService {
     public void updateState(int id,int state){
         reportDao.updateState(id,state);
     }
+
+    public void update1(int id,String title,String content){
+        reportDao.update1(id, title, content);
+    }
 }

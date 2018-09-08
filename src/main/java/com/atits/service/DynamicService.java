@@ -139,5 +139,7 @@ public class DynamicService {
         dynamicDao.updateState(id, state);
     }
 
-
+    public void update1(int id,String title,String content){
+        dynamicDao.update1(id, title, content);
+    }
 }

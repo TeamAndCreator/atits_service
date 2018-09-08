@@ -136,4 +136,8 @@ public class RegulationService {
         regulationDao.updateState(id, state);
     }
 
+    public void update1(int id,String title,String content){
+        regulationDao.update1(id, title, content);
+    }
+
 }

@@ -141,4 +141,9 @@ public class ActivityService {
     public void updateState(int id,int state){
         activityDao.updateState(id,state);
     }
+
+    public void update1(int id,String title,String content){
+        activityDao.update1(id, title, content);
+    }
+
 }

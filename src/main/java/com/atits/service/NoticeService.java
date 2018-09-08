@@ -131,4 +131,8 @@ public class NoticeService {
     public void updateState(int id,int state){
         noticeDao.updateState(id,state);
     }
+
+    public void update1(int id,String title,String content){
+        noticeDao.update1(id, title, content);
+    }
 }
