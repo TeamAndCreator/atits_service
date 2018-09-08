@@ -253,4 +253,17 @@ public class DynamicController {
             return Msg.fail(e.getMessage());
         }
     }
+
+    @ResponseBody
+    @ApiOperation(value = "修改title,content")
+    @RequestMapping(value = "updateForaAdmin",method = RequestMethod.PUT)
+    public Msg updateForaAdmin(int id,String title,String content){
+        try {
+            dynamicService.updateForaAdmin(id, title, content);
+            return Msg.success();
+        }catch (Exception e){
+            e.printStackTrace();
+            return Msg.fail(e.getMessage());
+        }
+    }
 }
