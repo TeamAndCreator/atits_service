@@ -19,6 +19,7 @@ public class System {
     @Column(length = 100000)
     private String content;
 
+    @Column(length = 100000)
     private String overView;
 
     public void setId(int id){this.id=id;}
