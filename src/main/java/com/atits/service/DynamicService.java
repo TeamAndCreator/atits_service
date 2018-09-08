@@ -142,4 +142,7 @@ public class DynamicService {
     public void update1(int id,String title,String content){
         dynamicDao.update1(id, title, content);
     }
+    public void updateForaAdmin(int id,String title,String content){
+        dynamicDao.updateForaAdmin(id, title, content);
+    }
 }
