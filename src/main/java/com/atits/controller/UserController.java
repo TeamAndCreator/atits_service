@@ -51,6 +51,7 @@ public class UserController {
             List<User> users = userService.findUsersBySystemId(systemId);
             return Msg.success().add("users", users);
         } catch (Exception e) {
+            e.printStackTrace();
             return Msg.fail(e.getMessage());
         }
     }
