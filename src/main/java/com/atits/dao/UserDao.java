@@ -99,7 +99,7 @@ public class UserDao {
      * 查找所有人的(id,profile.name,system.systemName,state)
      */
     public List findUserAll(){
-        String hql = "select new User (u.id,u.profile.name,u.system.systemName,u.state) from User as u  join u.roles as r where r.id=3 or r.id=4 or r.id=5 or r.id=6 or r.id=7";
+        String hql = "select new User (u.id,u.profile.name,u.system.systemName,u.state) from User as u";
         return getSession().createQuery(hql).list();
     }
 
