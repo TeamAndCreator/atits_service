@@ -107,6 +107,13 @@ public class SystemService {
     }
 
     /**
+     * 获取某个体系里具有某个权限的所有人
+     */
+    public List findUserInRole2(int systemId, int roleId) {
+        return systemDao.findUserInRole2(systemId, roleId);
+    }
+
+    /**
      * 获取个数
      */
     public int getCount() {

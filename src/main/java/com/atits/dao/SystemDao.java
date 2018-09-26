@@ -97,6 +97,8 @@ public class SystemDao {
         return getSession().createQuery(hql).setParameter("systemId",systemId).setParameter("roleId",roleId).list();
     }
 
+
+
     /**
      * 获取某个体系里具有某个权限的所有人
      */

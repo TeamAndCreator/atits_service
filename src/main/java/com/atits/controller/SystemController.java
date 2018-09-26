@@ -192,7 +192,7 @@ public class SystemController {
     @GetMapping(value = "findUsersInRole")
     public Msg findUsersInRole(int systemId,int roleId){
         try {
-            List users=systemService.findUserInRole(systemId,roleId);
+            List users=systemService.findUserInRole2(systemId,roleId);
             return Msg.success().add("users",users);
         }catch (Exception e){
             e.printStackTrace();
