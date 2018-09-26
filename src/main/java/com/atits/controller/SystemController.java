@@ -188,6 +188,19 @@ public class SystemController {
     }
 
     @ResponseBody
+    @ApiOperation(value ="获取某个体系里具有某个权限的所有人")
+    @GetMapping(value = "findUsersInRole")
+    public Msg findUsersInRole(int systemId,int roleId){
+        try {
+            List users=systemService.findUserInRole(systemId,roleId);
+            return Msg.success().add("users",users);
+        }catch (Exception e){
+            e.printStackTrace();
+            return Msg.fail(e.getMessage());
+        }
+    }
+
+    @ResponseBody
     @ApiOperation(value = "修改content")
     @RequestMapping(value = "content_change",method = RequestMethod.PUT)
     public Msg content_change(int systemId,String content){
