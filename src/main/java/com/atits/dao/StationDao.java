@@ -145,4 +145,12 @@ public class StationDao {
         String hql="update User set station =null where station.id=:staId";
         getSession().createQuery(hql).setParameter("staId",staId).executeUpdate();
     }
+
+    /**
+     * 获取某个实验站具有某个权限的所有user
+     */
+    public List findUserInRole2(int stationId,int roleId){
+        String hql="SELECT new User (u.id,p.name) from User u join u.roles r,Profile p where u.station.id=:stationId and r.id=:roleId and u.profile=p ";
+        return getSession().createQuery(hql).setParameter("stationId",stationId).setParameter("roleId",roleId).list();
+    }
 }

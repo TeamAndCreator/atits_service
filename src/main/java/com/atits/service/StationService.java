@@ -125,4 +125,11 @@ public class StationService {
     public void updateState(int staId){
         stationDao.updateState(staId);
     }
+
+    /**
+     * 获取某个实验站具有某个权限的所有user
+     */
+    public List findUserInRole2(int stationId,int roleId){
+        return stationDao.findUserInRole2(stationId,roleId);
+    }
 }

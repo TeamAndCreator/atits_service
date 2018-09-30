@@ -6,10 +6,7 @@ import com.atits.service.LaboratoryService;
 import com.atits.entity.System;
 import io.swagger.annotations.*;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -185,6 +182,19 @@ public class LaboratoryController {
         }
     }
 
+
+    @ResponseBody
+    @ApiOperation(value = "获取研究室中具有某个权限的人")
+    @GetMapping(value = "findUserInRole2")
+    public Msg findUserInRole2(int laboratoryId, int roleId){
+        try {
+            List users=laboratoryService.findUserInRole2(laboratoryId, roleId);
+            return Msg.success().add("users",users);
+        }catch (Exception e){
+            e.printStackTrace();
+            return Msg.fail(e.getMessage());
+        }
+    }
 
 }
 
