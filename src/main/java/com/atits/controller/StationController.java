@@ -5,10 +5,7 @@ import com.atits.entity.Station;
 import com.atits.service.StationService;
 import io.swagger.annotations.*;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -178,6 +175,19 @@ public class StationController {
             stationService.updateState(staId);
             return Msg.success();
         }catch (Exception e){
+            return Msg.fail(e.getMessage());
+        }
+    }
+
+    @ResponseBody
+    @ApiOperation(value = "获取实验站中具有某个权限的人")
+    @GetMapping(value = "findUserInRole2")
+    public Msg findUserInRole2(int stationId, int roleId){
+        try {
+            List users=stationService.findUserInRole2(stationId, roleId);
+            return Msg.success().add("users",users);
+        }catch (Exception e){
+            e.printStackTrace();
             return Msg.fail(e.getMessage());
         }
     }

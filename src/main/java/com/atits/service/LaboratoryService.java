@@ -131,5 +131,12 @@ public class LaboratoryService {
     public void updateState(int labId){
         laboratoryDao.updateState(labId);
     }
+
+    /**
+     * 获取某个研究室具有某个权限的所有user
+     */
+    public List findUserInRole2(int laboratoryId, int roleId) {
+        return laboratoryDao.findUserInRole2(laboratoryId, roleId);
+    }
 }
 
