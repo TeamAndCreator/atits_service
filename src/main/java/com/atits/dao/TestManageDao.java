@@ -44,7 +44,7 @@ public class TestManageDao {
      * @return
      */
     public List findSystemTestManage(int systemId){
-        String hql="from TestManage as tm where tm.testStart.system.id=:systemId";
+        String hql="select new TestManage(tm.id, tm.testStart.year, tm.testStart.system.id, tm.testStart.system.systemName, tm.testStart.date, tm.testStart.address, tm.scoreUser.profile.name, tm.sum) from TestManage as tm where tm.testStart.system.id=:systemId";
         return getSession().createQuery(hql).setParameter("systemId",systemId).list();
     }
 }
