@@ -64,8 +64,8 @@ public class UserService {
                     }
                 }
             }
-            for (int id:ids){
-                users.remove(id);
+            for (int i=ids.size()-1;i>=0;i--){
+                users.remove(ids.get(i).intValue());
             }
         }
         return users;
