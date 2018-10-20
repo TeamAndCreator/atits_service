@@ -177,11 +177,15 @@ public class ActivityController {
 
     }
 
+    int i = 0;
+
     @ResponseBody
     @ApiOperation(value = "获取所有id，title，date")
     @RequestMapping(value = "findAll1", method = RequestMethod.GET)
     public Msg findAll1() {
         try {
+            System.out.println("controller:" + i);
+            i = i + 1;
             List activitys = activityService.findAll1();
             return Msg.success().add("activitys", activitys);
         } catch (Exception e) {
@@ -252,12 +256,12 @@ public class ActivityController {
 
     @ResponseBody
     @ApiOperation(value = "修改title,content")
-    @RequestMapping(value = "update1",method = RequestMethod.PUT)
-    public Msg update1(int id,String title,String content){
+    @RequestMapping(value = "update1", method = RequestMethod.PUT)
+    public Msg update1(int id, String title, String content) {
         try {
             activityService.update1(id, title, content);
             return Msg.success();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return Msg.fail(e.getMessage());
         }
