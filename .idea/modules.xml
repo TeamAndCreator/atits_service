@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/atits_service.iml" filepath="$PROJECT_DIR$/atits_service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/atits_server.iml" filepath="$PROJECT_DIR$/atits_server.iml" />
     </modules>
   </component>
 </project>

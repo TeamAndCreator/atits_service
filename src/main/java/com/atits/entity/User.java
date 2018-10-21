@@ -3,12 +3,11 @@ package com.atits.entity;
 
 import io.swagger.annotations.ApiModel;
 
-
 import javax.persistence.*;
-//import java.util.Date;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
+
+//import java.util.Date;
 
 @Entity
 @Table(name = "t_user")
@@ -16,7 +15,7 @@ import java.util.Set;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @JoinColumn(nullable = false,unique = true)
     private String userName;
@@ -46,7 +45,7 @@ public class User {
         this.roles=roles;
     }
 
-    public User(int id,String userName,String systemName,int state){
+    public User(Long id, String userName, String systemName, int state){
         this.id=id;
         this.profile=new Profile();
         this.profile.setName(userName);
@@ -55,26 +54,26 @@ public class User {
         this.state=state;
     }
 
-    public User(int id,String userName,String sysName,Set<Role> roles) {
+    public User(Long id, String userName, String sysName, Set<Role> roles) {
         this.system=new System();
         this.id=id;
         this.userName = userName;
         this.system.setSystemName(sysName);
         this.roles=roles;
     }
-    public User(int id,String name) {
+    public User(Long id, String name) {
         this.id=id;
         this.profile=new Profile();
         profile.setName(name);
     }
-    public User(int id,String name,int systemId) {
+    public User(Long id, String name, int systemId) {
         this.id=id;
         this.profile=new Profile();
         profile.setName(name);
         this.system=new System();
         this.system.setId(systemId);
     }
-    public User(int id,int profileId,String name,int state) {
+    public User(Long id, int profileId, String name, int state) {
         this.id=id;
         this.profile=new Profile();
         this.profile.setName(name);
@@ -84,11 +83,11 @@ public class User {
 
 
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

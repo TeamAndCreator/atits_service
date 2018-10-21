@@ -4,6 +4,7 @@ import javax.persistence.*;
 
 /**
  * 体系
+ *
  * @author zys
  */
 @Entity
@@ -22,7 +23,9 @@ public class System {
     @Column(length = 100000)
     private String overView;
 
-    public void setId(int id){this.id=id;}
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public int getId() {
         return id;
@@ -52,11 +55,13 @@ public class System {
         this.overView = overView;
     }
 
-    public System(int id,String systemName) {
+    public System(int id, String systemName) {
         this.systemName = systemName;
-        this.id=id;
+        this.id = id;
     }
-    public System(){}
+
+    public System() {
+    }
 
     @Override
     public String toString() {
