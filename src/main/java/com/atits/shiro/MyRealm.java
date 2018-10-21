@@ -1,6 +1,6 @@
 package com.atits.shiro;
 
-import com.atits.dao.UserDao;
+import com.atits.Repository.UserRepository;
 import com.atits.entity.Role;
 import com.atits.entity.User;
 import org.apache.shiro.authc.*;
@@ -19,7 +19,7 @@ import java.util.Set;
 public class MyRealm extends AuthorizingRealm {
 
     @Resource
-    private UserDao userDao;
+    private UserRepository userRepository;
 
     //用于认证方法
     @Override
@@ -27,7 +27,7 @@ public class MyRealm extends AuthorizingRealm {
             AuthenticationToken token) throws AuthenticationException {
         UsernamePasswordToken usernamePasswordToken =(UsernamePasswordToken) token;
         String username=usernamePasswordToken.getUsername();
-        User user = userDao.findByUserName(username);
+        User user = userRepository.findByUserName(username);
         SimpleAuthenticationInfo info = null;
 
         if( user != null && user.getState() == 1) {
@@ -43,7 +43,7 @@ public class MyRealm extends AuthorizingRealm {
         String username = (String) principals.getPrimaryPrincipal();
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
         // 根据用户名查询当前用户拥有的角色
-        List<Role> roles = userDao.findRoleById(username);
+        List<Role> roles = userRepository.findRoleById(username);
         Set<String> roleNames = new HashSet<String>();
         for (Role role:roles) {
             roleNames.add(role.getName());
