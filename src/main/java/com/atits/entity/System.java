@@ -13,7 +13,7 @@ public class System {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     private String systemName;
 
@@ -23,11 +23,11 @@ public class System {
     @Column(length = 100000)
     private String overView;
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -55,7 +55,7 @@ public class System {
         this.overView = overView;
     }
 
-    public System(int id, String systemName) {
+    public System(Integer id, String systemName) {
         this.systemName = systemName;
         this.id = id;
     }

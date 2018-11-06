@@ -11,17 +11,17 @@ import javax.persistence.*;
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     private String name;
 
     private String description;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -43,7 +43,7 @@ public class Role {
 
     public Role(){}
 
-    public Role(int id){
+    public Role(Integer id){
         this.id=id;
     }
 

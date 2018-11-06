@@ -36,9 +36,9 @@ public class UserController {
     @ApiOperation(value = "通过ID获取用户")
     @GetMapping(value = "find_by_id")
     public Msg findById() {
-        long id=147;
+        Integer id=147;
         try {
-            User user = userService.fingById(id);
+            User user = userService.findById(id);
             return Msg.success().add("user", user);
         } catch (Exception e) {
             return Msg.fail(e.getMessage());

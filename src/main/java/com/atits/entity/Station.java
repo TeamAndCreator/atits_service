@@ -13,7 +13,7 @@ public class Station {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     private String staName;
 
@@ -41,11 +41,11 @@ public class Station {
         this.date = date;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -99,19 +99,19 @@ public class Station {
 
     public Station(){}
 
-    public Station(int id , String staName){
+    public Station(Integer id , String staName){
         this.id=id;
         this.staName=staName;
     }
 
-    public Station(int id , String staName,String systemName,int state){
+    public Station(Integer id , String staName,String systemName,int state){
         this.id=id;
         this.staName=staName;
         this.state=state;
         this.system=new System();
         this.system.setSystemName(systemName);
     }
-    public Station(int id,String staName, String content, String company,String systemName, String time,String date, int state) {
+    public Station(Integer id,String staName, String content, String company,String systemName, String time,String date, int state) {
         this.id=id;
         this.staName = staName;
         this.content = content;
@@ -122,7 +122,7 @@ public class Station {
         this.date=date;
         this.state = state;
     }
-    public Station(int id,String staName, String company,String systemName, String time,String date, int state) {
+    public Station(Integer id,String staName, String company,String systemName, String time,String date, int state) {
         this.id=id;
         this.staName = staName;
         this.company = company;

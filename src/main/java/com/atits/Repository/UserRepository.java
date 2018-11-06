@@ -7,14 +7,13 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends JpaRepository<User, Integer> {
 
-    @Query("from User where userName=:username")
     User findByUserName(String username);
 
-    @Query("select u.roles from User as u where u.userName=:username")
+    String findUserNameById(Integer id);
+
+    List<Role> findRoleByUserName(String username);
+
     List<Role> findRoleById(String username);
-
-
-
 }

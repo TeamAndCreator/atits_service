@@ -3,7 +3,8 @@ package com.atits.entity;
 import javax.persistence.*;
 
 /**
- *简历
+ * 简历
+ *
  * @author zys
  */
 @Entity
@@ -12,7 +13,7 @@ public class Profile {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     private String name;//姓名
 
@@ -67,17 +68,18 @@ public class Profile {
     @Column(length = 100000)
     private String achievement; // 主要业绩
 
-    public Profile(){}
-
-    public Profile(String name){
-        this.name=name;
+    public Profile() {
     }
 
-    public int getId() {
+    public Profile(String name) {
+        this.name = name;
+    }
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

@@ -15,7 +15,7 @@ import java.util.Set;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @JoinColumn(nullable = false,unique = true)
     private String userName;
@@ -45,7 +45,7 @@ public class User {
         this.roles=roles;
     }
 
-    public User(Long id, String userName, String systemName, int state){
+    public User(Integer id, String userName, String systemName, int state){
         this.id=id;
         this.profile=new Profile();
         this.profile.setName(userName);
@@ -54,26 +54,26 @@ public class User {
         this.state=state;
     }
 
-    public User(Long id, String userName, String sysName, Set<Role> roles) {
+    public User(Integer id, String userName, String sysName, Set<Role> roles) {
         this.system=new System();
         this.id=id;
         this.userName = userName;
         this.system.setSystemName(sysName);
         this.roles=roles;
     }
-    public User(Long id, String name) {
+    public User(Integer id, String name) {
         this.id=id;
         this.profile=new Profile();
         profile.setName(name);
     }
-    public User(Long id, String name, int systemId) {
+    public User(Integer id, String name, Integer systemId) {
         this.id=id;
         this.profile=new Profile();
         profile.setName(name);
         this.system=new System();
         this.system.setId(systemId);
     }
-    public User(Long id, int profileId, String name, int state) {
+    public User(Integer id, Integer profileId, String name, int state) {
         this.id=id;
         this.profile=new Profile();
         this.profile.setName(name);
@@ -83,11 +83,11 @@ public class User {
 
 
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

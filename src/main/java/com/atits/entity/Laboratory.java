@@ -14,7 +14,7 @@ public class Laboratory {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     private String labName;
 
@@ -41,11 +41,11 @@ public class Laboratory {
         this.date = date;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -99,12 +99,12 @@ public class Laboratory {
 
     public Laboratory(){}
 
-    public Laboratory(int id ,String labName){
+    public Laboratory(Integer id ,String labName){
         this.id=id;
         this.labName=labName;
     }
 
-    public Laboratory(int id ,String labName,String systemName,int state){
+    public Laboratory(Integer id ,String labName,String systemName,int state){
         this.id=id;
         this.labName=labName;
         this.state=state;
@@ -112,7 +112,7 @@ public class Laboratory {
         this.system.setSystemName(systemName);
     }
 
-    public Laboratory(int id,String labName, String content, String company,String systemName, String time, String date, int state) {
+    public Laboratory(Integer id,String labName, String content, String company,String systemName, String time, String date, int state) {
         this.id=id;
         this.labName = labName;
         this.content = content;
@@ -124,7 +124,7 @@ public class Laboratory {
         this.state = state;
     }
 
-    public Laboratory(int id,String labName, String company,String systemName, String time, String date, int state) {
+    public Laboratory(Integer id,String labName, String company,String systemName, String time, String date, int state) {
         this.id=id;
         this.labName = labName;
         this.company = company;
