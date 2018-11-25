@@ -230,4 +230,12 @@ public class TestScoreService {
     public void score(int id,int a1,int a2,int a3,int a4,int a5,int a6,int sum,String time){
         testScoreDao.score(id, a1, a2, a3, a4, a5, a6, sum,time);
     }
+
+    /**
+     * 根据id查找
+     */
+    public TestScore findById(int id){
+        return testScoreDao.findById(id);
+    }
+
 }
