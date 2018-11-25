@@ -44,6 +44,14 @@ public class TestScoreDao {
     }
 
     /**
+     * 根据id查找
+     */
+    public TestScore findById(int id){
+        String hql="select new TestScore(A1,A2,A3,A4,A5,A6) from TestScore where id=:id";
+        return (TestScore) getSession().createQuery(hql).setParameter("id",id).uniqueResult();
+    }
+
+    /**
      * 根据得分人id和testStart.id查找
      * @return
      */

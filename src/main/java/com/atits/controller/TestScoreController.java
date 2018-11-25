@@ -35,6 +35,21 @@ public class TestScoreController {
         }
     }
 
+
+    @ResponseBody
+    @ApiOperation(value = "根据id获取打分项")
+    @GetMapping(value = "findById")
+    public Msg findById(int id){
+        try {
+            TestScore testScore=testScoreService.findById(id);
+            return Msg.success().add("testScore",testScore);
+        }catch (Exception e){
+            e.printStackTrace();
+            return Msg.fail(e.getMessage());
+        }
+    }
+
+
     @ResponseBody
     @ApiOperation(value = "打分")
     @RequestMapping(value = "score",method = RequestMethod.PUT)

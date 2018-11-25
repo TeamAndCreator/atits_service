@@ -34,6 +34,15 @@ public class TestScore {
 
     private String testType;
 
+    public TestScore(int A1,int A2,int A3,int A4,int A5,int A6){
+        this.A1=A1;
+        this.A2=A2;
+        this.A3=A3;
+        this.A4=A4;
+        this.A5=A5;
+        this.A6=A6;
+    }
+
     public TestScore(){}
 
     public TestScore(TestStart testStart,User evaluationed,int role,User evaluation,String testType){
