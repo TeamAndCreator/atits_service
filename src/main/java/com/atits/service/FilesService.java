@@ -28,7 +28,7 @@ public class FilesService {
     @Resource
     private FilesDao filesDao;// 注入dao数据
 
-    private final String REAL_PATH="/root/File";
+    private final String REAL_PATH="/root/File/";
 
     private final static String VR_PATH="/File/";
 
