@@ -151,10 +151,13 @@ public class TestScoreService {
         for (User user : users) {
             Set<Role> roles=user.getRoles();
             int role1=0;
-            for (Role role : user.getRoles()) {//判断用户为岗位专家还是实验站站长
+            for (Role role : user.getRoles()) {//判断用户为岗位专家还是实验站站长还是研究室主任
+                if (role.getId() == 5) {
+                    role1 = 5;
+                    break;
+                }
                 if (role.getId() == 6) {
                     role1 = 3;
-                    break;
                 }
                 if (role.getId() == 7) {
                     role1 = 4;
@@ -162,14 +165,14 @@ public class TestScoreService {
                 }
             }
             List<Integer> ids = new ArrayList<>();//存放打分人的id，为了解决多角色重复打分
-            for (User sx : sxs) {//首席、副首席to岗位专家、实验站站长
+            for (User sx : sxs) {//首席、副首席to岗位专家、实验站站长、研究室主任
                 if (!ids.contains(sx.getId())) {
                     ids.add(sx.getId());
                     TestScore testScore = new TestScore(testStart, user,role1, sx, "g");
                     testScoreDao.addScore(testScore);
                 }
             }
-            for (User user1 : users) {//岗位专家、实验站站长to岗位专家、实验站站长
+            for (User user1 : users) {//岗位专家、实验站站长to岗位专家、实验站站长、研究室主任
                 if (!user1.equals(user)) {
                     if (!ids.contains(user1.getId())) {
                         ids.add(user1.getId());
