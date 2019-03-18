@@ -213,6 +213,7 @@ public class TestScoreService {
             temp.setA4(testScore.getA4());
             temp.setA5(testScore.getA5());
             temp.setA6(testScore.getA6());
+            temp.setA7(testScore.getA7());
             temp.setRole(testScore.getRole());
             temp.setTestType(testScore.getTestType());
             temp.setTime(testScore.getTime());
@@ -230,8 +231,8 @@ public class TestScoreService {
     /**
      * 打分
      */
-    public void score(int id,int a1,int a2,int a3,int a4,int a5,int a6,int sum,String time){
-        testScoreDao.score(id, a1, a2, a3, a4, a5, a6, sum,time);
+    public void score(int id,double a1,double a2,double a3,double a4,double a5,double a6,double a7,double sum,String time){
+        testScoreDao.score(id, a1, a2, a3, a4, a5, a6,a7, sum,time);
     }
 
     /**

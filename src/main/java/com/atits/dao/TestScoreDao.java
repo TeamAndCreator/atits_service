@@ -47,7 +47,7 @@ public class TestScoreDao {
      * 根据id查找
      */
     public TestScore findById(int id){
-        String hql="select new TestScore(A1,A2,A3,A4,A5,A6) from TestScore where id=:id";
+        String hql="select new TestScore(A1,A2,A3,A4,A5,A6,A7) from TestScore where id=:id";
         return (TestScore) getSession().createQuery(hql).setParameter("id",id).uniqueResult();
     }
 
@@ -63,9 +63,9 @@ public class TestScoreDao {
     /**
      * 打分
      */
-    public void score(int id,int a1,int a2,int a3,int a4,int a5,int a6,int sums,String time){
-        String hql="update TestScore as ts set ts.A1=:a1,ts.A2=:a2,ts.A3=:a3,ts.A4=:a4,ts.A5=:a5,ts.A6=:a6,ts.sum=:sums,ts.time=:time where ts.id=:id";
-        getSession().createQuery(hql).setParameter("id",id).setParameter("time",time).setParameter("sums",sums).setParameter("a1",a1).setParameter("a2",a2).setParameter("a3",a3).setParameter("a4",a4).setParameter("a5",a5).setParameter("a6",a6).executeUpdate();
+    public void score(int id,double a1,double a2,double a3,double a4,double a5,double a6,double a7,double sums,String time){
+        String hql="update TestScore as ts set ts.A1=:a1,ts.A2=:a2,ts.A3=:a3,ts.A4=:a4,ts.A5=:a5,ts.A6=:a6,ts.A7=:a7,ts.sum=:sums,ts.time=:time where ts.id=:id";
+        getSession().createQuery(hql).setParameter("id",id).setParameter("time",time).setParameter("sums",sums).setParameter("a1",a1).setParameter("a2",a2).setParameter("a3",a3).setParameter("a4",a4).setParameter("a5",a5).setParameter("a6",a6).setParameter("a7",a7).executeUpdate();
     }
 
 
