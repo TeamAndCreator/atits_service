@@ -53,13 +53,22 @@ public class TestScoreController {
     @ResponseBody
     @ApiOperation(value = "打分")
     @RequestMapping(value = "score",method = RequestMethod.PUT)
-    public Msg score(int id,int A1,int A2,int A3,int A4,int A5,int A6){
+    public Msg score(int id,double A1,double A2,double A3,double A4,double A5,double A6,double A7){
         try {
+            System.out.println("id="+id);
+            System.out.println("a1"+A1);
+            System.out.println("a2"+A2);
+            System.out.println("a3"+A3);
+            System.out.println("a4"+A4);
+            System.out.println("a5"+A5);
+            System.out.println("a6"+A6);
+            System.out.println("a7"+A7);
             String time=GetTimeUtil.getTime();
-            int sum=A1+A2+A3+A4+A5+A6;
-            testScoreService.score(id,A1,A2,A3,A4,A5,A6,sum,time);
+            double sum=A1+A2+A3+A4+A5+A6+A7;
+            testScoreService.score(id,A1,A2,A3,A4,A5,A6,A7,sum,time);
             return Msg.success();
         }catch (Exception e){
+            e.printStackTrace();
             return Msg.fail(e.getMessage());
         }
 

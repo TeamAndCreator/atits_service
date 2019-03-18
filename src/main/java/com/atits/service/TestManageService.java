@@ -55,21 +55,21 @@ public class TestManageService {
         for (User user:users){
             List<TestScore> testScores=testScoreDao.findByEvaluationed(user.getId(),testStart.getId());
             double finish_sum=0;
-            int sum_a=0;
+            double sum_a=0;
             int pv_a=0;
-            int sum_b=0;
+            double sum_b=0;
             int pv_b=0;
-            int sum_c=0;
+            double sum_c=0;
             int pv_c=0;
-            int sum_d=0;
+            double sum_d=0;
             int pv_d=0;
-            int sum_e=0;
+            double sum_e=0;
             int pv_e=0;
-            int sum_f=0;
+            double sum_f=0;
             int pv_f=0;
-            int sum_g=0;
+            double sum_g=0;
             int pv_g=0;
-            int sum_h=0;
+            double sum_h=0;
             int pv_h=0;
             for (TestScore testScore:testScores){
                 if (testScore.getTime()==null)
